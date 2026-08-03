@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Joaquín Moas — Desarrollo web para pequeños negocios</title>
+<meta name="description" content="Sitios web simples y rápidos para pequeños negocios y profesionales independientes. Ves el sitio terminado y funcionando antes de pagar nada.">
+<link rel="canonical" href="https://mosland.github.io/">
+<meta name="author" content="Joaquín Moas">
+<meta name="theme-color" content="#0B0B0D">
+
+<!-- Open Graph: esto es lo que se ve cuando pegás el link en WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_UY">
+<meta property="og:site_name" content="Joaquín Moas">
+<meta property="og:title" content="Joaquín Moas — Desarrollo web para pequeños negocios">
+<meta property="og:description" content="Sitios web simples y rápidos. Ves el tuyo terminado y funcionando antes de pagar nada.">
+<meta property="og:url" content="https://mosland.github.io/">
+<meta property="og:image" content="https://mosland.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Joaquín Moas — Desarrollo web para pequeños negocios y profesionales independientes">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<!-- Solo se precarga la fuente de los títulos: es la que pinta el H1 (el LCP).
+     Precargar las dos haría que compitan por ancho de banda. -->
+<link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/styles.css">
+
+<script>
+  /* Marca que hay JS antes del primer pintado, para que las animaciones de entrada
+     no provoquen un flash. Si el navegador no soporta IntersectionObserver no se
+     marca nada y todo el contenido queda visible desde el arranque. */
+  if ('IntersectionObserver' in window) document.documentElement.classList.add('js');
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Joaquín Moas — Desarrollo web",
+  "description": "Desarrollo de sitios web para pequeños negocios y profesionales independientes. El cliente ve el sitio terminado y funcionando antes de pagar.",
+  "url": "https://mosland.github.io/",
+  "email": "moasjoaquin7@gmail.com",
+  "telephone": "+598 98 436 346",
+  "priceRange": "USD 90 - USD 130",
+  "areaServed": { "@type": "Country", "name": "Uruguay" },
+  "founder": { "@type": "Person", "name": "Joaquín Moas" },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Paquetes",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Presencia",
+        "description": "Una página con quién sos, qué ofrecés, cómo te contactan y tu ubicación si aplica.",
+        "price": "90",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Completo",
+        "description": "Todo lo de Presencia más sección de servicios detallada, preguntas frecuentes y reserva de turnos o WhatsApp directo.",
+        "price": "130",
+        "priceCurrency": "USD"
+      }
+    ]
+  }
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     HEADER
+     Sin menú de navegación a propósito: en una landing de una sola página
+     los links de menú son rutas de escape. Solo marca + CTA.
+     ══════════════════════════════════════════════════════════════════════ -->
+<header class="site-header" id="header">
+  <div class="container site-header__inner">
+    <a class="brand" href="#contenido">
+      <span class="brand__mark" aria-hidden="true">J</span>
+      <span class="brand__name">Joaquín Moas</span>
+    </a>
+    <!-- WA-LINK: el número está definido en un solo lugar por enlace.
+         Si cambia el WhatsApp, buscá "wa.me/" y reemplazá en todos. -->
+    <a class="btn btn--sm"
+       href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20armar%20un%20sitio%20para%20mi%20negocio."
+       target="_blank" rel="noopener">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.43 1.32-1.97 1.36-.5.04-1.14.2-3.68-.77-3.1-1.2-5.08-4.35-5.24-4.55-.15-.2-1.24-1.65-1.24-3.15s.79-2.23 1.07-2.54c.28-.31.61-.38.81-.38s.4 0 .58.01c.19.01.44-.07.68.52.25.61.86 2.11.93 2.26.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.39-.45.53-.15.15-.31.31-.13.61.18.3.79 1.31 1.7 2.12 1.17 1.04 2.15 1.37 2.46 1.52.3.15.48.13.66-.08.18-.2.76-.89.96-1.19.2-.3.4-.25.68-.15.28.1 1.77.84 2.08.99.3.15.5.23.58.35.07.13.07.74-.18 1.43Z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       HERO — un resultado, un CTA, una señal de confianza. Nada más.
+       La garantía va acá arriba y no al final: sin portfolio ni testimonios,
+       la reversión de riesgo es el activo de conversión más fuerte que hay.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <h1 class="hero__title">
+        Sitios web simples para que tus clientes
+        <span class="accent">te encuentren y te escriban.</span>
+      </h1>
+      <p class="hero__sub">
+        Desarrollo web para pequeños negocios y profesionales independientes.
+        Rápidos, claros y pensados para el celular.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--lg"
+           href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20armar%20un%20sitio%20para%20mi%20negocio."
+           target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.43 1.32-1.97 1.36-.5.04-1.14.2-3.68-.77-3.1-1.2-5.08-4.35-5.24-4.55-.15-.2-1.24-1.65-1.24-3.15s.79-2.23 1.07-2.54c.28-.31.61-.38.81-.38s.4 0 .58.01c.19.01.44-.07.68.52.25.61.86 2.11.93 2.26.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.39-.45.53-.15.15-.31.31-.13.61.18.3.79 1.31 1.7 2.12 1.17 1.04 2.15 1.37 2.46 1.52.3.15.48.13.66-.08.18-.2.76-.89.96-1.19.2-.3.4-.25.68-.15.28.1 1.77.84 2.08.99.3.15.5.23.58.35.07.13.07.74-.18 1.43Z"/></svg>
+          Escribime por WhatsApp
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#proceso">Ver cómo trabajo</a>
+      </div>
+
+      <p class="hero__trust">
+        <svg class="ico ico--check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        No pagás nada hasta ver tu sitio terminado y funcionando.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       EL PROBLEMA — empatía antes de vender
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="problema">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">El problema</p>
+        <h2 class="section__title">No alcanza con tener una web. Tiene que trabajar para vos.</h2>
+        <p class="lead">
+          Un cliente te busca, entra a tu web y no encuentra cómo contactarte, o la ve
+          desde el celular y no carga bien. Ahí ya lo perdiste, antes de que sepa lo que hacés.
+        </p>
+      </div>
+
+      <div class="answer reveal">
+        <p>
+          Armo sitios simples y rápidos donde <strong>contactarte es lo más fácil de la
+          página</strong>, se ven bien desde cualquier celular, y transmiten la misma
+          seriedad que tu negocio tiene en persona.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PAQUETES
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" id="paquetes">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">Paquetes</p>
+        <h2 class="section__title">Dos opciones, precio cerrado.</h2>
+        <p class="lead lead--tight">
+          Sin costos escondidos ni "depende". Elegís uno y ese es el precio.
+        </p>
+        <p class="launch-note">
+          <span class="badge">Precio de lanzamiento</span>
+          Estos valores son temporales, mientras armo mis primeros trabajos. Van a subir.
+        </p>
+      </div>
+
+      <div class="cards">
+
+        <article class="card reveal">
+          <h3 class="card__name">Presencia</h3>
+          <p class="card__price"><span class="card__cur">USD</span>90</p>
+          <p class="card__pitch">Una página con todo lo esencial, bien hecha.</p>
+          <ul class="list">
+            <li>Quién sos y qué ofrecés</li>
+            <li>Cómo te contactan, bien visible</li>
+            <li>Tu ubicación, si aplica</li>
+            <li>Se ve bien en celular, tablet y computadora</li>
+            <li>Publicado y funcionando</li>
+          </ul>
+          <a class="btn btn--ghost btn--block"
+             href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20el%20paquete%20Presencia."
+             target="_blank" rel="noopener">Consultar por Presencia</a>
+        </article>
+
+        <article class="card card--featured reveal">
+          <p class="card__flag">Más elegido</p>
+          <h3 class="card__name">Completo</h3>
+          <p class="card__price"><span class="card__cur">USD</span>130</p>
+          <p class="card__pitch">Para cuando querés que la web además te ordene el trabajo.</p>
+          <ul class="list">
+            <li><strong>Todo lo del paquete Presencia</strong></li>
+            <li>Sección de servicios detallada</li>
+            <li>Preguntas frecuentes</li>
+            <li>Reserva de turnos o WhatsApp directo</li>
+          </ul>
+          <a class="btn btn--block"
+             href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20el%20paquete%20Completo."
+             target="_blank" rel="noopener">Consultar por Completo</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PROCESO
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="proceso">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">Cómo trabajo</p>
+        <h2 class="section__title">Cuatro pasos, sin sorpresas.</h2>
+      </div>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <h3 class="step__title">Charlamos 15 o 20 minutos</h3>
+          <p>Por WhatsApp o llamada. Me contás qué necesitás y qué querés transmitir.
+             No te compromete a nada.</p>
+        </li>
+        <li class="step reveal">
+          <h3 class="step__title">Armo el sitio completo</h3>
+          <p>Te lo paso en un enlace de prueba, funcionando de verdad, para que lo veas
+             y lo pruebes desde tu celular <strong>antes de pagar nada</strong>.</p>
+        </li>
+        <li class="step reveal">
+          <h3 class="step__title">Ajustamos lo que haga falta</h3>
+          <p>Hasta dos rondas de cambios incluidas. Textos, colores, secciones, lo que sea.</p>
+        </li>
+        <li class="step reveal">
+          <h3 class="step__title">Si te gusta, lo publicamos</h3>
+          <p>Pagás el precio acordado y lo migramos a tu dominio. Si después de los ajustes
+             no es lo que buscabas, no pagás nada.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       GARANTÍA
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="garantia">
+    <div class="container">
+      <div class="guarantee reveal">
+        <p class="eyebrow">La garantía</p>
+        <h2 class="guarantee__title">No pagás nada por adelantado.</h2>
+        <p class="guarantee__text">
+          Ves el sitio terminado y funcionando antes de decidir. Si después de los ajustes
+          no te convence, no me debés nada.
+        </p>
+        <p class="guarantee__kicker">El riesgo lo corro yo, no vos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PREGUNTAS FRECUENTES — <details> nativo, cero JavaScript
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" id="preguntas">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="section__title">Lo que me suelen preguntar.</h2>
+      </div>
+
+      <div class="faq reveal">
+
+        <details class="qa">
+          <summary>¿Cuánto tarda?</summary>
+          <div class="qa__body">
+            <p>Entre 5 y 10 días desde la primera charla, según cuánto material tengas
+               listo. Si tenés apuro por una fecha puntual, decímelo y lo coordinamos.</p>
+          </div>
+        </details>
+
+        <details class="qa">
+          <summary>¿Necesito tener los textos y las fotos?</summary>
+          <div class="qa__body">
+            <p>Ayuda mucho si los tenés, pero no es obligatorio. Si no los tenés, los
+               armamos juntos a partir de la charla inicial.</p>
+          </div>
+        </details>
+
+        <details class="qa">
+          <summary>¿El dominio y el hosting están incluidos?</summary>
+          <div class="qa__body">
+            <p>El hosting de un sitio como este es gratis, así que no lo pagás ni ahora ni
+               nunca. El dominio propio (por ejemplo <em>tunombre.com</em>) es opcional y
+               tiene un costo anual aparte que pagás directo al registrador: te acompaño en
+               el trámite pero no te lo cobro. Si no querés dominio propio, el sitio queda
+               igual publicado y funcionando en una dirección gratuita.</p>
+          </div>
+        </details>
+
+        <details class="qa">
+          <summary>¿Puedo cambiar cosas después de publicarlo?</summary>
+          <div class="qa__body">
+            <p>Sí. Las dos rondas de cambios están incluidas antes de publicar. Después,
+               los cambios chicos —un precio, un horario, un texto— los hago sin costo
+               durante el primer mes. Pasado ese mes lo vemos por cambio puntual, siempre
+               con el precio arreglado de antemano.</p>
+          </div>
+        </details>
+
+        <details class="qa">
+          <summary>¿Por qué es tan barato?</summary>
+          <div class="qa__body">
+            <p>Porque estos son mis primeros trabajos como freelance y estoy armando mi
+               portfolio. Es un precio de lanzamiento y va a subir. Lo que no cambia es que
+               ves el sitio terminado antes de pagar, así que no tenés que confiar en mi
+               palabra: lo mirás y decidís.</p>
+          </div>
+        </details>
+
+        <details class="qa">
+          <summary>¿Y si no me gusta?</summary>
+          <div class="qa__body">
+            <p>No pagás. Pedís los cambios que quieras dentro de las dos rondas incluidas y,
+               si aun así no te convence, no me debés nada y ahí queda.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PORTFOLIO — todavía no se muestra. La estructura y el CSS (.work-grid,
+       .work) ya están resueltos: cuando existan piezas reales, se descomenta
+       esto, se reemplazan las imágenes y listo. Es el único lugar de la web
+       donde se nombra un rubro específico.
+       ══════════════════════════════════════════════════════════════════════
+
+  <section class="section" id="trabajos">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">Trabajos</p>
+        <h2 class="section__title">Algunos sitios que armé.</h2>
+      </div>
+      <div class="work-grid">
+        <figure class="work reveal">
+          <img src="assets/trabajos/ejemplo.webp" alt="" width="800" height="600" loading="lazy" decoding="async">
+          <figcaption>
+            <h3 class="work__name">Nombre del proyecto</h3>
+            <p class="work__desc">Una línea sobre qué resolvía el sitio.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+       ══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SOBRE MÍ
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="sobre-mi">
+    <div class="container">
+      <div class="about reveal">
+        <p class="eyebrow">Sobre mí</p>
+        <h2 class="section__title">Soy Joaquín Moas.</h2>
+        <p>
+          Estoy terminando el último año de Tecnólogo en Informática en UTU y desarrollo
+          sitios web para pequeños negocios y profesionales independientes.
+        </p>
+        <p>
+          Este es mi primer emprendimiento como freelance y lo digo de frente, porque tiene
+          dos consecuencias directas para vos: los precios son de lanzamiento, y tu proyecto
+          lo trabaja la misma persona que lo programa. No pasás por un vendedor ni por una
+          agencia.
+        </p>
+        <p class="about__kicker">Escribís al WhatsApp y te contesto yo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CONTACTO — sin formulario. WhatsApp directo + mail como alternativa.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--contact" id="contacto">
+    <div class="container">
+      <div class="contact reveal">
+        <h2 class="contact__title">Hablemos.</h2>
+        <p class="contact__text">
+          Contame qué necesitás. La primera charla dura 15 o 20 minutos, es por WhatsApp o
+          llamada, y no te compromete a nada.
+        </p>
+        <a class="btn btn--lg"
+           href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20armar%20un%20sitio%20para%20mi%20negocio."
+           target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.43 1.32-1.97 1.36-.5.04-1.14.2-3.68-.77-3.1-1.2-5.08-4.35-5.24-4.55-.15-.2-1.24-1.65-1.24-3.15s.79-2.23 1.07-2.54c.28-.31.61-.38.81-.38s.4 0 .58.01c.19.01.44-.07.68.52.25.61.86 2.11.93 2.26.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.39-.45.53-.15.15-.31.31-.13.61.18.3.79 1.31 1.7 2.12 1.17 1.04 2.15 1.37 2.46 1.52.3.15.48.13.66-.08.18-.2.76-.89.96-1.19.2-.3.4-.25.68-.15.28.1 1.77.84 2.08.99.3.15.5.23.58.35.07.13.07.74-.18 1.43Z"/></svg>
+          Escribime por WhatsApp
+        </a>
+        <p class="contact__alt">
+          ¿Preferís mail? <a href="mailto:moasjoaquin7@gmail.com">moasjoaquin7@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>Joaquín Moas — Desarrollo web · Uruguay</p>
+    <p class="site-footer__meta">© <span id="year">2026</span> · Hecho a mano, sin plantillas.</p>
+  </div>
+</footer>
+
+<!-- Barra fija de móvil: aparece cuando el CTA del hero sale de pantalla -->
+<div class="mobile-cta" id="mobileCta" hidden>
+  <a class="btn btn--block"
+     href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20armar%20un%20sitio%20para%20mi%20negocio."
+     target="_blank" rel="noopener">
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.43 1.32-1.97 1.36-.5.04-1.14.2-3.68-.77-3.1-1.2-5.08-4.35-5.24-4.55-.15-.2-1.24-1.65-1.24-3.15s.79-2.23 1.07-2.54c.28-.31.61-.38.81-.38s.4 0 .58.01c.19.01.44-.07.68.52.25.61.86 2.11.93 2.26.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.39-.45.53-.15.15-.31.31-.13.61.18.3.79 1.31 1.7 2.12 1.17 1.04 2.15 1.37 2.46 1.52.3.15.48.13.66-.08.18-.2.76-.89.96-1.19.2-.3.4-.25.68-.15.28.1 1.77.84 2.08.99.3.15.5.23.58.35.07.13.07.74-.18 1.43Z"/></svg>
+    Escribime por WhatsApp
+  </a>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
