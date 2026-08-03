@@ -52,17 +52,46 @@
   }
 
   /* ── Barra de WhatsApp fija en móvil ──────────────────────────────────────
-     Aparece cuando el botón del hero deja de verse, así el CTA siempre está
-     a un toque de distancia sin tapar la primera pantalla.
+     La barra rellena los huecos: solo se muestra cuando la página no tiene
+     ningún CTA propio a la vista. Se vigilan tres anclas.
+
+       .hero__actions  el botón del hero, para no tapar la primera pantalla.
+       #contactoCta    el botón de la sección de contacto. Se vigila el botón y
+                       no la sección entera: la sección arranca con bastante
+                       padding, y esconder la barra ahí dejaría un tramo con el
+                       botón todavía fuera de pantalla y sin ningún CTA visible.
+       .site-footer    en pantallas bajas el botón de contacto puede salir por
+                       arriba antes de que termine el documento, y la barra
+                       volvería a asomar justo después de haberse ido.
      ─────────────────────────────────────────────────────────────────────── */
   var mobileCta = document.getElementById('mobileCta');
-  var heroActions = document.querySelector('.hero__actions');
+  var anchors = [];
 
-  if (mobileCta && heroActions) {
+  var heroActions = document.querySelector('.hero__actions');
+  var contactoCta = document.getElementById('contactoCta');
+  var footer = document.querySelector('.site-footer');
+
+  if (heroActions) anchors.push(heroActions);
+  if (contactoCta) anchors.push(contactoCta);
+  if (footer) anchors.push(footer);
+
+  if (mobileCta && anchors.length) {
     mobileCta.hidden = false;   // el CSS lo mantiene fuera de pantalla hasta .is-visible
 
-    new IntersectionObserver(function (entries) {
-      mobileCta.classList.toggle('is-visible', !entries[0].isIntersecting);
-    }, { threshold: 0 }).observe(heroActions);
+    var onScreen = [];          // en pantalla o no, una posición por ancla
+
+    var ctaObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var i = anchors.indexOf(entry.target);
+        if (i > -1) onScreen[i] = entry.isIntersecting;
+      });
+
+      var alguno = false;
+      for (var k = 0; k < anchors.length; k++) if (onScreen[k]) alguno = true;
+
+      mobileCta.classList.toggle('is-visible', !alguno);
+    }, { threshold: 0 });
+
+    for (var n = 0; n < anchors.length; n++) ctaObserver.observe(anchors[n]);
   }
 })();

@@ -100,5 +100,15 @@ el sitio siga cargando rápido.
   ámbar y no en verde: sumar un segundo color rompe el sistema.
 - **Sin formulario de contacto.** Un formulario en un sitio estático necesita un servicio
   externo que puede fallar en silencio y hacerte perder consultas sin que te enteres.
-- **El precio de lanzamiento se anuncia como temporal.** Está así a propósito, para poder
-  subirlo después sin quedar mal con nadie.
+- **Los precios se anuncian como "de introducción", nunca como oferta ni promoción.**
+  Está así a propósito. Anunciar la suba desde ahora permite subirlos después sin quedar
+  mal con nadie, y el vocabulario de descuento ("oferta", "promoción", "rebaja") haría que
+  el cliente asocie el trabajo con lo barato y se resista al precio pleno más adelante.
+  La palabra aparece en tres lugares que tienen que decir lo mismo: la etiqueta de la
+  sección de paquetes, la pregunta frecuente sobre precios y la sección "Sobre mí".
+- **Las preguntas frecuentes están duplicadas en el `<head>`.** Hay un bloque `FAQPage` en
+  JSON-LD para que Google las muestre en el resultado de búsqueda. Si editás una pregunta
+  o una respuesta, hay que tocarla en los dos lugares o el dato queda mintiendo.
+- **La barra fija de WhatsApp solo aparece si no hay otro CTA en pantalla.** `js/main.js`
+  vigila el botón del hero, el de contacto y el footer. Si se agrega otro CTA importante,
+  conviene sumarlo a esa lista para que la barra no quede duplicando un botón que ya se ve.

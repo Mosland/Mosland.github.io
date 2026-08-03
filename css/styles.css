@@ -365,12 +365,16 @@ ul { margin: 0; padding: 0; list-style: none; }
   max-width: var(--measure);
   font-size: clamp(1rem, 2.2vw, 1.125rem);
 }
+/* El párrafo de cierre que va abajo del recuadro */
+.answer + .lead { margin-top: 1.5rem; }
 
 /* ── PAQUETES ──────────────────────────────────────────────────────────── */
 .launch-note {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  /* baseline y no center: el texto ocupa varias líneas y con center la etiqueta
+     queda flotando en el medio del bloque en vez de alineada con la primera. */
+  align-items: baseline;
   gap: .625rem;
   font-size: .9375rem;
   color: var(--muted);
@@ -684,18 +688,23 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: rgba(11, 11, 13, .92);
   border-top: 1px solid var(--border);
   transform: translateY(110%);
-  transition: transform .28s var(--ease);
+  /* visibility, además del transform: fuera de pantalla el link tampoco tiene
+     que recibir el foco al tabular. Se apaga recién al terminar la salida. */
+  visibility: hidden;
+  transition: transform .28s var(--ease), visibility 0s linear .28s;
 }
 @supports (backdrop-filter: blur(1px)) {
   .mobile-cta { backdrop-filter: blur(14px); }
 }
-.mobile-cta.is-visible { transform: translateY(0); }
+.mobile-cta.is-visible {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform .28s var(--ease), visibility 0s;
+}
 .mobile-cta[hidden] { display: none; }
 
 /* Solo en móvil: en pantallas grandes el CTA del header ya está siempre a la vista */
 @media (min-width: 700px) { .mobile-cta { display: none !important; } }
-/* Espacio para que la barra no tape el final del contenido */
-@media (max-width: 699px) { .site-footer { padding-bottom: 6rem; } }
 
 /* ── ANIMACIÓN DE ENTRADA ──────────────────────────────────────────────────
    Solo se aplica si el <html> tiene la clase .js, que se agrega en el <head>

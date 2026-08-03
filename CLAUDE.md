@@ -41,8 +41,10 @@ sitios simples y rápidos donde contactarte es lo más fácil de la página, se 
 desde cualquier celular, y transmiten la misma seriedad que tu negocio tiene en
 persona.
 
-**Paquetes** (precio de lanzamiento — dejarlo explícito en la web como oferta de
-lanzamiento/temporal, no como precio fijo permanente)
+**Paquetes** (**precios de introducción** — dejarlo explícito en la web como temporal y
+que va a subir, no como precio fijo permanente. Sin vocabulario de descuento: nada de
+"oferta", "promoción" ni "rebaja", que asocian el trabajo con lo barato y hacen más
+difícil cobrar el precio pleno después)
 - Presencia — USD 90: una página (quién sos, qué ofrecés, cómo te contactan, ubicación
   si aplica).
 - Completo — USD 130: lo anterior + sección de servicios detallada + preguntas
@@ -50,10 +52,12 @@ lanzamiento/temporal, no como precio fijo permanente)
 
 **Proceso**
 1. Charla breve por WhatsApp o llamada (15-20 min) para entender qué necesita.
-2. Se arma el sitio completo en un enlace de prueba, para que lo vea funcionando
+2. Propuesta por escrito (qué incluye, plazo y precio). No se programa nada hasta que
+   el cliente la aprueba.
+3. Se arma el sitio completo en un enlace de prueba, para que lo vea funcionando
    antes de pagar nada.
-3. Hasta dos rondas de cambios incluidas.
-4. Si le gusta, paga el precio acordado y se migra a su dominio. Si después de los
+4. Hasta dos rondas de cambios incluidas. Si quiere más, se cotizan aparte.
+5. Si le gusta, paga el precio acordado y se migra a su dominio. Si después de los
    ajustes no es lo que buscaba, no paga nada.
 
 **Garantía**
@@ -91,7 +95,8 @@ que también muestre el WhatsApp como alternativa visible.
 
 ## Qué NO hacer
 - No mencionar el rubro salud (ni ningún rubro) en el mensaje principal.
-- No presentar el precio de lanzamiento como precio fijo sin aclarar que es temporal.
+- No presentar los precios de introducción como precio fijo sin aclarar que van a subir,
+  ni presentarlos con lenguaje de oferta/promoción/descuento.
 - No agregar formularios de contacto sin alternativa de WhatsApp visible.
 - No copiar el estilo dark-minimalista para futuras piezas de portfolio de clientes
   de salud — ese es un proyecto aparte con su propia dirección de diseño (cálida,
