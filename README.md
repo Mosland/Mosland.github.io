@@ -26,36 +26,40 @@ Y entrar a http://localhost:8000
 | Qué querés cambiar | Dónde |
 |---|---|
 | Textos y preguntas frecuentes | `index.html` |
-| Precios | `index.html`, pero son **5 lugares** — ver abajo |
+| Precio | `index.html`, pero son **3 lugares** — ver abajo |
 | Colores, tamaños, espaciados | `css/styles.css` — las variables están todas arriba de todo en `:root` |
-| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **5 veces** (hero, las dos tarjetas de precio, contacto y el CTA flotante) |
+| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **4 veces** (hero, la tarjeta de precio, contacto y el CTA flotante) |
 | Mail de contacto | `index.html`, buscar `mailto:` |
 | Imagen que se ve al compartir el link | `tools/og-image.html` — ver abajo |
 
 ### Cambiar un precio
 
-Los precios son de introducción y van a subir, así que esto lo vas a hacer. El precio
-aparece en **siete lugares** y hay que tocarlos todos.
+El precio es de introducción y va a subir, así que esto lo vas a hacer. Aparece en
+**cuatro lugares** y hay que tocarlos todos.
 
-En `index.html`, cinco:
+En `index.html`, tres:
 
-1. La tarjeta de **Presencia** (`card__price`).
-2. La tarjeta de **Completo** (`card__price`).
-3. `"priceRange"` en el bloque JSON-LD de arriba de todo.
-4. `"price"` de Presencia, en ese mismo bloque.
-5. `"price"` de Completo, en ese mismo bloque.
+1. La tarjeta de precio (`card__price`).
+2. `"priceRange"` en el bloque JSON-LD de arriba de todo.
+3. `"price"` del `Offer`, en ese mismo bloque.
 
-Del 3 al 5 son los datos que lee Google. Si quedan viejos, el sitio se contradice a
+El 2 y el 3 son los datos que lee Google. Si quedan viejos, el sitio se contradice a
 sí mismo: una cosa en la página, otra en el resultado de búsqueda.
 
-En `CLAUDE.md`, dos:
+En `CLAUDE.md`, uno:
 
-6. El bullet de **Presencia** en la lista de paquetes.
-7. El bullet de **Completo** en la misma lista.
+4. El bullet del paquete en la lista de arriba.
 
-Esos dos no los ve nadie que entre al sitio, pero son la fuente de verdad que lee
-Claude. Si quedan viejos, el precio viejo vuelve solo la próxima vez que le pidas
-un cambio.
+Ese no lo ve nadie que entre al sitio, pero es la fuente de verdad que lee Claude.
+Si queda viejo, el precio viejo vuelve solo la próxima vez que le pidas un cambio.
+
+`README.md` no lleva precios: este instructivo es todo lo que hay acá.
+
+⚠ **Buscar `USD 90` no encuentra la tarjeta.** En el HTML la moneda va en su propio
+elemento —`<span class="card__cur">USD</span>90`— así que entre `USD` y el número
+hay una etiqueta, no un espacio. Buscá **el número pelado** (`90`). Es la trampa más
+fácil de pisar: la búsqueda parece andar, encuentra el JSON-LD y el `CLAUDE.md`, y
+te deja viejo justo el precio que ve el cliente.
 
 La forma rápida de no olvidarte ninguno es buscar el número viejo en todo el repo
 antes de dar por terminado el cambio. Lo que aparezca en `css/styles.css` y en
@@ -159,8 +163,13 @@ el sitio siga cargando rápido.
   ámbar y no en verde: sumar un segundo color rompe el sistema.
 - **Sin formulario de contacto.** Un formulario en un sitio estático necesita un servicio
   externo que puede fallar en silencio y hacerte perder consultas sin que te enteres.
-- **Los precios se anuncian como "de introducción", nunca como oferta ni promoción.**
-  Está así a propósito. Anunciar la suba desde ahora permite subirlos después sin quedar
+- **Un solo paquete de USD 90, y es decisión tomada.** Antes eran dos (Presencia USD 90
+  y Completo USD 130) y se unificaron en agosto de 2026 en uno solo con el alcance
+  completo. No es un recorte temporal ni algo a medio hacer: no lo partas de nuevo en
+  dos, no agregues una opción más barata y no muevas nada del alcance a un extra pago.
+  El precio se cambia cuando Joaco lo decida, no porque parezca bajo.
+- **El precio se anuncia como "de introducción", nunca como oferta ni promoción.**
+  Está así a propósito. Anunciar la suba desde ahora permite subirlo después sin quedar
   mal con nadie, y el vocabulario de descuento ("oferta", "promoción", "rebaja") haría que
   el cliente asocie el trabajo con lo barato y se resista al precio pleno más adelante.
   La palabra aparece en tres lugares que tienen que decir lo mismo: la etiqueta de la
@@ -181,5 +190,9 @@ el sitio siga cargando rápido.
   cliente, y una promesa abierta te deja de proveedor de hosting permanente de cada sitio
   que entregaste. Misma lógica para cualquier servicio de terceros que entres a usar.
 - **La barra fija de WhatsApp solo aparece si no hay otro CTA en pantalla.** `js/main.js`
-  vigila el botón del hero, el de contacto y el footer. Si se agrega otro CTA importante,
-  conviene sumarlo a esa lista para que la barra no quede duplicando un botón que ya se ve.
+  vigila cuatro anclas: el botón del hero, el de la tarjeta de precio (`#paqueteCta`),
+  el de contacto (`#contactoCta`) y el footer. **Si se agrega otro CTA importante al
+  cuerpo, hay que sumarlo a esa lista**, si no la barra flotante aparece pegada arriba
+  del botón nuevo y quedan los dos juntos. Ya pasó tres veces —con el header, con el
+  hero y con la tarjeta de precio— y el síntoma siempre es el mismo, así que si ves dos
+  botones de WhatsApp juntos, lo que falta es un ancla.

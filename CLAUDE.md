@@ -41,32 +41,47 @@ sitios simples y rápidos donde contactarte es lo más fácil de la página, se 
 desde cualquier celular, y transmiten la misma seriedad que tu negocio tiene en
 persona.
 
-**Paquetes** (**precios de introducción** — dejarlo explícito en la web como temporal y
+**Paquete** (**precio de introducción** — dejarlo explícito en la web como temporal y
 que va a subir, no como precio fijo permanente. Sin vocabulario de descuento: nada de
 "oferta", "promoción" ni "rebaja", que asocian el trabajo con lo barato y hacen más
 difícil cobrar el precio pleno después)
-- Presencia — USD 90: una página (quién sos, qué ofrecés, cómo te contactan, ubicación
-  si aplica).
-- Completo — USD 130: lo anterior + sección de servicios detallada + preguntas
-  frecuentes + reserva de turnos o WhatsApp directo.
+- **USD 90, paquete único**: una página (quién sos, qué ofrecés, cómo te contactan,
+  ubicación si aplica) + sección de servicios detallada + preguntas frecuentes +
+  reserva de turnos o WhatsApp directo.
 
-**Al cambiar un precio hay que tocar SIETE lugares.** Los precios de introducción van
-a subir, así que esto va a pasar.
-- En `index.html`, cinco: las dos tarjetas de `#paquetes`, y dentro del JSON-LD de
-  `ProfessionalService` el campo `priceRange` y los dos `Offer.price`. Si alguno
-  queda viejo, el sitio se contradice a sí mismo en el resultado de búsqueda.
-- En **este mismo archivo**, dos: los dos bullets de la lista de paquetes de acá
-  arriba. Si quedan viejos es peor que en la web, porque el próximo que lea este
-  CLAUDE.md toma el precio viejo como fuente de verdad y lo vuelve a propagar.
+**Un solo paquete es una decisión de negocio deliberada (agosto de 2026), no un
+estado transitorio.** Antes eran dos —Presencia USD 90 y Completo USD 130— y se
+unificaron en uno solo de USD 90 con el alcance completo. Dos consecuencias, las
+dos obligatorias:
+- **No proponer volver a partirlo en dos.** Ni "básico y completo", ni una opción
+  más barata, ni sacar algo del alcance para venderlo como extra pago.
+- **No sugerir subir el precio salvo que Joaco lo pida.** Que la web lo anuncie
+  como precio de introducción es una decisión sobre *cómo se comunica*, para poder
+  subirlo algún día sin quedar mal con nadie. No es una invitación a proponer la
+  suba, ni un pendiente a levantar en cada sesión.
+
+**Al cambiar el precio hay que tocar CUATRO lugares.** El precio de introducción va
+a subir cuando Joaco lo decida, así que esto va a pasar.
+- En `index.html`, tres: la tarjeta de `#paquetes`, y dentro del JSON-LD de
+  `ProfessionalService` el campo `priceRange` y el `Offer.price`. Si alguno queda
+  viejo, el sitio se contradice a sí mismo en el resultado de búsqueda.
+- En **este mismo archivo**, uno: el bullet de la lista de acá arriba. Si queda
+  viejo es peor que en la web, porque el próximo que lea este CLAUDE.md toma el
+  precio viejo como fuente de verdad y lo vuelve a propagar.
 
 Es el mismo riesgo de desincronización por el que se eliminó el bloque `FAQPage`.
-Verificado por grep el 4/8/2026: no hay ningún otro lugar en el repo con los
-precios. Lo que aparece en `css/styles.css` y `tools/og-image.html` al buscar "90"
-o "130" son breakpoints, pesos de fuente y medidas, no precios; la imagen de OG no
-muestra precios.
+Verificado por grep el 4/8/2026: no hay ningún otro lugar en el repo con el
+precio. `README.md` no contiene precios, solo el instructivo para cambiarlos. Lo
+que aparece en `css/styles.css` y `tools/og-image.html` al buscar "90" son pesos
+de fuente y medidas, no precios; la imagen de OG no muestra precios.
 
-**Qué significa "reserva de turnos" en el paquete Completo** (definido en agosto de
-2026 — antes estaba vendido sin definir):
+⚠ **Buscar `"USD 90"` no encuentra la tarjeta.** El markup es
+`<span class="card__cur">USD</span>90`, con la moneda en su propio elemento: hay
+que buscar el número pelado.
+
+**Qué significa "reserva de turnos"** (definido en agosto de 2026 — antes estaba
+vendido sin definir; venía del paquete Completo, que ya no existe como opción
+separada porque su alcance es el del paquete único):
 - Es la agenda online **del propio cliente** (Calendly, Google Calendar u otra),
   conectada desde el sitio. La cuenta es suya: Joaco la configura, no es titular.
   Que sea suya es lo que evita quedar atado a mantener cuentas ajenas, y lo que
@@ -142,8 +157,15 @@ que también muestre el WhatsApp como alternativa visible.
 
 ## Qué NO hacer
 - No mencionar el rubro salud (ni ningún rubro) en el mensaje principal.
-- No presentar los precios de introducción como precio fijo sin aclarar que van a subir,
-  ni presentarlos con lenguaje de oferta/promoción/descuento.
+- No presentar el precio de introducción como precio fijo sin aclarar que va a subir,
+  ni presentarlo con lenguaje de oferta/promoción/descuento.
+- **No proponer volver a dos paquetes.** El paquete único de USD 90 es una decisión
+  de negocio tomada en agosto de 2026, no un recorte temporal ni algo a optimizar.
+  Nada de "básico y completo", ni una opción más barata, ni mover algo del alcance
+  a un extra pago.
+- **No sugerir subir el precio salvo que Joaco lo pida explícitamente.** Que la web
+  diga "precio de introducción" define cómo se comunica el precio para poder subirlo
+  algún día sin quedar mal; no es un pendiente a levantar en cada sesión.
 - No agregar formularios de contacto sin alternativa de WhatsApp visible.
 - No copiar el estilo dark-minimalista para futuras piezas de portfolio de clientes
   de salud — ese es un proyecto aparte con su propia dirección de diseño (cálida,

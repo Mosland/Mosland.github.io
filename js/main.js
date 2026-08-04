@@ -55,9 +55,14 @@
      Rellena los huecos: solo se muestra cuando la página no tiene ningún CTA
      propio a la vista. Corre en todos los anchos —antes se apagaba en desktop
      porque el header tenía su propio botón, y ese botón ya no está.
-     Se vigilan tres anclas.
+     Se vigilan cuatro anclas.
 
        .hero__actions  el botón del hero, para no tapar la primera pantalla.
+       #paqueteCta     el botón de la tarjeta de precio. Mismo criterio que el de
+                       contacto: se vigila el botón y no la sección, que arranca
+                       con el título, la bajada y la nota de precio introductorio
+                       antes de llegar a la tarjeta. Sin esta ancla la barra
+                       quedaba pegada justo arriba del botón, duplicándolo.
        #contactoCta    el botón de la sección de contacto. Se vigila el botón y
                        no la sección entera: la sección arranca con bastante
                        padding, y esconder la barra ahí dejaría un tramo con el
@@ -65,15 +70,21 @@
        .site-footer    en pantallas bajas el botón de contacto puede salir por
                        arriba antes de que termine el documento, y la barra
                        volvería a asomar justo después de haberse ido.
+
+     Si se agrega otro CTA importante al cuerpo, va también acá. El síntoma de
+     que falta uno es siempre el mismo: la barra flotante pegada a un botón que
+     ya se ve.
      ─────────────────────────────────────────────────────────────────────── */
   var floatingCta = document.getElementById('floatingCta');
   var anchors = [];
 
   var heroActions = document.querySelector('.hero__actions');
+  var paqueteCta = document.getElementById('paqueteCta');
   var contactoCta = document.getElementById('contactoCta');
   var footer = document.querySelector('.site-footer');
 
   if (heroActions) anchors.push(heroActions);
+  if (paqueteCta) anchors.push(paqueteCta);
   if (contactoCta) anchors.push(contactoCta);
   if (footer) anchors.push(footer);
 

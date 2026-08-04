@@ -40,9 +40,9 @@
 <!-- Se queda, pero por una razón acotada: no duplica ningún texto editable salvo
      los precios. Que Google renderice algo con esto para un servicio sin dirección
      física no está verificado, así que no se justifica como "mejora el SEO".
-     ⚠ PRECIOS: acá hay tres campos con precio —priceRange y los dos Offer.price—
-     que tienen que coincidir con las dos tarjetas del cuerpo. Los precios son de
-     introducción y van a subir: cuando eso pase, se tocan los cinco lugares. -->
+     ⚠ PRECIOS: acá hay dos campos con precio —priceRange y el Offer.price— que
+     tienen que coincidir con la tarjeta del cuerpo. Los precios son de
+     introducción y van a subir: cuando eso pase, se tocan los cuatro lugares. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,7 +52,7 @@
   "url": "https://mosland.github.io/",
   "email": "moasjoaquin7@gmail.com",
   "telephone": "+598 98 436 346",
-  "priceRange": "USD 90 - USD 130",
+  "priceRange": "USD 90",
   "areaServed": { "@type": "Country", "name": "Uruguay" },
   "founder": { "@type": "Person", "name": "Joaquín Moas" },
   "hasOfferCatalog": {
@@ -61,16 +61,9 @@
     "itemListElement": [
       {
         "@type": "Offer",
-        "name": "Presencia",
-        "description": "Una página con quién sos, qué ofrecés, cómo te contactan y tu ubicación si aplica.",
+        "name": "Sitio web completo",
+        "description": "Una página con quién sos, qué ofrecés, cómo te contactan y tu ubicación si aplica, más sección de servicios detallada, preguntas frecuentes y reserva de turnos conectada a tu agenda online, o WhatsApp directo.",
         "price": "90",
-        "priceCurrency": "USD"
-      },
-      {
-        "@type": "Offer",
-        "name": "Completo",
-        "description": "Todo lo de Presencia más sección de servicios detallada, preguntas frecuentes y reserva de turnos conectada a tu agenda online, o WhatsApp directo.",
-        "price": "130",
         "priceCurrency": "USD"
       }
     ]
@@ -184,9 +177,9 @@
   <section class="section section--alt" id="paquetes">
     <div class="container">
       <div class="reveal">
-        <h2 class="section__title">Dos opciones, precio cerrado.</h2>
+        <h2 class="section__title">Un paquete, precio cerrado.</h2>
         <p class="lead lead--tight">
-          Sin costos escondidos ni "depende". Elegís uno y ese es el precio.
+          Sin costos escondidos ni "depende". Ese es el precio.
         </p>
         <p class="launch-note">
           <span class="badge">Precios de introducción</span>
@@ -195,38 +188,30 @@
         </p>
       </div>
 
+      <!-- Una sola tarjeta a propósito: es decisión de negocio, no un recorte
+           temporal. No volver a partirla en dos — ver CLAUDE.md. Sin nombre de
+           paquete: con una sola opción, "Completo" invitaba a preguntar
+           "¿completo comparado con qué?". -->
       <div class="cards">
 
-        <article class="card reveal">
-          <h3 class="card__name">Presencia</h3>
+        <article class="card card--featured reveal">
           <p class="card__price"><span class="card__cur">USD</span>90</p>
-          <p class="card__pitch">Una página con todo lo esencial, bien hecha.</p>
+          <p class="card__pitch">Todo lo que tu negocio necesita mostrar, en una página.</p>
           <ul class="list">
             <li>Quién sos y qué ofrecés</li>
             <li>Cómo te contactan, bien visible</li>
             <li>Tu ubicación, si aplica</li>
             <li>Se ve bien en celular, tablet y computadora</li>
-            <li>Publicado y funcionando</li>
-          </ul>
-          <a class="btn btn--ghost btn--block"
-             href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20el%20paquete%20Presencia."
-             target="_blank" rel="noopener">Consultar por Presencia</a>
-        </article>
-
-        <article class="card card--featured reveal">
-          <p class="card__flag">Más elegido</p>
-          <h3 class="card__name">Completo</h3>
-          <p class="card__price"><span class="card__cur">USD</span>130</p>
-          <p class="card__pitch">Para cuando querés que la web además te ordene el trabajo.</p>
-          <ul class="list">
-            <li><strong>Todo lo del paquete Presencia</strong></li>
             <li>Sección de servicios detallada</li>
             <li>Preguntas frecuentes</li>
             <li>Reserva de turnos conectada a tu agenda online, o WhatsApp directo</li>
+            <li>Publicado y funcionando</li>
           </ul>
-          <a class="btn btn--block"
-             href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20el%20paquete%20Completo."
-             target="_blank" rel="noopener">Consultar por Completo</a>
+          <!-- id: la barra fija de abajo se esconde cuando este botón está en
+               pantalla. Sin esto las dos quedaban una encima de la otra. -->
+          <a class="btn btn--block" id="paqueteCta"
+             href="https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web%20y%20me%20interesa%20armar%20mi%20sitio."
+             target="_blank" rel="noopener">Consultar por WhatsApp</a>
         </article>
 
       </div>

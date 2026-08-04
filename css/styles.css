@@ -469,13 +469,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   white-space: nowrap;
 }
 
+/* Una sola tarjeta, centrada y angosta. Antes eran dos y acá vivía un
+   grid-template-columns: 1fr 1fr arriba de 760px; se sacó junto con el
+   segundo paquete. Un paquete es decisión de negocio, no un estado
+   transitorio: si algún día vuelven a ser dos, el grid se rearma acá. */
 .cards {
   display: grid;
   gap: 1.25rem;
   margin-top: 2.5rem;
-  max-width: 900px;
+  max-width: 480px;
+  margin-inline: auto;
 }
-@media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
 
 .card {
   display: flex;
@@ -491,26 +495,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-color: rgba(255, 180, 84, .38);
 }
 
-.card__flag {
-  position: absolute;
-  top: -.75rem;
-  left: clamp(1.5rem, 4vw, 2rem);
-  padding: .25rem .625rem;
-  border-radius: 100px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-family: var(--font-display);
-  font-size: .6875rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin: 0;
-}
+/* Acá estaba .card__flag, el cartel "Más elegido" de la tarjeta destacada.
+   Se sacó al pasar a un solo paquete: sin una segunda opción no significa nada. */
 
-.card__name {
-  font-size: 1.375rem;
-  margin-bottom: .375rem;
-}
 .card__price {
   font-family: var(--font-display);
   font-size: clamp(2.25rem, 6vw, 2.75rem);
