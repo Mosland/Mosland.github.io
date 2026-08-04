@@ -25,11 +25,41 @@ Y entrar a http://localhost:8000
 
 | Qué querés cambiar | Dónde |
 |---|---|
-| Textos, precios, preguntas frecuentes | `index.html` |
+| Textos y preguntas frecuentes | `index.html` |
+| Precios | `index.html`, pero son **5 lugares** — ver abajo |
 | Colores, tamaños, espaciados | `css/styles.css` — las variables están todas arriba de todo en `:root` |
 | Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **5 veces** (hero, las dos tarjetas de precio, contacto y el CTA flotante) |
 | Mail de contacto | `index.html`, buscar `mailto:` |
 | Imagen que se ve al compartir el link | `tools/og-image.html` — ver abajo |
+
+### Cambiar un precio
+
+Los precios son de introducción y van a subir, así que esto lo vas a hacer. El precio
+aparece en **siete lugares** y hay que tocarlos todos.
+
+En `index.html`, cinco:
+
+1. La tarjeta de **Presencia** (`card__price`).
+2. La tarjeta de **Completo** (`card__price`).
+3. `"priceRange"` en el bloque JSON-LD de arriba de todo.
+4. `"price"` de Presencia, en ese mismo bloque.
+5. `"price"` de Completo, en ese mismo bloque.
+
+Del 3 al 5 son los datos que lee Google. Si quedan viejos, el sitio se contradice a
+sí mismo: una cosa en la página, otra en el resultado de búsqueda.
+
+En `CLAUDE.md`, dos:
+
+6. El bullet de **Presencia** en la lista de paquetes.
+7. El bullet de **Completo** en la misma lista.
+
+Esos dos no los ve nadie que entre al sitio, pero son la fuente de verdad que lee
+Claude. Si quedan viejos, el precio viejo vuelve solo la próxima vez que le pidas
+un cambio.
+
+La forma rápida de no olvidarte ninguno es buscar el número viejo en todo el repo
+antes de dar por terminado el cambio. Lo que aparezca en `css/styles.css` y en
+`tools/og-image.html` ignoralo: son breakpoints y medidas, no precios.
 
 ### Cambiar el número de WhatsApp
 
@@ -135,9 +165,21 @@ el sitio siga cargando rápido.
   el cliente asocie el trabajo con lo barato y se resista al precio pleno más adelante.
   La palabra aparece en tres lugares que tienen que decir lo mismo: la etiqueta de la
   sección de paquetes, la pregunta frecuente sobre precios y la sección "Sobre mí".
-- **Las preguntas frecuentes están duplicadas en el `<head>`.** Hay un bloque `FAQPage` en
-  JSON-LD para que Google las muestre en el resultado de búsqueda. Si editás una pregunta
-  o una respuesta, hay que tocarla en los dos lugares o el dato queda mintiendo.
+- **Las preguntas frecuentes se editan en un solo lugar.** Antes estaban duplicadas en un
+  bloque `FAQPage` en el `<head>` para que Google las mostrara en el resultado de
+  búsqueda. Se sacó: eso solo funcionaba para sitios de gobierno y salud reconocidos
+  desde 2023, así que esta web nunca fue elegible, y en mayo de 2026 Google lo retiró
+  del todo. Era editar cada pregunta dos veces a cambio de nada. No lo vuelvas a agregar.
+- **El otro bloque JSON-LD (`ProfessionalService`) sí se queda**, pero no porque esté
+  comprobado que sirva —para un servicio sin dirección física Google no muestra gran
+  cosa— sino porque no duplica ningún texto editable salvo los precios. Por eso el
+  procedimiento de cambio de precio de más arriba.
+- **Lo que la web promete del hosting está acotado a propósito.** Dice "el sitio te lo
+  dejo publicado y funcionando, y eso no te lo cobro". No dice que el hosting sea gratis,
+  ni que lo vaya a ser siempre, ni que vos te hagas cargo de mantenerlo. Son dos riesgos
+  distintos: GitHub puede cambiar sus condiciones y esa cuenta la terminaría pagando el
+  cliente, y una promesa abierta te deja de proveedor de hosting permanente de cada sitio
+  que entregaste. Misma lógica para cualquier servicio de terceros que entres a usar.
 - **La barra fija de WhatsApp solo aparece si no hay otro CTA en pantalla.** `js/main.js`
   vigila el botón del hero, el de contacto y el footer. Si se agrega otro CTA importante,
   conviene sumarlo a esa lista para que la barra no quede duplicando un botón que ya se ve.
