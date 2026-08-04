@@ -27,9 +27,9 @@ Y entrar a http://localhost:8000
 |---|---|
 | Textos, precios, preguntas frecuentes | `index.html` |
 | Colores, tamaños, espaciados | `css/styles.css` — las variables están todas arriba de todo en `:root` |
-| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **6 veces** (header, hero, las dos tarjetas de precio, contacto y la barra fija de móvil) |
+| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **5 veces** (hero, las dos tarjetas de precio, contacto y el CTA flotante) |
 | Mail de contacto | `index.html`, buscar `mailto:` |
-| Imagen que se ve al compartir el link | `assets/og-image.png` (1200×630) |
+| Imagen que se ve al compartir el link | `tools/og-image.html` — ver abajo |
 
 ### Cambiar el número de WhatsApp
 
@@ -46,6 +46,28 @@ https://wa.me/59898436346?text=Hola%20Joaqu%C3%ADn%2C%20vi%20tu%20web...
   para que sepas de qué sección vino la consulta.
 - Si cambiás ese texto, hay que codificarlo para URL: los espacios son `%20`, la coma es
   `%2C`, la `í` es `%C3%ADn`.
+
+### Cambiar la imagen que se ve al compartir el link
+
+La imagen no se edita con un editor de fotos: se edita el HTML que la genera.
+
+1. Tocar `tools/og-image.html`.
+2. Regenerar el PNG:
+
+```
+powershell -ExecutionPolicy Bypass -File tools\build-og.ps1
+```
+
+Usa Edge headless, que ya viene con Windows — no hay que instalar nada.
+
+**Todo el contenido tiene que quedar dentro del cuadrado del medio.** WhatsApp no muestra
+la imagen 1200×630 entera: recorta un cuadrado al centro, y lo que se sale de ahí llega
+cortado al celular. En `og-image.html` hay una clase `guides` que dibuja la zona segura
+encima para poder revisarlo en el navegador.
+
+**Si cambiás el diseño, cambiale el nombre al archivo** (`og-image-v3.png`, etc.) y
+actualizá la meta `og:image` de `index.html`. WhatsApp y Facebook cachean la imagen por
+mucho tiempo: si pisás el mismo nombre, siguen mostrando la vieja durante días.
 
 ---
 
@@ -88,14 +110,21 @@ completar los textos. Es el único lugar de la web donde se nombra un rubro conc
 Las capturas conviene guardarlas en `.webp` y a un ancho de 800px como máximo, para que
 el sitio siga cargando rápido.
 
+> Ojo al descomentar: ese bloque todavía trae un `<p class="eyebrow">Trabajos</p>`, y la
+> clase `.eyebrow` ya no existe en el CSS (se sacaron las etiquetas de sección porque
+> repetían el título de abajo). Hay que borrar esa línea, el `<h2>` alcanza.
+
 ---
 
 ## Decisiones que conviene no romper
 
 - **Cero dependencias externas.** Nada de Google Fonts por CDN, nada de librerías. Las
   fuentes están self-hosted en `assets/fonts/`. Es lo que mantiene la carga rápida.
-- **La página funciona sin JavaScript.** `js/main.js` solo agrega animaciones y la barra
-  de WhatsApp de abajo. Si no carga, el sitio se ve completo igual.
+- **La página funciona sin JavaScript.** `js/main.js` solo agrega animaciones y el CTA
+  flotante de WhatsApp. Si no carga, el sitio se ve completo igual.
+- **Un solo CTA por pantalla.** El header no lleva botón de WhatsApp a propósito: ya está
+  el del hero y el flotante, y un tercero no agregaba nada. Si se saca el flotante, el
+  tramo entre el hero y contacto se queda sin ningún contacto a la vista.
 - **Un solo color de acento.** El ámbar `#FFB454`. Incluso los botones de WhatsApp van en
   ámbar y no en verde: sumar un segundo color rompe el sistema.
 - **Sin formulario de contacto.** Un formulario en un sitio estático necesita un servicio

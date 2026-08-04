@@ -159,17 +159,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-block: 1px solid var(--border);
 }
 
-/* ── TIPOGRAFÍA DE SECCIÓN ─────────────────────────────────────────────── */
-.eyebrow {
-  font-family: var(--font-display);
-  font-size: .8125rem;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 .875rem;
-}
-
+/* ── TIPOGRAFÍA DE SECCIÓN ─────────────────────────────────────────────────
+   Sin etiquetas de sección en mayúsculas: repetían el título que tenían justo
+   abajo y gastaban el ámbar en decoración. Los <h2> ya cargan la estructura.
+   ─────────────────────────────────────────────────────────────────────── */
 .section__title {
   font-size: clamp(1.75rem, 5.2vw, 2.75rem);
   max-width: 20ch;
@@ -213,7 +206,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn:active { transform: translateY(0); }
 
 .btn--lg { font-size: 1.0625rem; padding: 1.0625rem 1.75rem; }
-.btn--sm { font-size: .875rem; padding: .625rem 1rem; }
 .btn--block { display: flex; width: 100%; }
 
 .btn--ghost {
@@ -257,7 +249,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .site-header__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -303,12 +294,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: relative;
   overflow: hidden;
 }
-/* Resplandor ámbar detrás del título. Es un gradiente CSS: pesa 0 bytes. */
+/* Resplandor ámbar detrás del título. Es un gradiente CSS: pesa 0 bytes.
+   Corrido al 35% y no al centro: con el rail a la derecha, centrado le lavaba
+   el contraste en vez de acompañar al título. */
 .hero::before {
   content: '';
   position: absolute;
   top: -20%;
-  left: 50%;
+  left: 35%;
   width: min(900px, 130vw);
   aspect-ratio: 1;
   translate: -50% 0;
@@ -317,6 +310,22 @@ ul { margin: 0; padding: 0; list-style: none; }
   z-index: 0;
 }
 .hero__inner { position: relative; z-index: 1; }
+
+@media (min-width: 900px) {
+  .hero__inner {
+    display: grid;
+    /* El rail necesita poco ancho (su ítem más largo mide ~260px), así que la
+       columna del título se lleva la mayor parte: con menos, el h1 se partía en
+       cinco líneas cortas. */
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  /* Los max-width en ch se soltan: acá el ancho ya lo fija la columna, y dejarlos
+     puestos partía el título en líneas cortas y desparejas. */
+  .hero__inner .hero__title,
+  .hero__inner .hero__sub { max-width: none; }
+}
 
 .hero__title {
   font-size: clamp(2rem, 7.2vw, 4rem);
@@ -354,13 +363,78 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero__trust .ico { margin-top: .25em; }
 
+/* ── RAIL DEL HERO ─────────────────────────────────────────────────────────
+   Resumen del proceso, no una copia. Se oculta abajo de 900px: en celular el
+   fold tiene que quedar en el CTA, y el detalle completo está en #proceso.
+   ─────────────────────────────────────────────────────────────────────── */
+.hero-rail { display: none; }
+
+@media (min-width: 900px) {
+  .hero-rail {
+    display: grid;
+    gap: 0;
+    counter-reset: rail;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .hero-rail li {
+    counter-increment: rail;
+    position: relative;
+    padding: 0 0 1.5rem 2.75rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+  .hero-rail li:last-child { padding-bottom: 0; }
+
+  .hero-rail li::before {
+    content: counter(rail);
+    position: absolute;
+    left: 0;
+    top: -.15em;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    font-size: .8125rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--muted);
+  }
+  /* Línea que une los pasos */
+  .hero-rail li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: .875rem;
+    top: 1.75rem;
+    bottom: .4rem;
+    width: 1px;
+    background: var(--border);
+  }
+
+  /* El único paso en ámbar: acá entra la plata, y ese es el diferencial.
+     Se califica con li para ganarle a .hero-rail li sin recurrir a !important. */
+  .hero-rail li.hero-rail__pay { color: var(--accent); font-weight: 600; }
+  .hero-rail li.hero-rail__pay::before {
+    border-color: rgba(255, 180, 84, .45);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+}
+
 /* ── EL PROBLEMA ───────────────────────────────────────────────────────── */
 .answer {
   margin-top: 2.5rem;
   padding: 1.5rem clamp(1.25rem, 4vw, 2rem);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--border-strong);
   border-radius: var(--radius);
   max-width: var(--measure);
   font-size: clamp(1rem, 2.2vw, 1.125rem);
@@ -476,8 +550,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   top: .48em;
   width: 11px;
   height: 6px;
-  border-left: 2px solid var(--accent);
-  border-bottom: 2px solid var(--accent);
+  border-left: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
   rotate: -45deg;
 }
 .card .btn { margin-top: auto; }
@@ -510,7 +584,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border-strong);
-  color: var(--accent);
+  color: var(--muted);
   font-family: var(--font-display);
   font-size: .9375rem;
   font-weight: 700;
@@ -590,8 +664,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   flex: none;
   width: 11px;
   height: 11px;
-  border-right: 2px solid var(--accent);
-  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--border-strong);
+  border-bottom: 2px solid var(--border-strong);
   rotate: 45deg;
   translate: 0 -3px;
   transition: rotate .22s var(--ease), translate .22s var(--ease);
@@ -677,8 +751,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 .site-footer p { margin: 0; }
 .site-footer__meta { color: #6E6E77; }
 
-/* ── BARRA CTA MÓVIL ───────────────────────────────────────────────────── */
-.mobile-cta {
+/* ── CTA FLOTANTE ──────────────────────────────────────────────────────────
+   Corre en todos los anchos. Antes se apagaba en desktop porque el header
+   tenía su propio botón de WhatsApp; ese botón ya no está, así que sin esto
+   quedaba todo el tramo entre el hero y contacto sin ningún CTA a la vista.
+   Barra de ancho completo en celular, pastilla abajo a la derecha en desktop.
+   ─────────────────────────────────────────────────────────────────────── */
+.floating-cta {
   position: fixed;
   left: 0;
   right: 0;
@@ -694,17 +773,34 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: transform .28s var(--ease), visibility 0s linear .28s;
 }
 @supports (backdrop-filter: blur(1px)) {
-  .mobile-cta { backdrop-filter: blur(14px); }
+  .floating-cta { backdrop-filter: blur(14px); }
 }
-.mobile-cta.is-visible {
+.floating-cta.is-visible {
   transform: translateY(0);
   visibility: visible;
   transition: transform .28s var(--ease), visibility 0s;
 }
-.mobile-cta[hidden] { display: none; }
+.floating-cta[hidden] { display: none; }
 
-/* Solo en móvil: en pantallas grandes el CTA del header ya está siempre a la vista */
-@media (min-width: 700px) { .mobile-cta { display: none !important; } }
+@media (min-width: 700px) {
+  .floating-cta {
+    left: auto;
+    right: 24px;
+    bottom: 24px;
+    padding: 0;
+    background: none;
+    border-top: 0;
+    border-radius: 100px;
+    /* el offset de 24px entra en el transform, si no asoma el borde al ocultarse */
+    transform: translateY(calc(110% + 24px));
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .floating-cta { backdrop-filter: none; }
+  }
+  .floating-cta.is-visible { transform: translateY(0); }
+  /* el ancla trae .btn--block (100%): en la pastilla tiene que medir su contenido */
+  .floating-cta .btn { width: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); }
+}
 
 /* ── ANIMACIÓN DE ENTRADA ──────────────────────────────────────────────────
    Solo se aplica si el <html> tiene la clase .js, que se agrega en el <head>
@@ -730,7 +826,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ── IMPRESIÓN ─────────────────────────────────────────────────────────── */
 @media print {
-  .site-header, .mobile-cta, .hero::before { display: none !important; }
+  .site-header, .floating-cta, .hero::before { display: none !important; }
   body { background: #fff; color: #000; }
   .hero { min-height: 0; }
 }

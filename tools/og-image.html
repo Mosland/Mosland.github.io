@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Fuente de assets/og-image-v2.png</title>
+<!--
+  Fuente de la imagen de Open Graph. No se publica: la renderiza
+  tools/build-og.ps1 con Edge headless a 1200×630 y de ahí sale el PNG.
+
+  POR QUÉ TODO ESTÁ EN EL CUADRADO DEL MEDIO
+  WhatsApp no muestra la imagen 1200×630 entera: recorta un cuadrado al centro.
+  De los 1200px de ancho sobreviven x ∈ [285, 915] —y en la práctica un poco
+  menos—, así que cualquier cosa que se salga de ahí llega cortada al celular.
+  Todo el contenido vive dentro de un cuadrado de 520px centrado (x ∈ [340, 860]),
+  que deja aire de sobra incluso en el recorte más ajustado que se vio.
+  Las alas laterales llevan sólo fondo, para que la versión completa (Facebook,
+  Twitter, WhatsApp Web) siga leyéndose intencional y no vacía.
+
+  La tarjeta de WhatsApp ya imprime og:title y og:description como texto al lado
+  de la miniatura, así que la imagen no repite la frase: sólo lleva la marca.
+
+  Para revisar la zona segura: agregar la clase "guides" al <body> y abrir el
+  archivo en el navegador. Se dibuja el cuadrado encima. Hay que sacarla antes
+  de generar el PNG final (build-og.ps1 lo hace desde el archivo tal cual está).
+-->
+<style>
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('../assets/fonts/space-grotesk-latin.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+
+  /* Mismos tokens que css/styles.css */
+  :root {
+    --bg:         #0B0B0D;
+    --text:       #E8E8EA;
+    --muted:      #9A9AA2;
+    --accent:     #FFB454;
+    --accent-ink: #0B0B0D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+  body {
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* El mismo resplandor ámbar del hero, centrado para que el recorte cuadrado
+     lo agarre entero y no una esquina. */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 900px;
+    height: 900px;
+    translate: -50% -50%;
+    background: radial-gradient(circle, rgba(255, 180, 84, .13) 0%, transparent 62%);
+  }
+
+  .safe {
+    position: relative;
+    width: 520px;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 128px;
+    height: 128px;
+    border-radius: 32px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 78px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .name {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 62px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--text);
+  }
+
+  .role {
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: .01em;
+    color: var(--muted);
+  }
+
+  /* Regla de control, apagada por defecto. Ver el comentario de arriba. */
+  .guides .safe { outline: 2px dashed rgba(255, 180, 84, .5); }
+  .guides::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 285px;
+    width: 630px;
+    height: 630px;
+    outline: 2px solid rgba(255, 90, 90, .55);
+  }
+</style>
+</head>
+<body>
+  <div class="safe">
+    <div class="mark">J</div>
+    <div class="name">Joaquín Moas</div>
+    <div class="role">Desarrollo web</div>
+  </div>
+</body>
+</html>

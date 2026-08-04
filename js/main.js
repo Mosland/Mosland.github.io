@@ -51,9 +51,11 @@
     for (var j = 0; j < reveals.length; j++) revealObserver.observe(reveals[j]);
   }
 
-  /* ── Barra de WhatsApp fija en móvil ──────────────────────────────────────
-     La barra rellena los huecos: solo se muestra cuando la página no tiene
-     ningún CTA propio a la vista. Se vigilan tres anclas.
+  /* ── CTA de WhatsApp flotante ─────────────────────────────────────────────
+     Rellena los huecos: solo se muestra cuando la página no tiene ningún CTA
+     propio a la vista. Corre en todos los anchos —antes se apagaba en desktop
+     porque el header tenía su propio botón, y ese botón ya no está.
+     Se vigilan tres anclas.
 
        .hero__actions  el botón del hero, para no tapar la primera pantalla.
        #contactoCta    el botón de la sección de contacto. Se vigila el botón y
@@ -64,7 +66,7 @@
                        arriba antes de que termine el documento, y la barra
                        volvería a asomar justo después de haberse ido.
      ─────────────────────────────────────────────────────────────────────── */
-  var mobileCta = document.getElementById('mobileCta');
+  var floatingCta = document.getElementById('floatingCta');
   var anchors = [];
 
   var heroActions = document.querySelector('.hero__actions');
@@ -75,8 +77,8 @@
   if (contactoCta) anchors.push(contactoCta);
   if (footer) anchors.push(footer);
 
-  if (mobileCta && anchors.length) {
-    mobileCta.hidden = false;   // el CSS lo mantiene fuera de pantalla hasta .is-visible
+  if (floatingCta && anchors.length) {
+    floatingCta.hidden = false;   // el CSS lo mantiene fuera de pantalla hasta .is-visible
 
     var onScreen = [];          // en pantalla o no, una posición por ancla
 
@@ -89,7 +91,7 @@
       var alguno = false;
       for (var k = 0; k < anchors.length; k++) if (onScreen[k]) alguno = true;
 
-      mobileCta.classList.toggle('is-visible', !alguno);
+      floatingCta.classList.toggle('is-visible', !alguno);
     }, { threshold: 0 });
 
     for (var n = 0; n < anchors.length; n++) ctaObserver.observe(anchors[n]);
