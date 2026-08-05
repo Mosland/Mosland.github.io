@@ -28,7 +28,7 @@ Y entrar a http://localhost:8000
 | Textos y preguntas frecuentes | `index.html` |
 | Precio | `index.html`, pero son **3 lugares** — ver abajo |
 | Colores, tamaños, espaciados | `css/styles.css` — las variables están todas arriba de todo en `:root` |
-| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **4 veces** (hero, la tarjeta de precio, contacto y el CTA flotante) |
+| Número de WhatsApp | `index.html`, buscar `wa.me/` — aparece **4 veces** (hero, el presupuesto, contacto y el CTA flotante) |
 | Mail de contacto | `index.html`, buscar `mailto:` |
 | Imagen que se ve al compartir el link | `tools/og-image.html` — ver abajo |
 
@@ -39,7 +39,7 @@ El precio es de introducción y va a subir, así que esto lo vas a hacer. Aparec
 
 En `index.html`, tres:
 
-1. La tarjeta de precio (`card__price`).
+1. El total del presupuesto (`quote__total`).
 2. `"priceRange"` en el bloque JSON-LD de arriba de todo.
 3. `"price"` del `Offer`, en ese mismo bloque.
 
@@ -55,8 +55,8 @@ Si queda viejo, el precio viejo vuelve solo la próxima vez que le pidas un camb
 
 `README.md` no lleva precios: este instructivo es todo lo que hay acá.
 
-⚠ **Buscar `USD 90` no encuentra la tarjeta.** En el HTML la moneda va en su propio
-elemento —`<span class="card__cur">USD</span>90`— así que entre `USD` y el número
+⚠ **Buscar `USD 90` no encuentra el total.** En el HTML la moneda va en su propio
+elemento —`<span class="quote__cur">USD</span>90`— así que entre `USD` y el número
 hay una etiqueta, no un espacio. Buscá **el número pelado** (`90`). Es la trampa más
 fácil de pisar: la búsqueda parece andar, encuentra el JSON-LD y el `CLAUDE.md`, y
 te deja viejo justo el precio que ve el cliente.
@@ -99,9 +99,12 @@ la imagen 1200×630 entera: recorta un cuadrado al centro, y lo que se sale de a
 cortado al celular. En `og-image.html` hay una clase `guides` que dibuja la zona segura
 encima para poder revisarlo en el navegador.
 
-**Si cambiás el diseño, cambiale el nombre al archivo** (`og-image-v3.png`, etc.) y
-actualizá la meta `og:image` de `index.html`. WhatsApp y Facebook cachean la imagen por
-mucho tiempo: si pisás el mismo nombre, siguen mostrando la vieja durante días.
+**Si cambiás el diseño, cambiale el nombre al archivo** (`og-image-v4.png`, etc.) y
+actualizá tanto el `$out` de `tools/build-og.ps1` como la meta `og:image` de
+`index.html`. WhatsApp y Facebook cachean la imagen por mucho tiempo: si pisás el mismo
+nombre, siguen mostrando la vieja durante días. Por eso `assets/og-image-v2.png` sigue
+en el repo aunque ya no se use: los links que alguien compartió antes del rediseño
+todavía la piden.
 
 ---
 
@@ -144,9 +147,9 @@ completar los textos. Es el único lugar de la web donde se nombra un rubro conc
 Las capturas conviene guardarlas en `.webp` y a un ancho de 800px como máximo, para que
 el sitio siga cargando rápido.
 
-> Ojo al descomentar: ese bloque todavía trae un `<p class="eyebrow">Trabajos</p>`, y la
-> clase `.eyebrow` ya no existe en el CSS (se sacaron las etiquetas de sección porque
-> repetían el título de abajo). Hay que borrar esa línea, el `<h2>` alcanza.
+> El bloque ya viene con el `<div class="spine">` puesto, que es lo que hace que la
+> línea vertical siga sin cortarse cuando la sección entre en juego. Si lo sacás, la
+> página queda con un hueco en el espinazo justo ahí.
 
 ---
 
@@ -154,13 +157,54 @@ el sitio siga cargando rápido.
 
 - **Cero dependencias externas.** Nada de Google Fonts por CDN, nada de librerías. Las
   fuentes están self-hosted en `assets/fonts/`. Es lo que mantiene la carga rápida.
-- **La página funciona sin JavaScript.** `js/main.js` solo agrega animaciones y el CTA
-  flotante de WhatsApp. Si no carga, el sitio se ve completo igual.
+- **La página funciona sin JavaScript.** `js/main.js` solo pone el año del footer y el
+  CTA flotante de WhatsApp. Si no carga, el sitio se ve completo igual.
+- **El espinazo.** La línea vertical que recorre la página de arriba abajo es el
+  elemento que le da identidad, y para que funcione tiene que ser **continua**. Vive en
+  `.spine`, que va adentro de cada `.container` y **lleva el padding vertical de la
+  sección** —por eso `.section` tiene `padding-block: 0`—: así los tramos de secciones
+  contiguas se tocan y no queda un hueco entre una y otra. Si agregás una sección, va
+  con su `.spine`. Si te aparece un corte en la línea, es que alguna sección se quedó
+  sin él o recuperó su propio padding vertical.
+- **El ámbar está racionado.** Llegó a estar en doce lugares distintos y ahí dejó de ser
+  un acento. Ahora se usa para los CTA y para el momento del pago —el renglón "Recién
+  ahí pagás", el número del paso 5 y el cierre de la garantía—, que es el diferencial
+  del negocio. Sumar un uso más le quita fuerza a los que ya están.
+- **Un solo momento animado, y es al cargar.** No hay revelado al hacer scroll: lo
+  había, con el mismo desplazamiento y la misma duración para cada bloque de la
+  página, y esa uniformidad era una de las cosas que la hacían leer como generada con
+  IA. Lo que sí hay es una entrada orquestada en el hero: se traza el espinazo y
+  recién después entra lo que cuelga de él, escalonado. Termina a los 0,9s y no se
+  mueve nada más. Es CSS puro, así que corre igual con JavaScript desactivado.
+  ⚠ El título anima `transform` y **no** opacidad, a propósito: es el elemento del
+  LCP, y si arranca en `opacity: 0` el navegador no lo cuenta como pintado y la
+  métrica se va atrás toda la animación.
+- **El header no es fijo.** Un header sin menú, que solo lleva el nombre, no se gana
+  quedarse pegado: comía alto de pantalla justo donde el fold de celular tiene que
+  llegar al botón de WhatsApp. El contacto siempre a mano lo resuelve la barra flotante.
+- **Las fuentes son Bricolage Grotesque (títulos) y Hanken Grotesk (cuerpo).** Antes
+  eran Space Grotesk e Inter, que son las dos caras más asociadas a los sitios generados
+  con IA y estaban usadas juntas. Si algún día cambiás una, hay que **recalcular las
+  métricas de la familia `fallback`** que está justo abajo en el CSS (`size-adjust`,
+  `ascent-override`, `descent-override`): esos números salen de las métricas reales del
+  archivo contra las de Arial y son los que evitan que el texto salte cuando la fuente
+  termina de cargar. Heredar los viejos rompe eso en silencio.
 - **Un solo CTA por pantalla.** El header no lleva botón de WhatsApp a propósito: ya está
   el del hero y el flotante, y un tercero no agregaba nada. Si se saca el flotante, el
   tramo entre el hero y contacto se queda sin ningún contacto a la vista.
-- **Un solo color de acento.** El ámbar `#FFB454`. Incluso los botones de WhatsApp van en
-  ámbar y no en verde: sumar un segundo color rompe el sistema.
+- **Dos colores, con un rol cada uno.** El **pizarra frío** es la estructura del
+  documento: superficies, espinazo, reglas, números de paso, etiquetas, el marcador
+  del acordeón. El **ámbar `#FFB454`** es solo lo accionable y el momento del pago
+  —los botones, el renglón "Recién ahí pagás", el número del paso 5, el cierre de la
+  garantía—. Incluso los botones de WhatsApp van en ámbar y no en verde. Lo que
+  sostiene el sistema es que **el texto de lectura queda neutro**: si el cuerpo
+  también se tiñe de azul, la página se vuelve monocroma fría y esto pasa a leerse
+  como un filtro encima en vez de como dos colores con roles distintos.
+  ⚠ En el CSS, `.step--pay::before` tiene que quedar **después** de `.step::before`,
+  si no el pizarra se lleva puesto el ámbar del paso 5.
+- **No van fotos de Joaco.** Ni en el hero, ni en "Sobre mí", ni como marca. Está
+  decidido y no es una discusión de diseño. Las capturas de trabajos del portfolio
+  son otra cosa y sí van.
 - **Sin formulario de contacto.** Un formulario en un sitio estático necesita un servicio
   externo que puede fallar en silencio y hacerte perder consultas sin que te enteres.
 - **Un solo paquete de USD 90, y es decisión tomada.** Antes eran dos (Presencia USD 90
@@ -190,9 +234,9 @@ el sitio siga cargando rápido.
   cliente, y una promesa abierta te deja de proveedor de hosting permanente de cada sitio
   que entregaste. Misma lógica para cualquier servicio de terceros que entres a usar.
 - **La barra fija de WhatsApp solo aparece si no hay otro CTA en pantalla.** `js/main.js`
-  vigila cuatro anclas: el botón del hero, el de la tarjeta de precio (`#paqueteCta`),
+  vigila cuatro anclas: el botón del hero, el de el presupuesto (`#paqueteCta`),
   el de contacto (`#contactoCta`) y el footer. **Si se agrega otro CTA importante al
   cuerpo, hay que sumarlo a esa lista**, si no la barra flotante aparece pegada arriba
   del botón nuevo y quedan los dos juntos. Ya pasó tres veces —con el header, con el
-  hero y con la tarjeta de precio— y el síntoma siempre es el mismo, así que si ves dos
+  hero y con el presupuesto— y el síntoma siempre es el mismo, así que si ves dos
   botones de WhatsApp juntos, lo que falta es un ancla.

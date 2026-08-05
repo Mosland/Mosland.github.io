@@ -11,8 +11,9 @@ No preguntes primero por decisiones de diseño o de copy sin antes investigar qu
 funciona (buscar en la web tendencias actuales, ejemplos de sitios freelance/dev que
 conviertan bien, prácticas de UX para landing pages de servicios). Proponé con
 fundamento, no solo con gusto personal. Preguntá solo lo que la investigación no
-pueda resolver (preferencias puramente personales, datos que solo Joaco tiene: fotos,
-número de WhatsApp real, etc).
+pueda resolver (preferencias puramente personales, datos que solo Joaco tiene: número
+de WhatsApp real, precios, etc). Ojo: acá decía "fotos" y estaba mal — no van fotos de
+Joaco en el sitio, ver "Qué NO hacer".
 
 ## Perfil de Joaco
 Estudiante avanzado de Tecnólogo en Informática (UTU, Uruguay), último año, perfil
@@ -62,9 +63,10 @@ dos obligatorias:
 
 **Al cambiar el precio hay que tocar CUATRO lugares.** El precio de introducción va
 a subir cuando Joaco lo decida, así que esto va a pasar.
-- En `index.html`, tres: la tarjeta de `#paquetes`, y dentro del JSON-LD de
-  `ProfessionalService` el campo `priceRange` y el `Offer.price`. Si alguno queda
-  viejo, el sitio se contradice a sí mismo en el resultado de búsqueda.
+- En `index.html`, tres: el total del presupuesto de `#paquetes` (`quote__total`), y
+  dentro del JSON-LD de `ProfessionalService` el campo `priceRange` y el
+  `Offer.price`. Si alguno queda viejo, el sitio se contradice a sí mismo en el
+  resultado de búsqueda.
 - En **este mismo archivo**, uno: el bullet de la lista de acá arriba. Si queda
   viejo es peor que en la web, porque el próximo que lea este CLAUDE.md toma el
   precio viejo como fuente de verdad y lo vuelve a propagar.
@@ -75,8 +77,8 @@ precio. `README.md` no contiene precios, solo el instructivo para cambiarlos. Lo
 que aparece en `css/styles.css` y `tools/og-image.html` al buscar "90" son pesos
 de fuente y medidas, no precios; la imagen de OG no muestra precios.
 
-⚠ **Buscar `"USD 90"` no encuentra la tarjeta.** El markup es
-`<span class="card__cur">USD</span>90`, con la moneda en su propio elemento: hay
+⚠ **Buscar `"USD 90"` no encuentra el total.** El markup es
+`<span class="quote__cur">USD</span>90`, con la moneda en su propio elemento: hay
 que buscar el número pelado.
 
 **Qué significa "reserva de turnos"** (definido en agosto de 2026 — antes estaba
@@ -140,7 +142,15 @@ que también muestre el WhatsApp como alternativa visible.
 - Minimalista, tema oscuro.
 - Tipografía con personalidad, no system font genérica — elegir algo que transmita
   intención, no un default.
-- Un solo color de acento, alto contraste, mucho espacio en blanco (o "negro").
+- **Dos colores con roles fijos** (decisión de agosto de 2026; antes era un solo
+  acento). **Pizarra frío** para la estructura del documento: superficies,
+  espinazo, reglas, números de paso, etiquetas, el marcador del acordeón. Nunca es
+  accionable. Y **un único acento ámbar `#FFB454`** reservado para lo accionable y
+  para el momento del pago. La regla que sostiene el sistema: **el texto de lectura
+  no se tiñe** —`--text` y `--muted` quedan neutros—, porque si el cuerpo también se
+  va al azul la página se vuelve monocroma fría y esto deja de leerse como dos
+  colores con roles distintos para leerse como un filtro encima. Alto contraste,
+  mucho espacio en negro.
 - Mobile-first: la mayoría de quien visite esto lo va a hacer desde el celular.
 - Rápido: nada de imágenes pesadas ni animaciones que retrasen la carga.
 - CTA de contacto (WhatsApp) visible sin scrollear, no escondido al final.
@@ -156,6 +166,13 @@ que también muestre el WhatsApp como alternativa visible.
   tenerlo en cuenta si se arma algo reutilizable para eso.
 
 ## Qué NO hacer
+- **No poner fotos de Joaco en el sitio.** Ni en el hero, ni en "Sobre mí", ni como
+  marca, ni en la imagen de OG. Es una preferencia personal y está decidida: no hace
+  falta justificarla, no hay que proponer variantes con foto ni volver a levantarlo
+  como oportunidad de mejora, aunque la evidencia de conversión diga que una foto
+  real del prestador ayuda —ese dato ya se conoce y la decisión es igual—. Las
+  capturas de trabajos en la sección de portfolio son otra cosa y sí van, cuando
+  existan piezas reales.
 - No mencionar el rubro salud (ni ningún rubro) en el mensaje principal.
 - No presentar el precio de introducción como precio fijo sin aclarar que va a subir,
   ni presentarlo con lenguaje de oferta/promoción/descuento.

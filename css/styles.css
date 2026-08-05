@@ -1,55 +1,105 @@
 /* ══════════════════════════════════════════════════════════════════════════
    Joaquín Moas — hoja de estilo única
-   Orden: tokens → fuentes → reset → layout → tipografía → componentes →
-          secciones → animación
+   Orden: tokens → fuentes → reset → layout → espinazo → tipografía →
+          componentes → secciones → impresión
+
+   IDEA RECTORA — la página es el presupuesto.
+   Lo que diferencia el trabajo de Joaco no es el precio: es que todo se acuerda
+   por escrito antes de tocar nada y no se cobra hasta verlo funcionando. El
+   artefacto central de eso es la propuesta escrita del paso 2, así que la página
+   se comporta como ese documento: un espinazo vertical que la recorre entera,
+   renglones en vez de tarjetas, totales en vez de precios sueltos, y hairlines
+   en vez de marcos. Es un vocabulario que sale de su propio proceso.
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── TOKENS ────────────────────────────────────────────────────────────────
-   Contraste verificado contra el fondo (#0B0B0D):
-     --text   16.0:1    --muted  7.0:1    --accent 11.1:1
-   Todos muy por encima del 4.5:1 que pide WCAG AA.
-   Fondo casi-negro en vez de #000 puro: el negro absoluto con texto claro
-   produce halación y cansa la vista.
+   DOS COLORES CON ROLES FIJOS. No es una paleta de dos tonos: son dos registros
+   que no se pisan nunca.
+
+     · Pizarra frío  → la estructura del documento. Superficies, espinazo,
+                       reglas, números de paso, etiquetas, el marcador del
+                       acordeón. Nunca es accionable.
+     · Ámbar #FFB454 → solo lo accionable y el momento del pago. Nada más.
+
+   Y una regla que es la que hace que el sistema funcione: EL TEXTO DE LECTURA
+   NO SE TIÑE. --text y --muted quedan neutros a propósito. Si el cuerpo también
+   se va al azul, la página se vuelve monocroma fría y esto deja de leerse como
+   dos colores con roles distintos: pasa a leerse como un filtro encima. La
+   primera versión de esto fallaba justo por ahí, teñía el fondo y poco más.
+
+   El ámbar además está racionado. Llegó a aparecer doce veces en una página
+   (mitad del h1, badge, check, borde y resplandor de la garantía, resplandor de
+   contacto, marca, riel, links, botones) y ahí dejó de ser un acento.
+
+   Contraste verificado contra los tres fondos, todo por encima del 4.5:1 de
+   WCAG AA:
+                        fondo   panel   presupuesto
+     --text             15.90   14.77   13.54
+     --muted             6.97    6.47    5.93
+     --structure         8.19    7.60    6.97
+     --accent           11.03   10.25     —
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #0B0B0D;
-  --bg-alt:        #0F0F12;
-  --surface:       #141417;
-  --surface-2:     #1A1A1F;
-  --border:        #26262B;
-  --border-strong: #35353D;
+  --bg:          #0B0D10;   /* casi neutro, apenas frío */
+  --bg-alt:      #0E1720;   /* panel pizarra: #paquetes y #preguntas */
+  --surface:     #12202B;   /* el presupuesto */
 
-  --text:          #E8E8EA;
-  --muted:         #9A9AA2;
+  --line:        #24404F;   /* espinazo y reglas */
+  --line-strong: #375F73;
 
-  --accent:        #FFB454;
-  --accent-dim:    #E09A3E;
-  --accent-ink:    #0B0B0D;   /* texto sobre el ámbar */
-  --accent-soft:   rgba(255, 180, 84, .12);
+  --text:        #E8E8EA;   /* NEUTRO — no se tiñe */
+  --muted:       #9A9AA2;   /* NEUTRO — no se tiñe */
+  --structure:   #83AEC6;   /* números, etiquetas, marcadores */
 
-  --font-display: 'Space Grotesk', 'Space Grotesk fallback', system-ui, sans-serif;
-  --font-body:    'Inter', 'Inter fallback', system-ui, sans-serif;
+  --accent:      #FFB454;
+  --accent-dim:  #E09A3E;
+  --accent-ink:  #0B0D10;   /* texto sobre el ámbar */
 
-  --header-h: 60px;
-  --radius:   14px;
-  --radius-sm: 10px;
+  --font-display: 'Bricolage Grotesque', 'Bricolage fallback', system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk', 'Hanken fallback', system-ui, sans-serif;
+
+  --header-h: 58px;
+
+  /* Ni 14px, que es el radio por defecto de cualquier tarjeta generada, ni 0,
+     que es el otro default —la maqueta tipo diario con esquinas rectas— y sería
+     cambiar un lugar común por otro. 6px es el 43% del radio viejo: el salto
+     que se percibe está entre 3 y 6, y de 6 en adelante se empieza a leer
+     "de app" sin ganar gran cosa. */
+  --radius: 6px;
 
   --container: 1080px;
   --measure:   62ch;
 
+  /* Separación entre el espinazo y el contenido, y ritmo vertical base. */
+  --spine-gap: 1.75rem;
+  --rhythm:    clamp(3.5rem, 9vw, 5.5rem);
+
   --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+@media (min-width: 900px) {
+  :root { --spine-gap: 3.5rem; }
 }
 
 /* ── FUENTES ───────────────────────────────────────────────────────────────
    Self-hosted, subset latin (cubre ñ á é í ó ú ü ¿ ¡), variable: un archivo
    por familia con todos los pesos. Cero requests a dominios externos.
-   Las familias "fallback" ajustan las métricas de la fuente de sistema para
-   que el swap no mueva el layout (CLS ≈ 0).
+
+   Bricolage Grotesque para títulos: tiene eje óptico (opsz), así que los
+   tamaños grandes se aprietan y ganan carácter en vez de ser el mismo dibujo
+   estirado. Hanken Grotesk para el cuerpo. Antes acá estaban Space Grotesk e
+   Inter, que en 2026 son literalmente las dos caras más citadas como "fuente
+   de sitio generado por IA", y estaban usadas juntas.
+
+   Las familias "fallback" ajustan las métricas de Arial para que el swap no
+   mueva el layout (CLS ≈ 0). Los números salen de las métricas reales de cada
+   archivo (unitsPerEm, hhea y xAvgCharWidth) contra las de Arial: si se cambia
+   una fuente hay que recalcularlos, no heredarlos.
    ─────────────────────────────────────────────────────────────────────── */
 @font-face {
-  font-family: 'Space Grotesk';
-  src: url('../assets/fonts/space-grotesk-latin.woff2') format('woff2');
-  font-weight: 300 700;
+  font-family: 'Bricolage Grotesque';
+  src: url('../assets/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+  font-weight: 300 800;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
@@ -57,9 +107,9 @@
                  U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Hanken Grotesk';
+  src: url('../assets/fonts/hanken-grotesk-latin.woff2') format('woff2');
+  font-weight: 300 800;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
@@ -67,19 +117,19 @@
                  U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Space Grotesk fallback';
+  font-family: 'Bricolage fallback';
   src: local('Arial');
-  size-adjust: 100%;
-  ascent-override: 96%;
-  descent-override: 24%;
+  size-adjust: 112.82%;
+  ascent-override: 82.43%;
+  descent-override: 23.93%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'Inter fallback';
+  font-family: 'Hanken fallback';
   src: local('Arial');
-  size-adjust: 107%;
-  ascent-override: 90%;
-  descent-override: 22%;
+  size-adjust: 123.47%;
+  ascent-override: 80.99%;
+  descent-override: 24.54%;
   line-gap-override: 0%;
 }
 
@@ -88,7 +138,9 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 16px);
+  /* Sin header fijo ya no hay nada que tape el destino de un ancla: alcanza
+     con un poco de aire para que la sección no arranque pegada al borde. */
+  scroll-padding-top: 1.5rem;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -108,7 +160,7 @@ body {
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -.02em;
   margin: 0;
   text-wrap: balance;
@@ -123,12 +175,12 @@ strong { color: var(--text); font-weight: 600; }
 
 img { max-width: 100%; height: auto; display: block; }
 
-ul { margin: 0; padding: 0; list-style: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .skip-link {
@@ -140,7 +192,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--accent-ink);
   padding: .75rem 1.25rem;
   font-weight: 600;
-  border-radius: 0 0 var(--radius-sm) 0;
+  border-radius: 0 0 var(--radius) 0;
 }
 .skip-link:focus { left: 0; }
 
@@ -153,10 +205,51 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 @media (min-width: 640px) { .container { padding-inline: 32px; } }
 
-.section { padding-block: clamp(4rem, 11vw, 7.5rem); }
+/* Las secciones no llevan padding vertical propio: lo lleva el espinazo, para
+   que la línea no se corte entre una sección y la siguiente. */
+.section { padding-block: 0; --section-bg: var(--bg); }
 .section--alt {
   background: var(--bg-alt);
-  border-block: 1px solid var(--border);
+  --section-bg: var(--bg-alt);
+}
+
+/* Ritmo variable. Antes todas las secciones compartían un único clamp y abrían
+   igual —h2 y bajada—, así que la página era una sucesión de bloques idénticos.
+   Ahora cada una pesa distinto: la garantía respira el doble porque es el
+   argumento más fuerte que hay, y "sobre mí" es una nota al pie. */
+.section--guarantee { --rhythm: clamp(5.5rem, 15vw, 9rem); }
+.section--contact   { --rhythm: clamp(4.5rem, 12vw, 7.5rem); }
+#sobre-mi           { --rhythm: clamp(2.75rem, 7vw, 4rem); }
+
+/* ── EL ESPINAZO ───────────────────────────────────────────────────────────
+   El elemento firma. Una hairline que baja por el borde izquierdo de la columna
+   de contenido a lo largo de toda la página, desde el hero hasta el cierre.
+
+   No es decoración: reemplaza tres cosas a la vez. Los dos rieles numerados
+   —el del hero y el de #proceso, cada uno con su círculo y su línea conectora—
+   pasan a colgar de esta única línea, y la tira de 3px que tenía el recuadro de
+   respuesta deja de ser un adorno suelto. Es una resta, no una suma.
+
+   El padding vertical vive acá y no en .section justamente para que la línea
+   sea continua: los tramos de secciones contiguas se tocan.
+
+   La línea es un pseudo-elemento y no un border-left porque un borde no se
+   puede dibujar: el hero la anima con scaleY al cargar. El +1px del padding
+   reemplaza el ancho que aportaba el borde, así el contenido no se corre.
+   ─────────────────────────────────────────────────────────────────────── */
+.spine {
+  position: relative;
+  padding-left: calc(var(--spine-gap) + 1px);
+  padding-block: var(--rhythm);
+}
+.spine::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
 }
 
 /* ── TIPOGRAFÍA DE SECCIÓN ─────────────────────────────────────────────────
@@ -170,16 +263,19 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .lead {
-  font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
+  font-size: clamp(1.0625rem, 2.4vw, 1.1875rem);
   color: var(--muted);
   max-width: var(--measure);
   line-height: 1.6;
 }
 .lead--tight { margin-bottom: 1.5rem; }
 
-.accent { color: var(--accent); }
-
-/* ── BOTONES ───────────────────────────────────────────────────────────── */
+/* ── BOTONES ───────────────────────────────────────────────────────────────
+   Rectángulos de radio chico, no pastillas de radio máximo: el border-radius
+   100px en todo lo que es botón era una de las señales más marcadas. Y sin el
+   translateY(-1px) al pasar el mouse, que es el "levantar" por defecto; el
+   estado se muestra cambiando el fondo, que es lo que de verdad informa.
+   ─────────────────────────────────────────────────────────────────────── */
 .btn {
   --btn-bg: var(--accent);
   --btn-fg: var(--accent-ink);
@@ -195,15 +291,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   line-height: 1;
   padding: .8125rem 1.25rem;
   border: 1px solid transparent;
-  border-radius: 100px;
+  border-radius: var(--radius);
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color .18s var(--ease), transform .18s var(--ease),
-              border-color .18s var(--ease), color .18s var(--ease);
+  transition: background-color .18s var(--ease), border-color .18s var(--ease),
+              color .18s var(--ease);
 }
-.btn:hover { --btn-bg: var(--accent-dim); transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
+.btn:hover { --btn-bg: var(--accent-dim); }
 
 .btn--lg { font-size: 1.0625rem; padding: 1.0625rem 1.75rem; }
 .btn--block { display: flex; width: 100%; }
@@ -211,133 +306,103 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn--ghost {
   --btn-bg: transparent;
   --btn-fg: var(--text);
-  border-color: var(--border-strong);
+  border-color: var(--line-strong);
 }
 .btn--ghost:hover {
-  --btn-bg: var(--surface-2);
+  --btn-bg: transparent;
   --btn-fg: var(--text);
   border-color: var(--muted);
 }
 
 .ico { width: 1.125em; height: 1.125em; flex: none; fill: currentColor; }
-.ico--check {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  color: var(--accent);
-}
 
-/* ── HEADER ────────────────────────────────────────────────────────────── */
+/* ── HEADER ────────────────────────────────────────────────────────────────
+   Estático, y solo el nombre. Antes era sticky con backdrop-filter: un panel
+   translúcido con desenfoque, fijo, sin ningún menú adentro. Un header que no
+   lleva navegación no se gana quedarse pegado, y en celular se comía alto justo
+   donde el fold tiene que llegar al botón de WhatsApp. El contacto siempre a
+   mano lo resuelve la barra flotante.
+
+   La marca dejó de ser una "J" en un cuadrado ámbar redondeado —el avatar por
+   defecto de cualquier plantilla— y pasó a ser el nombre, que es lo que el
+   cliente después va a escribir en el WhatsApp.
+   ─────────────────────────────────────────────────────────────────────── */
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
   height: var(--header-h);
   display: flex;
   align-items: center;
-  background: var(--bg);
-  border-bottom: 1px solid transparent;
-  transition: border-color .25s var(--ease), background-color .25s var(--ease);
-}
-@supports (backdrop-filter: blur(1px)) {
-  .site-header { background: rgba(11, 11, 13, .72); backdrop-filter: blur(14px) saturate(140%); }
-}
-.site-header.is-stuck { border-bottom-color: var(--border); }
-
-.site-header__inner {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: .5625rem;
+  display: inline-block;
   color: var(--text);
   text-decoration: none;
   font-family: var(--font-display);
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -.01em;
-  min-width: 0;
-}
-.brand__mark {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  flex: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: .9375rem;
-  font-weight: 700;
-  line-height: 1;
-}
-.brand__name {
-  font-size: .9375rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-/* ── HERO ──────────────────────────────────────────────────────────────── */
+/* ── HERO ──────────────────────────────────────────────────────────────────
+   Acá vivía .hero::before, un resplandor radial ámbar de 900px detrás del
+   título. Era el "orbe de gradiente detrás del hero" en versión ámbar, y había
+   tres iguales en la página (este, el de la garantía y el de contacto). Los
+   tres se fueron: la jerarquía la hacen el tamaño, el aire y el espinazo.
+   ─────────────────────────────────────────────────────────────────────── */
 .hero {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100svh - var(--header-h));
-  padding-block: clamp(2.5rem, 8vh, 5rem);
-  position: relative;
-  overflow: hidden;
 }
-/* Resplandor ámbar detrás del título. Es un gradiente CSS: pesa 0 bytes.
-   Corrido al 35% y no al centro: con el rail a la derecha, centrado le lavaba
-   el contraste en vez de acompañar al título. */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: 35%;
-  width: min(900px, 130vw);
-  aspect-ratio: 1;
-  translate: -50% 0;
-  background: radial-gradient(circle, rgba(255, 180, 84, .09) 0%, transparent 62%);
-  pointer-events: none;
-  z-index: 0;
+/* El contenedor y el espinazo se estiran a todo el alto del hero, y el contenido
+   se centra adentro. Si se centrara el espinazo —que es lo natural de escribir—
+   la línea mide solo lo que mide el texto y queda un hueco de casi 100px antes
+   de la sección siguiente, justo en el elemento cuya única gracia es no
+   cortarse nunca. */
+.hero > .container { flex: 1; display: flex; flex-direction: column; }
+.hero .spine {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(2.5rem, 7vh, 4.5rem);
 }
-.hero__inner { position: relative; z-index: 1; }
 
 @media (min-width: 900px) {
-  .hero__inner {
+  .hero .spine {
     display: grid;
-    /* El rail necesita poco ancho (su ítem más largo mide ~260px), así que la
-       columna del título se lleva la mayor parte: con menos, el h1 se partía en
-       cinco líneas cortas. */
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+    /* El resumen necesita poco ancho, así que la columna del título se lleva la
+       mayor parte: con menos, el h1 se partía en líneas cortas y desparejas. */
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr);
+    /* align-content y no solo align-items: lo que hay que centrar es la fila
+       entera dentro del espinazo estirado, no cada celda dentro de su fila. */
+    align-content: center;
     align-items: center;
     gap: clamp(2rem, 5vw, 4rem);
   }
-  /* Los max-width en ch se soltan: acá el ancho ya lo fija la columna, y dejarlos
-     puestos partía el título en líneas cortas y desparejas. */
   .hero__inner .hero__title,
   .hero__inner .hero__sub { max-width: none; }
 }
 
+/* El énfasis lo hace el peso, no el color. Antes la segunda mitad del título
+   iba pintada de ámbar, que es de los movimientos más repetidos que hay. */
 .hero__title {
-  font-size: clamp(2rem, 7.2vw, 4rem);
-  max-width: 17ch;
-  margin-bottom: 1.25rem;
+  font-size: clamp(2rem, 6.6vw, 3.75rem);
+  font-weight: 400;
+  max-width: 18ch;
+  margin-bottom: 1.5rem;
 }
-.hero__title .accent { display: block; }
+.hero__title strong {
+  display: block;
+  font-weight: 800;
+  color: var(--text);
+}
 
 .hero__sub {
-  font-size: clamp(1.0625rem, 2.6vw, 1.3125rem);
+  font-size: clamp(1.0625rem, 2.6vw, 1.25rem);
   color: var(--muted);
-  max-width: 46ch;
+  max-width: 44ch;
   margin-bottom: 2rem;
 }
 
@@ -345,216 +410,157 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: flex;
   flex-wrap: wrap;
   gap: .75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 @media (max-width: 479px) {
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; }
 }
 
+/* Nota al pie del hero. Antes llevaba un check ámbar al costado; ahora se apoya
+   en una hairline, que es como un documento marca una aclaración. */
 .hero__trust {
-  display: flex;
-  align-items: flex-start;
-  gap: .5rem;
+  border-top: 1px solid var(--line);
+  padding-top: .875rem;
   font-size: .9375rem;
   color: var(--muted);
-  max-width: 44ch;
+  max-width: 42ch;
   margin: 0;
 }
-.hero__trust .ico { margin-top: .25em; }
 
-/* ── RAIL DEL HERO ─────────────────────────────────────────────────────────
-   Resumen del proceso, no una copia. Se oculta abajo de 900px: en celular el
-   fold tiene que quedar en el CTA, y el detalle completo está en #proceso.
+/* ── RESUMEN DEL PROCESO EN EL HERO ────────────────────────────────────────
+   Renglones de planilla, sin numerar. Antes esto y #proceso eran dos rieles
+   numerados distintos diciendo lo mismo, cada uno con círculo y línea
+   conectora. La numeración quedó una sola vez, en #proceso, que es donde el
+   orden de verdad hay que seguirlo; acá alcanza con que se lea de arriba abajo.
+   Se oculta abajo de 900px: en celular el fold tiene que quedar en el CTA, y el
+   detalle completo está más abajo.
    ─────────────────────────────────────────────────────────────────────── */
-.hero-rail { display: none; }
+.hero-ledger { display: none; }
 
 @media (min-width: 900px) {
-  .hero-rail {
-    display: grid;
-    gap: 0;
-    counter-reset: rail;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .hero-rail li {
-    counter-increment: rail;
-    position: relative;
-    padding: 0 0 1.5rem 2.75rem;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.3;
+  .hero-ledger { display: block; }
+  .hero-ledger li {
+    padding-block: .8125rem;
+    border-top: 1px solid var(--line);
+    font-size: .9375rem;
+    line-height: 1.35;
     color: var(--muted);
   }
-  .hero-rail li:last-child { padding-bottom: 0; }
+  .hero-ledger li:last-child { border-bottom: 1px solid var(--line); }
 
-  .hero-rail li::before {
-    content: counter(rail);
-    position: absolute;
-    left: 0;
-    top: -.15em;
-    display: grid;
-    place-items: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    border: 1px solid var(--border-strong);
-    background: var(--bg);
-    font-size: .8125rem;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--muted);
-  }
-  /* Línea que une los pasos */
-  .hero-rail li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: .875rem;
-    top: 1.75rem;
-    bottom: .4rem;
-    width: 1px;
-    background: var(--border);
-  }
-
-  /* El único paso en ámbar: acá entra la plata, y ese es el diferencial.
-     Se califica con li para ganarle a .hero-rail li sin recurrir a !important. */
-  .hero-rail li.hero-rail__pay { color: var(--accent); font-weight: 600; }
-  .hero-rail li.hero-rail__pay::before {
-    border-color: rgba(255, 180, 84, .45);
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
+  /* El único renglón en ámbar de todo el hero: acá entra la plata. */
+  .hero-ledger li.hero-ledger__pay { color: var(--accent); font-weight: 500; }
 }
 
-/* ── EL PROBLEMA ───────────────────────────────────────────────────────── */
+/* ── EL PROBLEMA ───────────────────────────────────────────────────────────
+   .answer era un recuadro con borde de 1px, radio de 14px y una tira de 3px de
+   color al costado: tres señales apiladas en una sola caja. Ahora es lo que en
+   realidad es —la frase central de la página— y se destaca con tipografía y
+   aire, no con un marco.
+   ─────────────────────────────────────────────────────────────────────── */
 .answer {
-  margin-top: 2.5rem;
-  padding: 1.5rem clamp(1.25rem, 4vw, 2rem);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--border-strong);
-  border-radius: var(--radius);
-  max-width: var(--measure);
-  font-size: clamp(1rem, 2.2vw, 1.125rem);
+  margin-block: 2.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1875rem, 3vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -.015em;
+  color: var(--text);
+  max-width: 34ch;
 }
-/* El párrafo de cierre que va abajo del recuadro */
-.answer + .lead { margin-top: 1.5rem; }
+.answer strong { font-weight: 800; }
 
-/* ── PAQUETES ──────────────────────────────────────────────────────────── */
+/* ── PAQUETE ───────────────────────────────────────────────────────────────
+   El badge era una pastilla con fondo teñido, borde ámbar y versalitas
+   espaciadas: el badge canónico de cualquier landing generada. Ahora es una
+   etiqueta chica sobre una hairline. Dice exactamente lo mismo.
+   ─────────────────────────────────────────────────────────────────────── */
 .launch-note {
-  display: flex;
-  flex-wrap: wrap;
-  /* baseline y no center: el texto ocupa varias líneas y con center la etiqueta
-     queda flotando en el medio del bloque en vez de alineada con la primera. */
-  align-items: baseline;
-  gap: .625rem;
   font-size: .9375rem;
   color: var(--muted);
   max-width: var(--measure);
 }
 .badge {
-  display: inline-block;
-  padding: .3125rem .6875rem;
-  border-radius: 100px;
-  background: var(--accent-soft);
-  border: 1px solid rgba(255, 180, 84, .3);
-  color: var(--accent);
+  display: block;
+  width: fit-content;
+  margin-bottom: .5rem;
+  padding-bottom: .3125rem;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--structure);
   font-family: var(--font-display);
   font-size: .75rem;
   font-weight: 600;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
-/* Una sola tarjeta, centrada y angosta. Antes eran dos y acá vivía un
-   grid-template-columns: 1fr 1fr arriba de 760px; se sacó junto con el
-   segundo paquete. Un paquete es decisión de negocio, no un estado
-   transitorio: si algún día vuelven a ser dos, el grid se rearma acá. */
-.cards {
-  display: grid;
-  gap: 1.25rem;
+/* Una sola tarjeta a propósito: es decisión de negocio, no un recorte temporal.
+   No volver a partirla en dos — ver CLAUDE.md.
+
+   Leída como presupuesto y no como tarjeta de pricing: los ítems son renglones
+   de lo que incluye y el precio es el total, abajo y con la regla del último
+   renglón encima. Se fueron los ✓ por ítem —formato SaaS, que sirve para
+   comparar planes y acá no hay con qué comparar— y el centrado, que en una
+   página alineada a la izquierda cantaba a plantilla. El borde se queda solo en
+   esta caja: es la única que de verdad delimita un trato cerrado. */
+.quote {
   margin-top: 2.5rem;
-  max-width: 480px;
-  margin-inline: auto;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(1.5rem, 4vw, 2rem);
+  max-width: 27rem;
+  padding: clamp(1.25rem, 4vw, 1.75rem);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  position: relative;
 }
-.card--featured {
-  background: var(--surface-2);
-  border-color: rgba(255, 180, 84, .38);
+.quote__pitch {
+  color: var(--muted);
+  font-size: .9375rem;
+  margin-bottom: 1.25rem;
 }
+.quote__items { border-top: 1px solid var(--line); }
+.quote__items li {
+  padding-block: .625rem;
+  border-bottom: 1px solid var(--line);
+  font-size: .9375rem;
+  line-height: 1.45;
+}
+/* La regla del total: más marcada que las de los renglones. */
+.quote__items li:last-child { border-bottom-color: var(--line-strong); }
 
-/* Acá estaba .card__flag, el cartel "Más elegido" de la tarjeta destacada.
-   Se sacó al pasar a un solo paquete: sin una segunda opción no significa nada. */
-
-.card__price {
+.quote__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin: 1rem 0 1.5rem;
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 6vw, 2.75rem);
+  font-size: clamp(2rem, 6vw, 2.5rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -.03em;
-  color: var(--text);
-  margin: 0 0 .75rem;
+  font-variant-numeric: tabular-nums;
 }
-.card__cur {
-  font-size: .9375rem;
+.quote__cur {
+  font-size: .8125rem;
   font-weight: 500;
-  color: var(--muted);
-  letter-spacing: .04em;
-  margin-right: .375rem;
-  vertical-align: .55em;
-}
-.card__pitch {
-  color: var(--muted);
-  font-size: .9375rem;
-  margin-bottom: 1.5rem;
+  color: var(--structure);
+  letter-spacing: .06em;
 }
 
-.list { margin-bottom: 1.75rem; }
-.list li {
-  position: relative;
-  padding-left: 1.625rem;
-  margin-bottom: .625rem;
-  font-size: .9375rem;
-  line-height: 1.55;
-  color: var(--text);
-}
-.list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: .48em;
-  width: 11px;
-  height: 6px;
-  border-left: 2px solid var(--muted);
-  border-bottom: 2px solid var(--muted);
-  rotate: -45deg;
-}
-.card .btn { margin-top: auto; }
-
-/* ── PROCESO ───────────────────────────────────────────────────────────── */
+/* ── PROCESO ───────────────────────────────────────────────────────────────
+   El único lugar numerado de la página. Los números cuelgan del espinazo, sin
+   círculo y sin línea conectora propia: la línea vertical ya recorre todo y
+   hace ese trabajo. El fondo del número corta la línea, que es lo que da la
+   sensación de hito sin dibujar una pastilla.
+   ─────────────────────────────────────────────────────────────────────── */
 .steps {
   counter-reset: step;
   margin-top: 2.5rem;
-  max-width: 720px;
-  padding: 0;
-  list-style: none;
+  max-width: 44rem;
 }
 .step {
   counter-increment: step;
   position: relative;
-  padding-left: 3.75rem;
   padding-bottom: 2.25rem;
 }
 .step:last-child { padding-bottom: 0; }
@@ -562,70 +568,64 @@ ul { margin: 0; padding: 0; list-style: none; }
 .step::before {
   content: counter(step);
   position: absolute;
-  left: 0;
-  top: 0;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  color: var(--muted);
+  top: .1em;
+  /* Espeja el padding-left del espinazo —el +1px incluido— para caer justo sobre
+     la línea. Si acá queda solo --spine-gap, el número se corre un píxel. */
+  left: calc((var(--spine-gap) + 1px) * -1);
+  translate: -50% 0;
+  padding-block: .375rem;
+  padding-inline: .5rem;
+  background: var(--section-bg);
   font-family: var(--font-display);
-  font-size: .9375rem;
+  font-size: .8125rem;
   font-weight: 700;
   line-height: 1;
+  color: var(--structure);
+  font-variant-numeric: tabular-nums;
 }
-/* Línea que conecta los pasos */
-.step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: 1.125rem;
-  top: 2.5rem;
-  bottom: .5rem;
-  width: 1px;
-  background: linear-gradient(var(--border-strong), var(--border));
-}
+/* El paso donde entra la plata, que es el diferencial. VA DESPUÉS de la regla de
+   arriba a propósito: si se escribe antes, el pizarra de .step::before se lo
+   lleva puesto y el paso 5 pierde el ámbar. Pasó en una prueba. */
+.step--pay::before { color: var(--accent); }
 
 .step__title { font-size: 1.1875rem; margin-bottom: .4375rem; }
 .step p { color: var(--muted); font-size: .96875rem; }
 
-/* ── GARANTÍA ──────────────────────────────────────────────────────────── */
-.guarantee {
-  padding: clamp(2rem, 6vw, 3.5rem);
-  border: 1px solid rgba(255, 180, 84, .3);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(120% 140% at 0% 0%, rgba(255, 180, 84, .09), transparent 58%),
-    var(--surface);
-}
+/* ── GARANTÍA ──────────────────────────────────────────────────────────────
+   Antes era un recuadro con borde ámbar, radio de 14px y un resplandor radial
+   adentro. Ahora no tiene caja: el peso se lo lleva por tamaño y por aire —la
+   sección respira casi el doble que las demás—, que es lo que un documento hace
+   con la cláusula que más importa.
+   ─────────────────────────────────────────────────────────────────────── */
 .guarantee__title {
-  font-size: clamp(1.625rem, 4.6vw, 2.375rem);
-  max-width: 18ch;
-  margin-bottom: 1rem;
+  font-size: clamp(1.875rem, 6vw, 3.25rem);
+  max-width: 16ch;
+  margin-bottom: 1.25rem;
 }
 .guarantee__text {
-  font-size: clamp(1.0625rem, 2.3vw, 1.1875rem);
+  font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
   color: var(--muted);
-  max-width: 52ch;
+  max-width: 48ch;
 }
 .guarantee__kicker {
   font-family: var(--font-display);
-  font-size: clamp(1.0625rem, 2.3vw, 1.1875rem);
+  font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
   font-weight: 600;
   color: var(--accent);
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   margin-bottom: 0;
 }
 
-/* ── PREGUNTAS FRECUENTES ──────────────────────────────────────────────── */
+/* ── PREGUNTAS FRECUENTES ──────────────────────────────────────────────────
+   El marcador es un + que se convierte en − animando el background-size de la
+   barra vertical. Dos hairlines cruzadas, mismo vocabulario que el resto.
+   ─────────────────────────────────────────────────────────────────────── */
 .faq {
   margin-top: 2.5rem;
-  max-width: 760px;
-  border-top: 1px solid var(--border);
+  max-width: 46rem;
+  border-top: 1px solid var(--line);
 }
-.qa { border-bottom: 1px solid var(--border); }
+.qa { border-bottom: 1px solid var(--line); }
 
 .qa summary {
   display: flex;
@@ -645,66 +645,69 @@ ul { margin: 0; padding: 0; list-style: none; }
 .qa summary::-webkit-details-marker { display: none; }
 .qa summary:hover { color: var(--accent); }
 
-/* Marcador +/− dibujado en CSS, sin iconos ni JS */
 .qa summary::after {
   content: '';
   flex: none;
-  width: 11px;
-  height: 11px;
-  border-right: 2px solid var(--border-strong);
-  border-bottom: 2px solid var(--border-strong);
-  rotate: 45deg;
-  translate: 0 -3px;
-  transition: rotate .22s var(--ease), translate .22s var(--ease);
+  width: 12px;
+  height: 12px;
+  color: var(--structure);
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-size: 12px 1px, 1px 12px;
+  transition: background-size .22s var(--ease);
 }
-.qa[open] summary::after { rotate: 225deg; translate: 0 3px; }
+.qa[open] summary::after { background-size: 12px 1px, 1px 0; }
 
 .qa__body {
   padding-bottom: 1.25rem;
   color: var(--muted);
   font-size: .96875rem;
-  max-width: 62ch;
+  max-width: var(--measure);
 }
 
-/* ── TRABAJOS (listo para cuando existan piezas reales) ────────────────── */
+/* ── TRABAJOS (listo para cuando existan piezas reales) ────────────────────
+   Mismo sistema que el resto: sin borde ni radio grande, la pieza se separa por
+   el escalón de fondo y por el aire. Si cambia el sistema, cambia acá también.
+   ─────────────────────────────────────────────────────────────────────── */
 .work-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
   margin-top: 2.5rem;
 }
 @media (min-width: 720px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
 
-.work {
-  margin: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
+.work { margin: 0; }
+.work img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border-radius: var(--radius);
-  overflow: hidden;
 }
-.work img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-.work figcaption { padding: 1.25rem; }
+.work figcaption { padding-top: .875rem; }
 .work__name { font-size: 1.0625rem; margin-bottom: .3125rem; }
 .work__desc { color: var(--muted); font-size: .9375rem; margin: 0; }
 
 /* ── SOBRE MÍ ──────────────────────────────────────────────────────────── */
 .about { max-width: var(--measure); }
-.about p { color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.0625rem); }
-.about__kicker {
+.about > p { color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.0625rem); }
+.about .about__kicker {
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--text) !important;
+  color: var(--text);
   font-size: 1.0625rem;
   margin-top: 1.5rem;
 }
 
-/* ── CONTACTO ──────────────────────────────────────────────────────────── */
-.section--contact {
-  border-top: 1px solid var(--border);
-  background:
-    radial-gradient(80% 120% at 50% 100%, rgba(255, 180, 84, .07), transparent 60%),
-    var(--bg);
-}
-.contact { text-align: center; max-width: 620px; margin-inline: auto; }
+/* ── CONTACTO ──────────────────────────────────────────────────────────────
+   Sin el resplandor radial que subía desde abajo, y alineado a la izquierda
+   como todo el resto: un bloque centrado dentro de una página alineada a la
+   izquierda era el cierre de plantilla. El documento termina donde termina
+   el espinazo.
+   ─────────────────────────────────────────────────────────────────────── */
+.contact { max-width: 34rem; }
 .contact__title {
   font-size: clamp(2rem, 6vw, 3rem);
   margin-bottom: 1rem;
@@ -724,7 +727,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ── FOOTER ────────────────────────────────────────────────────────────── */
 .site-footer {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
   padding-block: 2.5rem;
   font-size: .875rem;
   color: var(--muted);
@@ -736,13 +739,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   justify-content: space-between;
 }
 .site-footer p { margin: 0; }
-.site-footer__meta { color: #6E6E77; }
+/* Venía en #6E6E77, que contra el fondo da 3.9:1 y no llega al 4.5:1 que pide
+   WCAG AA para texto de este tamaño. Es el único color del sitio que no cumplía.
+   #7A7A83 da 4.62:1 y sigue leyéndose como secundario. */
+.site-footer__meta { color: #7A7A83; }
 
 /* ── CTA FLOTANTE ──────────────────────────────────────────────────────────
-   Corre en todos los anchos. Antes se apagaba en desktop porque el header
-   tenía su propio botón de WhatsApp; ese botón ya no está, así que sin esto
-   quedaba todo el tramo entre el hero y contacto sin ningún CTA a la vista.
-   Barra de ancho completo en celular, pastilla abajo a la derecha en desktop.
+   Corre en todos los anchos: es el único contacto permanente que hay, ahora que
+   el header no está fijo. Barra de ancho completo en celular, botón suelto
+   abajo a la derecha en desktop.
    ─────────────────────────────────────────────────────────────────────── */
 .floating-cta {
   position: fixed;
@@ -751,16 +756,13 @@ ul { margin: 0; padding: 0; list-style: none; }
   bottom: 0;
   z-index: 60;
   padding: .75rem 20px calc(.75rem + env(safe-area-inset-bottom));
-  background: rgba(11, 11, 13, .92);
-  border-top: 1px solid var(--border);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
   transform: translateY(110%);
   /* visibility, además del transform: fuera de pantalla el link tampoco tiene
      que recibir el foco al tabular. Se apaga recién al terminar la salida. */
   visibility: hidden;
   transition: transform .28s var(--ease), visibility 0s linear .28s;
-}
-@supports (backdrop-filter: blur(1px)) {
-  .floating-cta { backdrop-filter: blur(14px); }
 }
 .floating-cta.is-visible {
   transform: translateY(0);
@@ -777,33 +779,59 @@ ul { margin: 0; padding: 0; list-style: none; }
     padding: 0;
     background: none;
     border-top: 0;
-    border-radius: 100px;
     /* el offset de 24px entra en el transform, si no asoma el borde al ocultarse */
     transform: translateY(calc(110% + 24px));
   }
-  @supports (backdrop-filter: blur(1px)) {
-    .floating-cta { backdrop-filter: none; }
-  }
   .floating-cta.is-visible { transform: translateY(0); }
-  /* el ancla trae .btn--block (100%): en la pastilla tiene que medir su contenido */
-  .floating-cta .btn { width: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); }
+  /* el ancla trae .btn--block (100%): suelto tiene que medir su contenido */
+  .floating-cta .btn { width: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, .5); }
 }
 
-/* ── ANIMACIÓN DE ENTRADA ──────────────────────────────────────────────────
-   Solo se aplica si el <html> tiene la clase .js, que se agrega en el <head>
-   únicamente cuando existe IntersectionObserver. Sin JS todo queda visible.
+/* ── MOVIMIENTO ────────────────────────────────────────────────────────────
+   Un solo momento orquestado, al cargar, y solo en el hero. NADA al hacer
+   scroll: acá vivía .reveal, que le aplicaba el mismo translateY(14px) y la
+   misma duración a cada bloque de la página, y esa uniformidad es una de las
+   señales más reconocibles de página generada.
+
+   La secuencia cuenta algo: primero se traza el espinazo —el documento se
+   escribe— y recién después entra lo que cuelga de él, escalonado por rol.
+   Termina a los 0,9s y no se vuelve a mover nada en toda la página.
+
+   Es CSS puro, sin JavaScript. Por eso no hace falta el script anti-flash que
+   había antes en el <head>, y por eso la entrada corre igual con JS desactivado.
+
+   EL TÍTULO ANIMA transform Y NO OPACIDAD, A PROPÓSITO. Es el elemento del LCP:
+   si arranca en opacity 0, el navegador no lo cuenta como pintado y la métrica
+   se va atrás toda la animación. Moviéndolo con transform, se pinta en el
+   primer frame y la métrica no se entera.
    ─────────────────────────────────────────────────────────────────────── */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .55s var(--ease), transform .55s var(--ease);
-}
-.js .reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .spine::before {
+    transform-origin: top;
+    animation: espinazo .6s var(--ease) both;
+  }
+  .hero__title   { animation: sube  .5s var(--ease) both; }
+  .hero__sub     { animation: entra .5s var(--ease) .10s both; }
+  .hero__actions { animation: entra .5s var(--ease) .18s both; }
+  .hero__trust   { animation: entra .5s var(--ease) .26s both; }
 
+  .hero-ledger li { animation: entra .45s var(--ease) both; }
+  .hero-ledger li:nth-child(1) { animation-delay: .30s; }
+  .hero-ledger li:nth-child(2) { animation-delay: .34s; }
+  .hero-ledger li:nth-child(3) { animation-delay: .38s; }
+  .hero-ledger li:nth-child(4) { animation-delay: .42s; }
+  .hero-ledger li:nth-child(5) { animation-delay: .46s; }
+}
+
+@keyframes espinazo { from { transform: scaleY(0); }        to { transform: scaleY(1); } }
+@keyframes sube     { from { transform: translateY(10px); } to { transform: none; } }
+@keyframes entra    { from { opacity: 0; transform: translateY(10px); }
+                      to   { opacity: 1; transform: none; } }
+
+/* El resto del movimiento del sitio es la barra flotante, que informa un cambio
+   de estado real, y las transiciones de hover y del acordeón. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .reveal { opacity: 1; transform: none; transition: none; }
-  .btn:hover { transform: none; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
@@ -813,7 +841,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ── IMPRESIÓN ─────────────────────────────────────────────────────────── */
 @media print {
-  .site-header, .floating-cta, .hero::before { display: none !important; }
+  .site-header, .floating-cta { display: none !important; }
   body { background: #fff; color: #000; }
   .hero { min-height: 0; }
+  .spine { padding-left: 0; padding-block: 1.5rem; }
+  .spine::before { display: none; }
 }

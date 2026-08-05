@@ -15,7 +15,7 @@ $ErrorActionPreference = 'Stop'
 
 $root   = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $root 'tools\og-image.html'
-$out    = Join-Path $root 'assets\og-image-v2.png'
+$out    = Join-Path $root 'assets\og-image-v3.png'
 
 $edge = @(
   "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe",
@@ -37,6 +37,12 @@ try {
           --user-data-dir="$profile" `
           --screenshot="$out" --window-size=1200,630 `
           ("file:///" + ($source -replace '\\','/'))
+
+  # Edge devuelve el control antes de terminar de escribir el PNG, así que un
+  # Test-Path inmediato falla aunque el screenshot haya salido bien. Se espera
+  # hasta 10 segundos a que el archivo aparezca.
+  $limite = (Get-Date).AddSeconds(10)
+  while (-not (Test-Path $out) -and (Get-Date) -lt $limite) { Start-Sleep -Milliseconds 250 }
 
   if (-not (Test-Path $out)) { throw "Edge no escribió $out" }
 
