@@ -108,6 +108,42 @@ todavía la piden.
 
 ---
 
+## Revisar que no se rompió nada
+
+`tools/verificar.js` corre de una las comprobaciones que son tediosas a mano y
+fáciles de romper sin darse cuenta. Conviene pasarlo antes de publicar.
+
+```
+python -m http.server 8000          en una terminal
+node tools/verificar.js             en otra
+```
+
+Sale con código 1 si algo falla, y deja las capturas en una carpeta temporal cuya
+ruta imprime al final (no ensucia el repo). Chequea:
+
+- que el ámbar siga en **los tres puntos del pago** —el renglón "Recién ahí pagás",
+  el número del paso 5 y el cierre de la garantía— y que la estructura siga en
+  pizarra. Es lo más fácil de romper del sistema de dos colores;
+- que el **espinazo** sea una línea sola, sin cortes y toda en la misma x;
+- los **cuatro estados de la barra flotante** de WhatsApp;
+- que no haya **desborde horizontal** en 360, 390, 768, 1024 y 1440;
+- que todo lo tabulable tenga **foco visible** y que la barra escondida no lo reciba;
+- que con **`prefers-reduced-motion`** la entrada no corra y el contenido se vea;
+- que **sin JavaScript** la página se vea entera.
+
+Necesita Playwright, que **no** es una dependencia del sitio —el sitio sigue sin
+ninguna— sino una herramienta de desarrollo:
+
+```
+npm install playwright
+npx playwright install chromium
+```
+
+Eso crea `node_modules/` y `package.json` en la carpeta. Los dos están en el
+`.gitignore` justamente para que no se cuelen en un commit.
+
+---
+
 ## Publicar los cambios
 
 ```
