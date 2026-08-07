@@ -9,3 +9,10 @@ Desktop.ini
 node_modules/
 package.json
 package-lock.json
+
+# Configuración de Claude Code que es de esta computadora y de ninguna otra
+# (la aprobación del .mcp.json, por ejemplo). Lo que sí se comparte va en
+# .claude/settings.json, que se commitea. Acá estaba dependiendo del gitignore
+# global de la máquina: en una recién clonada ese no existe y "git add -A" se
+# llevaba la config local al repo.
+.claude/settings.local.json
