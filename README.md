@@ -180,10 +180,23 @@ Para ver el sitio no hace falta nada: es HTML plano. Lo que sí viaja con el rep
 configuración de Claude Code —`.mcp.json` y `.claude/settings.json`— y ahí hay tres
 cosas que conviene saber antes de la primera vez.
 
-**1. Node tiene que estar instalado.** `.mcp.json` levanta Playwright con
-`npx @playwright/mcp@latest`. Sin Node no hay `npx`, el servidor no arranca, y el error
-no dice "falta Node": dice que el servidor no conectó, que es bastante menos útil. Se
-comprueba con `node --version` antes de empezar.
+**1. Hacen falta Node y el navegador de Playwright.** Son dos cosas, no una, y la
+segunda es la que se olvida.
+
+```
+node --version                  tiene que responder algo
+npx playwright install chromium  descarga el navegador (~430 MB, una sola vez por máquina)
+```
+
+`.mcp.json` levanta Playwright con `npx @playwright/mcp@latest`, así que sin Node no
+hay `npx` y el servidor no arranca. Pero aunque Node esté, **el servidor arranca igual
+sin navegador y dice `✔ Connected`**: el error recién aparece en la primera navegación,
+como `Chromium distribution ... is not found`. Esa es la trampa — "conectado" no
+significa que funcione, así que no alcanza con mirar el estado del servidor.
+
+El archivo `playwright-mcp.config.json` de la raíz es el que fuerza el chromium propio
+de Playwright. Sin él, Playwright busca el Chrome del sistema, que en Windows puede
+perfectamente no estar instalado aunque tengas Edge.
 
 **2. La primera vez pide aprobar dos cosas.** Claude Code no confía en la configuración
 que viene adentro de un repo hasta que se lo autorizás, así que al abrir la carpeta va
