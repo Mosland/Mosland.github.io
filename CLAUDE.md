@@ -52,7 +52,7 @@ difícil cobrar el precio pleno después)
 
 **Un solo paquete es una decisión de negocio deliberada (agosto de 2026), no un
 estado transitorio.** Antes eran dos —Presencia USD 90 y Completo USD 130— y se
-unificaron en uno solo de USD 90 con el alcance completo. Dos consecuencias, las
+unificaron en uno solo con el alcance completo. Dos consecuencias, las
 dos obligatorias:
 - **No proponer volver a partirlo en dos.** Ni "básico y completo", ni una opción
   más barata, ni sacar algo del alcance para venderlo como extra pago.
@@ -61,21 +61,36 @@ dos obligatorias:
   subirlo algún día sin quedar mal con nadie. No es una invitación a proponer la
   suba, ni un pendiente a levantar en cada sesión.
 
-**Al cambiar el precio hay que tocar CUATRO lugares.** El precio de introducción va
-a subir cuando Joaco lo decida, así que esto va a pasar.
-- En `index.html`, tres: el total del presupuesto de `#paquetes` (`quote__total`), y
-  dentro del JSON-LD de `ProfessionalService` el campo `priceRange` y el
-  `Offer.price`. Si alguno queda viejo, el sitio se contradice a sí mismo en el
-  resultado de búsqueda.
-- En **este mismo archivo**, uno: el bullet de la lista de acá arriba. Si queda
-  viejo es peor que en la web, porque el próximo que lea este CLAUDE.md toma el
-  precio viejo como fuente de verdad y lo vuelve a propagar.
+**Al cambiar el precio hay que tocar SEIS lugares, repartidos en tres archivos.** El
+precio de introducción va a subir cuando Joaco lo decida, así que esto va a pasar.
+Los lugares se nombran por su función y no por lo que dicen hoy: si este
+procedimiento repitiera el número, cada corrección del conteo agregaría un lugar más
+que mantener.
+- En `index.html`, **tres**: el total del presupuesto de `#paquetes`
+  (`quote__total`), y dentro del JSON-LD de `ProfessionalService` los campos
+  `priceRange` y `Offer.price`. Si alguno queda viejo, el sitio se contradice a sí
+  mismo en el resultado de búsqueda.
+- En **este mismo archivo**, **dos**: el bullet del paquete único en "Paquete", más
+  arriba, y el bullet de "No proponer volver a dos paquetes" en "Qué NO hacer". Si
+  quedan viejos es peor que en la web, porque el próximo que lea este CLAUDE.md toma
+  el precio viejo como fuente de verdad y lo vuelve a propagar.
+- En `README.md`, **uno**: el bullet del paquete único en "Decisiones que conviene no
+  romper". Este es el que faltaba: hasta el 7/8/2026 este mismo párrafo afirmaba que
+  el README no tenía precios, y sí los tenía.
+
+**Y dos cosas que NO se tocan**, que es la trampa del otro lado:
+- Las menciones históricas de los dos paquetes viejos, acá y en el README. Describen
+  lo que había antes de unificarlos; actualizarlas borra el registro de por qué no
+  hay que volver a partir el paquete en dos.
+- Los ejemplos de búsqueda de este procedimiento y del README, donde el número
+  aparece como texto de ejemplo y no como precio.
 
 Es el mismo riesgo de desincronización por el que se eliminó el bloque `FAQPage`.
-Verificado por grep el 4/8/2026: no hay ningún otro lugar en el repo con el
-precio. `README.md` no contiene precios, solo el instructivo para cambiarlos. Lo
-que aparece en `css/styles.css` y `tools/og-image.html` al buscar "90" son pesos
-de fuente y medidas, no precios; la imagen de OG no muestra precios.
+Verificado por grep el 7/8/2026 buscando el número pelado en todo el repo: aparte de
+los seis, lo único que sale es un canal de color en `tools/og-image.html` y los
+ejemplos de búsqueda. `css/styles.css` no aparece: su único match es un ratio de
+contraste con un punto delante, que la búsqueda del número pelado no encuentra. La
+imagen de OG no muestra precios.
 
 ⚠ **Buscar `"USD 90"` no encuentra el total.** El markup es
 `<span class="quote__cur">USD</span>90`, con la moneda en su propio elemento: hay

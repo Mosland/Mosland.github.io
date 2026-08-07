@@ -35,7 +35,7 @@ Y entrar a http://localhost:8000
 ### Cambiar un precio
 
 El precio es de introducción y va a subir, así que esto lo vas a hacer. Aparece en
-**cuatro lugares** y hay que tocarlos todos.
+**seis lugares**, repartidos en tres archivos, y hay que tocarlos todos.
 
 En `index.html`, tres:
 
@@ -46,14 +46,26 @@ En `index.html`, tres:
 El 2 y el 3 son los datos que lee Google. Si quedan viejos, el sitio se contradice a
 sí mismo: una cosa en la página, otra en el resultado de búsqueda.
 
-En `CLAUDE.md`, uno:
+En `CLAUDE.md`, dos:
 
-4. El bullet del paquete en la lista de arriba.
+4. El bullet del paquete único, en la sección "Paquete".
+5. El bullet de "No proponer volver a dos paquetes", en "Qué NO hacer".
 
-Ese no lo ve nadie que entre al sitio, pero es la fuente de verdad que lee Claude.
-Si queda viejo, el precio viejo vuelve solo la próxima vez que le pidas un cambio.
+Esos dos no los ve nadie que entre al sitio, pero son la fuente de verdad que lee
+Claude. Si quedan viejos, el precio viejo vuelve solo la próxima vez que le pidas un
+cambio.
 
-`README.md` no lleva precios: este instructivo es todo lo que hay acá.
+En este mismo `README.md`, uno:
+
+6. El bullet del paquete único, en "Decisiones que conviene no romper", al final.
+
+Este es el que faltaba. Hasta el 7/8/2026 acá decía que el README no llevaba precios,
+y era mentira: los llevaba, y el procedimiento mandaba justamente a no mirarlo.
+
+**Lo que NO hay que tocar**, que es el error del otro lado: las menciones de los dos
+paquetes viejos (Presencia y Completo) son historia, no precios vigentes — si las
+actualizás, borrás el registro de por qué el paquete no se vuelve a partir en dos. Y
+el número que aparece abajo como ejemplo de búsqueda tampoco es un precio.
 
 ⚠ **Buscar `USD 90` no encuentra el total.** En el HTML la moneda va en su propio
 elemento —`<span class="quote__cur">USD</span>90`— así que entre `USD` y el número
