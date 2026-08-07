@@ -174,6 +174,38 @@ Jekyll y suba los archivos tal cual.
 
 ---
 
+## Clonar el repo en otra computadora
+
+Para ver el sitio no hace falta nada: es HTML plano. Lo que sí viaja con el repo es la
+configuración de Claude Code —`.mcp.json` y `.claude/settings.json`— y ahí hay tres
+cosas que conviene saber antes de la primera vez.
+
+**1. Node tiene que estar instalado.** `.mcp.json` levanta Playwright con
+`npx @playwright/mcp@latest`. Sin Node no hay `npx`, el servidor no arranca, y el error
+no dice "falta Node": dice que el servidor no conectó, que es bastante menos útil. Se
+comprueba con `node --version` antes de empezar.
+
+**2. La primera vez pide aprobar dos cosas.** Claude Code no confía en la configuración
+que viene adentro de un repo hasta que se lo autorizás, así que al abrir la carpeta va
+a preguntar por el servidor de `.mcp.json` (Playwright) y por el marketplace de plugins
+que declara `.claude/settings.json`. Se aprueba una vez por máquina y no vuelve a
+preguntar. Que pregunte no es un error, es el comportamiento normal.
+
+**3. Los permisos son un subconjunto, a propósito.** `.claude/settings.json` trae
+aprobados cuatro grupos y nada más: `git`, `gh`, el servidor local de preview, y las
+herramientas de Playwright que no ejecutan código arbitrario. Todo lo demás va a
+preguntar la primera vez y se aprueba en el momento. **No es la lista completa que
+había antes de mudar la configuración al repo:** esa tenía unas sesenta reglas, y la
+mayoría eran rutas temporales con identificadores de sesiones muertas y dominios de
+búsquedas puntuales que no se van a repetir. Copiarlas enteras era mudar la basura de
+una máquina a la otra.
+
+⚠ **`.claude/settings.local.json` no viaja y no tiene que viajar.** Ahí van las cosas
+que son de esa computadora y de ninguna otra, como la aprobación del `.mcp.json`. Está
+en el `.gitignore` del repo para que un `git add -A` no se lo lleve por delante.
+
+---
+
 ## Cuando haya trabajos para mostrar
 
 Dentro de `index.html`, buscando `PORTFOLIO`, hay una sección entera comentada con el HTML
