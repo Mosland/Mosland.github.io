@@ -273,6 +273,22 @@ aprobación distinta.
   skill `claude-md-improver` y el comando `/revise-claude-md`. Estaba habilitado en
   `.claude/settings.json` desde el 7/8/2026 sin figurar en ningún inventario.
 
+**Fuera del inventario del proyecto, pero corre igual: `godot-ai`**
+
+No es parte de esta configuración y por eso no está en la lista de arriba: es un
+servidor MCP de **scope usuario**, declarado en `~/.claude.json`, que corre en
+cualquier proyecto que se abra en esta computadora. Va acá igual porque **puede romper
+las pruebas locales de este repo**: escucha en el **puerto 8000**, el mismo que usan el
+servidor de preview y `tools/verificar.js`. Windows permite que los dos procesos hagan
+bind al mismo puerto, así que el servidor de preview arranca sin quejarse y las
+conexiones caen en cualquiera de los dos.
+
+⚠ El síntoma no se parece a un problema de puerto: `verificar.js` reporta que **falta
+cada elemento del sitio**, uno por uno, como si la landing se hubiera roto entera. Ya
+pasó una vez, verificado el 8/8/2026. La salida es correr todo en otro puerto
+(`python -m http.server 8899` y `node tools/verificar.js 8899`); está documentado en el
+README.
+
 **Diferidos, con el disparador que los activaría**
 - **impeccable** y **task-observer** — cuando arranque el trabajo con clientes.
 - **emil-design-eng** — si hace falta refinar animación.
