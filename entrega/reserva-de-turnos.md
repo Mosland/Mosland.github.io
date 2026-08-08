@@ -19,8 +19,11 @@ escrito qué parte depende de él.
 
 ## 1. Checklist de prueba de punta a punta
 
-Se corre **antes de publicar**, en el orden de abajo. Si algo falla, no se publica
-hasta resolverlo.
+Se corre **en dos momentos, y los dos son obligatorios**: la pasada completa antes de
+publicar, y una segunda pasada corta después de migrar el sitio al dominio propio del
+cliente. Abajo, en el orden en que se ejecutan.
+
+Si algo falla, no se publica hasta resolverlo.
 
 ### ☐ 1. La cuenta de agenda es del cliente, no tuya
 
@@ -78,6 +81,22 @@ hecha: lo de acá abajo es dejarla por escrito, no darle la noticia.
 ### ☐ 6. Cancelá el turno de prueba
 
 Que no le quede un turno inventado en la agenda.
+
+### ☐ 7. Después de migrar al dominio final, probá de nuevo
+
+Este paso no es antes de publicar: va **después del paso 5 del Proceso**, cuando el
+sitio ya pasó al dominio propio del cliente.
+
+Repetí los pasos **2, 3 y 6** contra el dominio final: reservá de verdad desde el
+sitio en su dominio, verificá que el turno cae en el calendario del cliente, y cancelá
+el turno de prueba. Los pasos 1, 4 y 5 no hace falta repetirlos: la titularidad de la
+cuenta y los límites del plan no cambian por mover el dominio.
+
+**Por qué no alcanza con la primera pasada.** Si el embed de la agenda tiene
+restricción por dominio, funciona perfecto en el subdominio de prueba y se rompe en el
+dominio propio. Es la misma falla silenciosa que el resto de este documento existe
+para prevenir, solo que un rato más tarde y con el cliente ya pagando: el sitio se ve
+igual, el botón sigue ahí, y no se entera nadie.
 
 ---
 

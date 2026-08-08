@@ -122,10 +122,18 @@ separada porque su alcance es el del paquete único):
   cierra la cuenta, el botón de reservar sigue visible y no reserva nada, y él no se
   entera. No se arregla con una regla de diseño. Se arregla con dos cosas, ambas
   obligatorias en la entrega:
-  1. Probar la reserva de punta a punta antes de publicar (reservar de verdad y
-     verificar que el turno aparece en el calendario del cliente).
+  1. Probar la reserva de punta a punta —reservar de verdad y verificar que el turno
+     aparece en el calendario del cliente— **en dos momentos, los dos obligatorios**:
+     antes de publicar en el enlace de prueba, y **de nuevo después de migrar al
+     dominio propio del cliente** (paso 5 del Proceso). No alcanza con el primero: si
+     el embed de la agenda tiene restricción por dominio, anda en el subdominio de
+     prueba y se rompe en el dominio final, que es la misma falla silenciosa un rato
+     más tarde.
   2. Dejarle por escrito qué parte depende de él: que la cuenta es suya, que si la
      desactiva el botón deja de funcionar, y que eso el sitio no lo puede detectar.
+
+  El checklist con el que se corre esto está en `entrega/reserva-de-turnos.md`, junto
+  con el texto modelo del punto 2.
 
 **Proceso**
 1. Charla breve por WhatsApp o llamada (15-20 min) para entender qué necesita.
