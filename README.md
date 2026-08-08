@@ -114,9 +114,7 @@ encima para poder revisarlo en el navegador.
 **Si cambiás el diseño, cambiale el nombre al archivo** (`og-image-v4.png`, etc.) y
 actualizá tanto el `$out` de `tools/build-og.ps1` como la meta `og:image` de
 `index.html`. WhatsApp y Facebook cachean la imagen por mucho tiempo: si pisás el mismo
-nombre, siguen mostrando la vieja durante días. Por eso `assets/og-image-v2.png` sigue
-en el repo aunque ya no se use: los links que alguien compartió antes del rediseño
-todavía la piden.
+nombre, siguen mostrando la vieja durante días.
 
 ---
 
