@@ -739,9 +739,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   justify-content: space-between;
 }
 .site-footer p { margin: 0; }
-/* Venía en #6E6E77, que contra el fondo da 3.9:1 y no llega al 4.5:1 que pide
-   WCAG AA para texto de este tamaño. Es el único color del sitio que no cumplía.
-   #7A7A83 da 4.62:1 y sigue leyéndose como secundario. */
+/* Venía en #6E6E77, que contra el fondo (--bg, #0B0D10) da 3.85:1 y no llega al
+   4.5:1 que pide WCAG AA para texto de este tamaño. Era el único color del sitio
+   que no cumplía. #7A7A83 da 4.58:1 y sigue leyéndose como secundario.
+   ⚠ Son 0,08 de margen sobre el mínimo: cualquier retoque a este color o al fondo
+   lo vuelve a bajar de AA, así que si tocás alguno de los dos, medí de nuevo. */
 .site-footer__meta { color: #7A7A83; }
 
 /* ── CTA FLOTANTE ──────────────────────────────────────────────────────────
