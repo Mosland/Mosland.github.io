@@ -337,9 +337,10 @@ el sitio siga cargando rápido.
 - **Lo que la web promete del hosting está acotado a propósito.** Dice "el sitio te lo
   dejo publicado y funcionando, y eso no te lo cobro". No dice que el hosting sea gratis,
   ni que lo vaya a ser siempre, ni que vos te hagas cargo de mantenerlo. Son dos riesgos
-  distintos: GitHub puede cambiar sus condiciones y esa cuenta la terminaría pagando el
-  cliente, y una promesa abierta te deja de proveedor de hosting permanente de cada sitio
-  que entregaste. Misma lógica para cualquier servicio de terceros que entres a usar.
+  distintos: el proveedor puede cambiar sus condiciones y esa cuenta la terminaría
+  pagando el cliente, y una promesa abierta te deja de proveedor de hosting permanente
+  de cada sitio que entregaste. Misma lógica para cualquier servicio de terceros que
+  entres a usar.
 - **La barra fija de WhatsApp solo aparece si no hay otro CTA en pantalla.** `js/main.js`
   vigila cuatro anclas: el botón del hero, el de el presupuesto (`#paqueteCta`),
   el de contacto (`#contactoCta`) y el footer. **Si se agrega otro CTA importante al
