@@ -200,9 +200,43 @@ que también muestre el WhatsApp como alternativa visible.
   página).
 - Deploy en GitHub Pages, gratis, con subdominio `github.io` para arrancar. Dominio
   propio (opcional, con costo) se evalúa más adelante, no ahora.
-- Este mismo approach (deploy gratis en un subdominio antes de cobrar) es el que se
-  va a reusar después para entregar los sitios de clientes reales antes del pago —
-  tenerlo en cuenta si se arma algo reutilizable para eso.
+- Lo que **sí** se reusa para los sitios de clientes es el approach: mostrarlo
+  publicado y funcionando en un subdominio gratis antes de cobrar nada. Lo que **no**
+  se reusa es la plataforma — ver acá abajo.
+
+### Dónde viven los sitios de clientes (decidido en agosto de 2026)
+
+Esto estuvo abierto un tiempo y ya está cerrado. **Son dos plataformas distintas y no
+se mezclan.**
+
+**GitHub Pages queda solo para esta web, la de presentación de Joaco.** No se usa para
+sitios de clientes, por dos motivos independientes de los que cada uno alcanza solo:
+- Los *Terms for Additional Products and Features* de GitHub dicen que Pages "is not
+  intended for or allowed to be used as a free web hosting service to run your online
+  business". Alojar ahí el negocio de un tercero es exactamente eso. Quien interpreta
+  la cláusula es GitHub, no nosotros, y lo que puede hacer es bajar el sitio.
+- Solo se permite **un user/org site por cuenta**, y el de Joaco ya lo ocupa este repo.
+
+**Los sitios de clientes van en Cloudflare Pages, gratis, en una cuenta que abre y de
+la que es titular el CLIENTE.** Joaco ayuda a configurarla porque es sencillo, pero no
+queda como dueño de la cuenta ni pagando nada. Es el mismo principio que ya rige para
+la agenda de turnos, y por los mismos dos motivos: es lo que evita quedar de proveedor
+de hosting permanente de cada sitio entregado, y lo que hace que si un día el cliente
+deja de trabajar con Joaco, el sitio siga siendo suyo y se lo pueda llevar sin
+depender de nadie.
+
+**El dominio propio lo compra el cliente, donde quiera.** Si no tiene preferencia, se
+le puede sugerir Cloudflare Registrar: cobra el precio del registro sin margen encima,
+y si ya va a usar Cloudflare Pages le queda todo en la misma cuenta. Es una sugerencia
+y no un requisito — el sitio anda igual con el dominio comprado en cualquier lado, y
+anda igual sin dominio propio.
+
+**Trigger a futuro, no ahora:** si algún día Cloudflare Pages deja de alcanzar, mirar
+**Workers (Static Assets)**. Es donde Cloudflare está poniendo la inversión —su propia
+doc recomienda arrancar ahí los proyectos nuevos y aclara que Pages sigue soportado
+pero sin trabajo de features nuevo— y migrar es trivial porque son los mismos archivos
+estáticos. **No hay nada que hacer hoy con esto**: es para cuando aparezca el
+problema, no un pendiente a levantar en cada sesión.
 
 ## Herramientas de Claude Code en este proyecto
 
@@ -283,7 +317,9 @@ por el que se descartó.
   gratuito de un tercero a futuro, ni comprometerse a sostener el hosting de forma
   indefinida. La web promete una sola cosa: que el sitio queda publicado y
   funcionando, y que eso no se cobra. Son dos riesgos distintos y los dos importan:
-  GitHub puede cambiar sus condiciones y esa cuenta la terminaría pagando el
+  el proveedor puede cambiar sus condiciones y esa cuenta la terminaría pagando el
   cliente, y una promesa abierta deja a Joaco de proveedor de hosting permanente de
-  cada sitio que entregó. Mientras siga abierta la decisión de dónde van a vivir los
-  sitios de clientes, la web no puede adelantarla.
+  cada sitio que entregó. ⚠ **Que ya esté decidido dónde viven los sitios de clientes
+  no habilita a anunciarlo en la web.** La decisión resuelve dónde se publica; no
+  cambia lo que se promete, y los dos riesgos de arriba siguen igual de vivos. Si
+  algún día se quiere cambiar ese texto, es una decisión aparte y la toma Joaco.
