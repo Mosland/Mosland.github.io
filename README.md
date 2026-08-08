@@ -196,9 +196,19 @@ cosas que conviene saber antes de la primera vez.
 segunda es la que se olvida.
 
 ```
-node --version                  tiene que responder algo
-npx playwright install chromium  descarga el navegador (~430 MB, una sola vez por máquina)
+node --version                                  tiene que responder algo
+npx @playwright/mcp@latest install-browser chromium   descarga el navegador
 ```
+
+La descarga son unos 307 MB (el navegador y su headless shell) y ocupa cerca de
+700 MB en disco. Es una sola vez por máquina.
+
+⚠ **Ese comando no es `npx playwright install chromium`**, que es el que usa
+`tools/verificar.js` más arriba en este mismo archivo. Parecen lo mismo y no lo son:
+cada uno instala la versión de chromium que necesita *su* paquete, y si instalás la
+del otro el MCP falla pidiendo un número de build distinto
+(`expected executable at ...\chromium-1237\...`). Si usás las dos herramientas, se
+instalan las dos: ocupan lugar aparte y no se pisan.
 
 `.mcp.json` levanta Playwright con `npx @playwright/mcp@latest`, así que sin Node no
 hay `npx` y el servidor no arranca. Pero aunque Node esté, **el servidor arranca igual

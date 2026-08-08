@@ -16,3 +16,8 @@ package-lock.json
 # global de la máquina: en una recién clonada ese no existe y "git add -A" se
 # llevaba la config local al repo.
 .claude/settings.local.json
+
+# Cada vez que el MCP de Playwright saca un snapshot deja un .yml acá. Son
+# temporales de una sesión, no del proyecto, y el "git add -A" del instructivo
+# de más arriba se los llevaría.
+.playwright-mcp/
