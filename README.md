@@ -227,9 +227,13 @@ que declara `.claude/settings.json`. Se aprueba una vez por máquina y no vuelve
 preguntar. Que pregunte no es un error, es el comportamiento normal.
 
 **3. Los permisos son un subconjunto, a propósito.** `.claude/settings.json` trae
-aprobados cuatro grupos y nada más: `git`, `gh`, el servidor local de preview, y las
-herramientas de Playwright que no ejecutan código arbitrario. Todo lo demás va a
-preguntar la primera vez y se aprueba en el momento. **No es la lista completa que
+aprobados cinco grupos y nada más: `git`, `gh`, el servidor local de preview, las
+herramientas de Playwright que no ejecutan código arbitrario, y `WebSearch`. Todo lo
+demás va a preguntar la primera vez y se aprueba en el momento.
+
+`WebSearch` está ahí porque el `CLAUDE.md` pide investigar antes de proponer diseño o
+copy, y sin el permiso esa instrucción se traba en una pregunta cada vez. Se había
+sacado y se devolvió por eso. **No es la lista completa que
 había antes de mudar la configuración al repo:** esa tenía unas sesenta reglas, y la
 mayoría eran rutas temporales con identificadores de sesiones muertas y dominios de
 búsquedas puntuales que no se van a repetir. Copiarlas enteras era mudar la basura de

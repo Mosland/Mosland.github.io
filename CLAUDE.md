@@ -204,6 +204,55 @@ que también muestre el WhatsApp como alternativa visible.
   va a reusar después para entregar los sitios de clientes reales antes del pago —
   tenerlo en cuenta si se arma algo reutilizable para eso.
 
+## Herramientas de Claude Code en este proyecto
+
+Inventario de qué está instalado, qué está postergado y qué se descartó. Sirve para
+dos cosas: que una máquina nueva sepa qué esperar, y que no se vuelva a proponer algo
+que ya se evaluó y se rechazó. Verificado el 8/8/2026 probando cada cosa con una
+acción real, no leyendo los archivos de configuración.
+
+**Todo va en project scope**, en archivos que se commitean, para que viaje a la otra
+computadora. El `enabledPlugins` del scope de usuario está vacío a propósito.
+
+⚠ **MCP y plugin no son lo mismo, y se confunden fácil.** Un MCP es un servidor que se
+declara en `.mcp.json` y se habilita por máquina. Un plugin viene de un marketplace, se
+declara en `.claude/settings.json` y aporta skills o comandos. Archivos distintos,
+aprobación distinta.
+
+**Activos**
+- **Playwright MCP** (Microsoft) — el único servidor MCP del proyecto. Declarado en
+  `.mcp.json` y habilitado por máquina en `.claude/settings.local.json`. Ojo que su
+  chromium no es el mismo que el de `tools/verificar.js`: ver el README.
+- **frontend-design** — **plugin, no MCP**, del marketplace `claude-plugins-official`.
+  Aporta una skill de dirección de diseño. Estuvo anotado como "frontend-design MCP" y
+  no existe tal servidor; `.mcp.json` tiene uno solo y es Playwright. Instalado sin
+  versión fija (queda como `unknown`), así que su contenido puede cambiar sin aviso.
+- **claude-md-management** — plugin del mismo marketplace, versión 1.0.0. Aporta la
+  skill `claude-md-improver` y el comando `/revise-claude-md`. Estaba habilitado en
+  `.claude/settings.json` desde el 7/8/2026 sin figurar en ningún inventario.
+
+**Diferidos, con el disparador que los activaría**
+- **impeccable** y **task-observer** — cuando arranque el trabajo con clientes.
+- **emil-design-eng** — si hace falta refinar animación.
+- **Figma MCP** — cuando un cliente pase un archivo de Figma.
+- **Claude Design** — en la fase de outreach.
+
+Diferido acá significa que **no está instalado**. No dejan rastro en ninguna
+configuración, así que esta lista es el único lugar donde consta que se los consideró.
+
+**Evaluados y rechazados para este proyecto**
+Superpowers, Context7, agent-browser, Strix, Claude Web Builder, The Architect,
+ui-ux-pro-max-skill, 21st.dev MCP, taste-skill, Vercel y **GitHub MCP**.
+
+**GitHub MCP se rechazó porque el acceso a GitHub ya existe por otro lado:**
+`.claude/settings.json` aprueba `Bash(gh *)` y `PowerShell(gh *)`, así que el CLI `gh`
+cubre PRs, issues y lo demás sin sumar un servidor más que arrancar, aprobar y
+mantener. El rechazo se apoya en que ese permiso está: si algún día se saca, hay que
+reevaluarlo.
+
+No volver a proponer nada de la lista de rechazados salvo que haya cambiado el motivo
+por el que se descartó.
+
 ## Qué NO hacer
 - **No poner fotos de Joaco en el sitio.** Ni en el hero, ni en "Sobre mí", ni como
   marca, ni en la imagen de OG. Es una preferencia personal y está decidida: no hace
