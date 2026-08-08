@@ -170,7 +170,17 @@ que también muestre el WhatsApp como alternativa visible.
 ## Dirección de diseño
 - Minimalista, tema oscuro.
 - Tipografía con personalidad, no system font genérica — elegir algo que transmita
-  intención, no un default.
+  intención, no un default. Hoy son **Bricolage Grotesque** (títulos) y **Hanken
+  Grotesk** (cuerpo), self-hosted en `assets/fonts/`.
+  **El cambio de fuentes engordó la carga y fue a propósito.** Antes eran Space
+  Grotesk e Inter y pesaban **68,9 KB** entre las dos (22.288 + 48.256 bytes);
+  las de ahora pesan **109,0 KB** (Bricolage 76.888 + Hanken 34.704 bytes). Son
+  **40,1 KB más, un 58%**. No es un descuido ni algo a optimizar: las dos caras
+  viejas son las más asociadas a los sitios generados con IA, y estaban usadas
+  juntas. Se pagó ese peso por identidad visual, con los ojos abiertos. Si alguien
+  audita la performance y encuentra las fuentes como el archivo más pesado del
+  sitio: ya se sabe, y la respuesta es que se queda. Medido el 8/8/2026 sobre los
+  archivos reales; los pesos viejos salen de `git show c978b49^`.
 - **Dos colores con roles fijos** (decisión de agosto de 2026; antes era un solo
   acento). **Pizarra frío** para la estructura del documento: superficies,
   espinazo, reglas, números de paso, etiquetas, el marcador del acordeón. Nunca es
