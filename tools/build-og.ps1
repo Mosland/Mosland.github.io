@@ -1,4 +1,4 @@
-# Genera assets/og-image-v2.png a partir de tools/og-image.html.
+# Genera assets/og-image-v3.png a partir de tools/og-image.html.
 #
 # Uso:  powershell -ExecutionPolicy Bypass -File tools\build-og.ps1
 #
@@ -7,7 +7,8 @@
 # og-image.html.
 #
 # Si se cambia el diseño de la imagen, conviene renombrar el archivo de salida
-# (og-image-v3.png, etc.) y actualizar la meta og:image de index.html: WhatsApp
+# (og-image-v4.png, etc.) y actualizar tanto el $out de acá abajo como la meta
+# og:image de index.html: WhatsApp
 # y Facebook cachean la imagen scrapeada por mucho tiempo y, si se pisa el mismo
 # nombre, siguen mostrando la vieja.
 
