@@ -137,6 +137,20 @@ separada porque su alcance es el del paquete único):
 5. Si le gusta, paga el precio acordado y se migra a su dominio. Si después de los
    ajustes no es lo que buscaba, no paga nada.
 
+**Tres promesas comerciales que la web ya hace**, y que hasta ahora vivían solo en
+`index.html` (las dos primeras en las preguntas frecuentes). Son compromisos con el
+cliente, no ideas a revisar: si algo del sitio o de una propuesta las contradice, lo
+que está mal es lo otro.
+- **Plazo de entrega: entre 5 y 10 días** desde la primera charla, según cuánto
+  material tenga listo el cliente. Si tiene apuro por una fecha puntual, se coordina.
+- **Durante el primer mes después de publicar, los cambios chicos van sin costo** —un
+  precio, un horario, un texto—. Pasado ese mes se ven por cambio puntual, siempre con
+  el precio arreglado de antemano. Ojo que esto es *además* de las dos rondas, que son
+  antes de publicar: son dos cosas distintas y la web las distingue.
+- Las rondas más allá de las dos incluidas **se cotizan aparte**, pasándole el precio
+  antes de tocar nada. Es lo mismo que dice el punto 4 de acá arriba — está anotado
+  para que se sepa que ya está cubierto y no se agregue de nuevo.
+
 **Garantía**
 No se cobra nada por adelantado. El cliente ve el sitio terminado y funcionando antes
 de decidir. Si no lo convence después de los ajustes, no debe nada.
