@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Material de trabajo interno: plantillas de entrega para clientes. No es
+# secreto —el repo es público— pero no tiene por qué salir en una búsqueda.
+Disallow: /entrega/
+
 Sitemap: https://mosland.github.io/sitemap.xml
