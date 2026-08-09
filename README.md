@@ -142,6 +142,12 @@ ruta imprime al final (no ensucia el repo). Chequea:
 - que el ámbar siga en **los tres puntos del pago** —el renglón "Recién ahí pagás",
   el número del paso 5 y el cierre de la garantía— y que la estructura siga en
   pizarra. Es lo más fácil de romper del sistema de dos colores;
+- que los **trece ratios de contraste anotados en `css/styles.css`** —la tabla del
+  encabezado y la nota del gris del pie— sigan dando lo que dicen que dan. Se
+  recalculan con la fórmula de WCAG 2.1 sobre los colores que la página usa de
+  verdad, leídos del DOM: si tocás un color o un fondo, esto falla en vez de dejar
+  el comentario mintiendo. Incluye una comprobación aparte de que todos pasen el
+  4.5:1 de AA;
 - que el **espinazo** sea una línea sola, sin cortes y toda en la misma x;
 - los **cuatro estados de la barra flotante** de WhatsApp;
 - que no haya **desborde horizontal** en 360, 390, 768, 1024 y 1440;
