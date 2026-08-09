@@ -170,6 +170,42 @@ npx playwright install chromium
 Eso crea `node_modules/` y `package.json` en la carpeta. Los dos están en el
 `.gitignore` justamente para que no se cuelen en un commit.
 
+### Revisar que los archivos no se contradigan entre sí
+
+`tools/consistencia.js` es lo otro, y es más barato: no abre el navegador, no
+necesita servidor ni Playwright, y termina en milisegundos.
+
+```
+node tools/consistencia.js
+```
+
+Hay valores que viven en varios archivos a la vez y tienen que decir lo mismo.
+Hasta ahora eso dependía de que alguien se acordara de leer este README entero
+antes de tocar algo, y falló: en agosto de 2026 se encontraron **tres reglas ya
+desincronizadas al mismo tiempo**. Compara ocho:
+
+1. **El precio**, en los seis lugares del procedimiento de más arriba. Extrae cada
+   uno por su frase exacta y no contando apariciones del número, así no confunde
+   los precios vigentes con las menciones históricas ni con los ejemplos de búsqueda.
+2. **El número de WhatsApp**, que aparece cuatro veces en `index.html`.
+3. **Cómo se anuncia el precio**: que la idea de "introducción" siga en los tres
+   lugares, y que no se haya colado vocabulario de descuento.
+4. **El negro del fondo**, escrito a mano en cinco lugares: las dos metas
+   `theme-color`, la variable `--bg` del CSS, la del generador de la imagen de OG,
+   y el favicon.
+5. **El dominio**, en siete lugares.
+6. **El rango de precio de Calendly**, en `CLAUDE.md` y en la plantilla de entrega.
+7. **Que todo botón con id terminado en `Cta`** esté vigilado por `js/main.js`.
+8. **Que `.step--pay::before` vaya después de `.step::before`** en el CSS.
+
+⚠ **Lo que no cubre:** las métricas de las familias `fallback`, que hay que
+recalcular si se cambia una fuente. Salen de leer el binario del `.woff2`, así que
+eso sigue dependiendo de que alguien se acuerde.
+
+Si alguien reescribe una de las frases que el script usa de anclaje, **eso también
+falla**, a propósito: un chequeo que se saltea en silencio cuando no encuentra lo
+que buscaba da verde sin haber mirado nada.
+
 ---
 
 ## Publicar los cambios
