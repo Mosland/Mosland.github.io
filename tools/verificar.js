@@ -3,7 +3,9 @@
 
    Corre las comprobaciones que son tediosas de hacer a mano y fáciles de
    romper sin darse cuenta. No reemplaza mirar el sitio: reemplaza acordarse
-   de mirar ocho cosas distintas cada vez.
+   de mirar todas estas cosas, una por una, cada vez. (Acá había un conteo y se
+   sacó: cada bloque nuevo obligaba a corregirlo, y el conteo viejo es peor que
+   no tener conteo.)
 
    USO
      1. Levantar el sitio:   python -m http.server 8000
@@ -107,6 +109,86 @@ function check(bien, texto, detalle) {
   check(color.paso1 !== AMBAR,    'número del paso 1', color.paso1);
   check(color.badge !== AMBAR,    'etiqueta de precios', color.badge);
   check(color.marcador !== AMBAR, 'marcador del acordeón', color.marcador);
+
+  /* ── Contraste real contra los ratios anotados en styles.css ──────────────
+     La tabla del encabezado del CSS y la nota del pie declaran trece ratios
+     calculados a mano una vez. Un comentario no se entera de que el color
+     cambió: sigue diciendo el número viejo y nadie lo nota. Acá se recalculan
+     con la fórmula de luminancia relativa de WCAG 2.1, sobre los colores que la
+     página realmente está usando —leídos del DOM, no copiados acá— así que si
+     alguien toca un color o un fondo, esto falla en vez de dejar el comentario
+     mintiendo. El margen de 0,05 es por los dos decimales de la anotación. */
+  console.log('\nCONTRASTE — los ratios anotados en styles.css');
+
+  const paleta = await page.evaluate(() => {
+    const raiz = getComputedStyle(document.documentElement);
+    const v = (n) => raiz.getPropertyValue(n).trim();
+    const pie = document.querySelector('.site-footer__meta');
+    return {
+      bg: v('--bg'), panel: v('--bg-alt'), presupuesto: v('--surface'),
+      text: v('--text'), muted: v('--muted'),
+      structure: v('--structure'), accent: v('--accent'),
+      pie: pie ? getComputedStyle(pie).color : null,
+    };
+  });
+
+  const canales = (c) => {
+    const s = String(c).trim();
+    if (s[0] !== '#') return s.match(/\d+(?:\.\d+)?/g).slice(0, 3).map(Number);
+    return s.length === 4
+      ? [1, 2, 3].map((i) => parseInt(s[i] + s[i], 16))
+      : [1, 3, 5].map((i) => parseInt(s.substr(i, 2), 16));
+  };
+  const luminancia = (c) => {
+    const [r, g, b] = canales(c).map((n) => {
+      const x = n / 255;
+      return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contraste = (a, b) => {
+    const [alto, bajo] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
+    return (alto + 0.05) / (bajo + 0.05);
+  };
+
+  const MARGEN = 0.05;
+  const AA = 4.5;
+
+  const anotados = [
+    { que: '--text sobre el fondo',            color: paleta.text,      fondo: paleta.bg,          esperado: 15.90 },
+    { que: '--text sobre el panel',            color: paleta.text,      fondo: paleta.panel,       esperado: 14.77 },
+    { que: '--text sobre el presupuesto',      color: paleta.text,      fondo: paleta.presupuesto, esperado: 13.54 },
+    { que: '--muted sobre el fondo',           color: paleta.muted,     fondo: paleta.bg,          esperado:  6.97 },
+    { que: '--muted sobre el panel',           color: paleta.muted,     fondo: paleta.panel,       esperado:  6.47 },
+    { que: '--muted sobre el presupuesto',     color: paleta.muted,     fondo: paleta.presupuesto, esperado:  5.93 },
+    { que: '--structure sobre el fondo',       color: paleta.structure, fondo: paleta.bg,          esperado:  8.19 },
+    { que: '--structure sobre el panel',       color: paleta.structure, fondo: paleta.panel,       esperado:  7.60 },
+    { que: '--structure sobre el presupuesto', color: paleta.structure, fondo: paleta.presupuesto, esperado:  6.97 },
+    { que: '--accent sobre el fondo',          color: paleta.accent,    fondo: paleta.bg,          esperado: 11.03 },
+    { que: '--accent sobre el panel',          color: paleta.accent,    fondo: paleta.panel,       esperado: 10.25 },
+    /* El meta del pie no sale de una variable: lo pisa .site-footer__meta con un
+       color propio. Se lee del elemento, que es donde vive el valor real. */
+    { que: 'el meta del pie sobre el fondo',   color: paleta.pie,       fondo: paleta.bg,          esperado:  4.58 },
+    /* El que había antes en el pie. No está en el CSS vivo, pero el comentario
+       afirma que daba 3.85 y que por eso se cambió: si el fondo se toca, ese
+       número deja de ser cierto y el motivo del cambio queda mal contado. */
+    { que: '#6E6E77, el viejo del pie',        color: '#6E6E77',        fondo: paleta.bg,          esperado:  3.85, bajoAA: true },
+  ];
+
+  for (const a of anotados) {
+    const r = contraste(a.color, a.fondo);
+    check(Math.abs(r - a.esperado) <= MARGEN, a.que,
+          r.toFixed(2) + ':1 (anotado ' + a.esperado.toFixed(2) + ':1)');
+  }
+
+  /* La tabla del CSS afirma, arriba de los números, que todo pasa AA. El
+     #6E6E77 queda afuera a propósito: está anotado justamente como el que no
+     llegaba. */
+  const flojos = anotados
+    .filter((a) => !a.bajoAA && contraste(a.color, a.fondo) < AA)
+    .map((a) => a.que);
+  check(flojos.length === 0, 'todos por encima del ' + AA + ':1 de WCAG AA',
+        flojos.length ? flojos.join(', ') : 'ninguno por debajo');
 
   /* ── Continuidad del espinazo ─────────────────────────────────────────────
      Es el elemento firma y su única gracia es no cortarse nunca. Se corta si
