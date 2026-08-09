@@ -208,6 +208,8 @@ que también muestre el WhatsApp como alternativa visible.
   página).
 - Deploy en GitHub Pages, gratis, con subdominio `github.io` para arrancar. Dominio
   propio (opcional, con costo) se evalúa más adelante, no ahora.
+- **DigitalPlat FreeDomain**: upgrade gratis sobre `mosland.github.io`, **solo uso
+  personal, nunca para sitios de clientes** (si el servicio cierra, se cae el sitio).
 - Lo que **sí** se reusa para los sitios de clientes es el approach: mostrarlo
   publicado y funcionando en un subdominio gratis antes de cobrar nada. Lo que **no**
   se reusa es la plataforma — ver acá abajo.
@@ -290,9 +292,14 @@ pasó una vez, verificado el 8/8/2026. La salida es correr todo en otro puerto
 README.
 
 **Diferidos, con el disparador que los activaría**
-- **impeccable** y **task-observer** — cuando arranque el trabajo con clientes.
-- **emil-design-eng** — si hace falta refinar animación.
-- **Figma MCP** — cuando un cliente pase un archivo de Figma.
+- **impeccable** — cuando arranque el trabajo con clientes. ⚠ **Reemplaza a
+  frontend-design, no se suman:** mismo asiento de dirección estética.
+- **task-observer** — mismo disparador que impeccable. Necesita volumen de sesiones
+  para rendir.
+- **emil-design-eng** — si hace falta refinar animación. Cobertura parcial en
+  HTML/CSS plano: parte del skill asume React.
+- **Figma MCP** — cuando un cliente pase un archivo de Figma. El costo es el seat de
+  Figma, no el MCP.
 - **Claude Design** — en la fase de outreach.
 
 Diferido acá significa que **no está instalado**. No dejan rastro en ninguna
@@ -310,6 +317,17 @@ reevaluarlo.
 
 No volver a proponer nada de la lista de rechazados salvo que haya cambiado el motivo
 por el que se descartó.
+
+**Motivos completos de cada rechazo: ver Notion, página Skills Pluging MCP, sección
+Proyecto Web Personal. No proponer nada de esta lista sin revisar ahí primero si
+cambió el motivo.** Los motivos viven allá a propósito, para no cargar en cada sesión
+algo que se consulta rara vez.
+
+**No instalar ni proponer ninguna herramienta externa nueva —MCP, plugin, skill o
+servicio— sin preguntarle a Joaco primero.** Y cuando haga falta evaluar algo nuevo,
+**buscar antes en esa misma página de Notion si ya se evaluó**, en vez de investigar
+de cero: ahí están también los diferidos, los que quedaron en pausa y los que se
+miraron y no entraron en ninguna lista de acá.
 
 ## Qué NO hacer
 - **No poner fotos de Joaco en el sitio.** Ni en el hero, ni en "Sobre mí", ni como
