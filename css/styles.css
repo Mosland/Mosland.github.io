@@ -40,6 +40,11 @@
      --accent           11.03   10.25     —
    ─────────────────────────────────────────────────────────────────────── */
 :root {
+  /* El sitio es oscuro fijo, no conmutable. Declararlo hace que el navegador
+     pinte en oscuro lo que no controla el CSS: la barra de scroll y los
+     controles nativos. Sin esto quedan claros sobre el fondo negro. */
+  color-scheme: dark;
+
   --bg:          #0B0D10;   /* casi neutro, apenas frío */
   --bg-alt:      #0E1720;   /* panel pizarra: #paquetes y #preguntas */
   --surface:     #12202B;   /* el presupuesto */
