@@ -28,6 +28,11 @@ Este archivo guarda el **porqué** de las decisiones. El **cómo** se hace cada 
   publicado, o instalar cualquier herramienta. No para un typo ni un cambio de una línea.
 - **Un dato que aparece en dos archivos es una regla de consistencia nueva.** Antes de
   duplicar algo, conviene apuntarlo en `tools/consistencia.js`.
+- **Después de un `/compact`, reabrí el archivo que dispara la regla que estés tocando.**
+  Este `CLAUDE.md` se reinyecta solo al compactar; los de `.claude/rules/` no: recién
+  vuelven a cargar cuando se lee de nuevo un archivo que matchee su `paths`. ⚠ Si seguís
+  trabajando sobre algo que depende de una de esas reglas sin haber reabierto su
+  disparador, **la regla puede estar faltando y no se nota**.
 
 ## Perfil y posicionamiento
 
