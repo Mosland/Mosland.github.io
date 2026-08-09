@@ -318,7 +318,7 @@ reevaluarlo.
 No volver a proponer nada de la lista de rechazados salvo que haya cambiado el motivo
 por el que se descartó.
 
-**Motivos completos de cada rechazo: ver Notion, página Skills Pluging MCP, sección
+**Motivos completos de cada rechazo: ver Notion, página Skills Plugins MCP, sección
 Proyecto Web Personal. No proponer nada de esta lista sin revisar ahí primero si
 cambió el motivo.** Los motivos viven allá a propósito, para no cargar en cada sesión
 algo que se consulta rara vez.
