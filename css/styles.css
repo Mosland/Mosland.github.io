@@ -201,17 +201,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .skip-link:focus { left: 0; }
 
-/* Destinos de ancla. Sin esto, saltar a #contenido (el salto de accesibilidad y
-   la marca) o a #proceso (el botón del hero) deja la sección pegada al borde de
-   arriba de la ventana, sin nada de aire. No hay header fijo, así que alcanza
-   con un respiro: no hay ninguna altura que compensar.
-   Va a todas las secciones con id y no solo a las dos que hoy se enlazan, para
-   que el próximo ancla que se agregue ya nazca con esto resuelto. */
-main[id],
-section[id] {
-  scroll-margin-top: 1.5rem;
-}
-
 /* ── LAYOUT ────────────────────────────────────────────────────────────── */
 .container {
   width: 100%;
