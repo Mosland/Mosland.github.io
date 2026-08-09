@@ -30,8 +30,9 @@ quiere hacer antes de darlo por terminado. Ese repaso todavía no arrancó y no 
    `10&nbsp;días`, así que un grep de `"10 días"` da falso negativo.** Es la misma trampa
    que la de `"USD 90"` en `.claude/rules/precio.md`, y ya causó un falso negativo el
    9/8/2026.
-3. **Commitear el set de la reescritura de `CLAUDE.md`** (el archivo, las cuatro reglas,
-   los dos anclajes de `consistencia.js` y este archivo).
+3. **Repasar que las cuatro reglas dicen lo que tienen que decir.** Se movieron en bloque y
+   se verificó que no se perdió nada (las cinco palabras prohibidas y las tres promesas
+   siguen en pie), pero nadie las leyó todavía con ojo de "¿esto está bien redactado?".
 
 ## 3. Después
 
@@ -105,4 +106,4 @@ escribirle un `alt` real.
 | `tools/consistencia.js` — chequeo mecánico entre archivos | `7edf37e` |
 | Cerrado dónde viven los sitios de clientes (Cloudflare, cuenta del cliente) | `8a7943c` |
 | Plantilla de entrega de la reserva de turnos | `a50351f` |
-| Reescritura de `CLAUDE.md` + `.claude/rules/` | *(sin commitear)* |
+| Reescritura de `CLAUDE.md` (373 → 171 l) + `.claude/rules/` + este archivo | `6411913` |
