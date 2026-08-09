@@ -44,8 +44,9 @@ persona.
 
 **Paquete** (**precio de introducción** — dejarlo explícito en la web como temporal y
 que va a subir, no como precio fijo permanente. Sin vocabulario de descuento: nada de
-"oferta", "promoción" ni "rebaja", que asocian el trabajo con lo barato y hacen más
-difícil cobrar el precio pleno después)
+"oferta", "promoción", "promo" ni "rebaja", que asocian el trabajo con lo barato y
+hacen más difícil cobrar el precio pleno después. "promo" cuenta por lo mismo que
+"promoción": el acortamiento no cambia lo que la palabra le dice al cliente)
 - **USD 90, paquete único**: una página (quién sos, qué ofrecés, cómo te contactan,
   ubicación si aplica) + sección de servicios detallada + preguntas frecuentes +
   reserva de turnos o WhatsApp directo.
@@ -343,7 +344,8 @@ miraron y no entraron en ninguna lista de acá.
   existan piezas reales.
 - No mencionar el rubro salud (ni ningún rubro) en el mensaje principal.
 - No presentar el precio de introducción como precio fijo sin aclarar que va a subir,
-  ni presentarlo con lenguaje de oferta/promoción/descuento.
+  ni presentarlo con lenguaje de oferta/promoción/promo/rebaja/descuento. Las cinco
+  palabras son las que chequea `tools/consistencia.js`.
 - **No proponer volver a dos paquetes.** El paquete único de USD 90 es una decisión
   de negocio tomada en agosto de 2026, no un recorte temporal ni algo a optimizar.
   Nada de "básico y completo", ni una opción más barata, ni mover algo del alcance
