@@ -64,10 +64,11 @@
       sitemap.xml y el "En vivo" del README. Se compara el host y no la URL
       entera, porque og:image apunta a un archivo y no a la raíz.
 
-   6. CALENDLY — el rango de precio del plan pago está en CLAUDE.md y dos veces
-      en entrega/reserva-de-turnos.md (una en el texto y otra en la plantilla
-      que se le manda al cliente). Es precio de un tercero: que coincidan entre
-      sí no lo vuelve vigente, solo evita que se contradigan.
+   6. CALENDLY — el rango de precio del plan pago está en
+      .claude/rules/entrega-clientes.md y dos veces en entrega/reserva-de-turnos.md
+      (una en el texto y otra en la plantilla que se le manda al cliente). Es
+      precio de un tercero: que coincidan entre sí no lo vuelve vigente, solo
+      evita que se contradigan.
 
    7. CTA → ANCLA — todo botón con id terminado en "Cta" tiene que estar
       vigilado por js/main.js, si no la barra flotante aparece pegada arriba de
@@ -158,7 +159,7 @@ todosIguales([
   { donde: 'index.html · JSON-LD Offer.price',
     valor: extraer('index.html', /"price":\s*"(\d+)"/, 'precio') },
   { donde: 'CLAUDE.md · bullet del paquete único',
-    valor: extraer('CLAUDE.md', /- \*\*USD (\d+), paquete único\*\*/, 'precio') },
+    valor: extraer('CLAUDE.md', /\*\*Paquete único: USD (\d+)\*\*/, 'precio') },
   { donde: 'CLAUDE.md · "no volver a dos paquetes"',
     valor: extraer('CLAUDE.md', /El paquete único de USD (\d+) es una decisión/, 'precio') },
   { donde: 'README.md · decisiones que no se rompen',
@@ -226,8 +227,8 @@ todosIguales([
 /* ── 6. CALENDLY ───────────────────────────────────────────────────────── */
 console.log('\nCALENDLY — el rango del plan pago, en dos archivos');
 todosIguales([
-  { donde: 'CLAUDE.md · reserva de turnos',
-    valor: extraer('CLAUDE.md', /USD (\d+-\d+) por usuario al mes/, 'rango de Calendly') },
+  { donde: '.claude/rules/entrega-clientes.md · planes gratuitos',
+    valor: extraer('.claude/rules/entrega-clientes.md', /USD (\d+-\d+) por usuario al mes/, 'rango de Calendly') },
   { donde: 'entrega/reserva-de-turnos.md · paso 5',
     valor: extraer('entrega/reserva-de-turnos.md', /\*\*USD (\d+-\d+) por usuario al mes\*\*/, 'rango de Calendly') },
   { donde: 'entrega/reserva-de-turnos.md · texto modelo',

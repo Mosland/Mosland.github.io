@@ -44,14 +44,19 @@ Si algo de acá contradice al código, **manda el código**: este archivo está 
 - `tools/og-image.html` — ⚠ **no es una página del sitio.** Es la fuente que se
   rasteriza para generar el PNG de OG, junto con `tools/build-og.ps1`.
 
-**Documentación** — `CLAUDE.md` (el porqué), `README.md` (el cómo), y este archivo.
+**Documentación** — `CLAUDE.md` (el porqué), `README.md` (el cómo), `PLAN.md` (qué falta)
+y este archivo. Más `.claude/rules/` — cuatro archivos de reglas que **no cargan en cada
+sesión**: llevan frontmatter `paths:` y entran en contexto solo al tocar los archivos que
+nombran. `copy-web.md` (el copy del sitio), `diseno.md` (el sistema visual), `precio.md`
+(el procedimiento de los seis lugares) y `entrega-clientes.md` (reserva de turnos y
+hosting).
 
 **Material para clientes** — ⚠ rol propio: ni sitio ni herramienta.
 `entrega/reserva-de-turnos.md` es el checklist y el texto modelo que se usan **con un
 cliente** al entregarle un sitio con reserva de turnos. Está terminado y sin estrenar.
 
-**Configuración de Claude Code** — `.mcp.json`, `.claude/settings.json` y
-`playwright-mcp.config.json`, commiteados a propósito. Ver sección 8.
+**Configuración de Claude Code** — `.mcp.json`, `.claude/settings.json`,
+`.claude/rules/` y `playwright-mcp.config.json`, commiteados a propósito. Ver sección 8.
 
 ## 4. El sitio: qué secciones tiene
 
