@@ -182,7 +182,8 @@ node tools/consistencia.js
 Hay valores que viven en varios archivos a la vez y tienen que decir lo mismo.
 Hasta ahora eso dependía de que alguien se acordara de leer este README entero
 antes de tocar algo, y falló: en agosto de 2026 se encontraron **tres reglas ya
-desincronizadas al mismo tiempo**. Compara ocho:
+desincronizadas al mismo tiempo**. Compara esto (acá no va el conteo a propósito:
+cada regla nueva obligaba a corregirlo, y un conteo viejo es peor que ninguno):
 
 1. **El precio**, en los seis lugares del procedimiento de más arriba. Extrae cada
    uno por su frase exacta y no contando apariciones del número, así no confunde
@@ -197,6 +198,11 @@ desincronizadas al mismo tiempo**. Compara ocho:
 6. **El rango de precio de Calendly**, en `CLAUDE.md` y en la plantilla de entrega.
 7. **Que todo botón con id terminado en `Cta`** esté vigilado por `js/main.js`.
 8. **Que `.step--pay::before` vaya después de `.step::before`** en el CSS.
+9. **El nombre del PNG de la imagen de OG**, escrito en cuatro lugares —la meta
+   `og:image`, el `$out` y el encabezado de `build-og.ps1`, y el `<title>` de
+   `og-image.html`—, más que ese archivo exista de verdad en `assets/`. Es la regla
+   del renombrado de más arriba: se rompe al cambiar el diseño de la imagen, y el
+   síntoma no se ve en el sitio sino al pegar el link en un chat, días después.
 
 ⚠ **Lo que no cubre:** las métricas de las familias `fallback`, que hay que
 recalcular si se cambia una fuente. Salen de leer el binario del `.woff2`, así que

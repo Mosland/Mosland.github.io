@@ -85,6 +85,15 @@
       ⚠ Punto ciego propio: si algún día se resuelve con !important o subiendo
         la especificidad, el orden deja de importar y esta aserción pasa a pedir
         algo que ya no hace falta.
+
+   9. IMAGEN DE OG — el nombre del PNG está escrito en cuatro lugares: la meta
+      og:image de index.html, el $out de tools/build-og.ps1, el comentario de
+      encabezado de ese mismo script, y el <title> de tools/og-image.html. Además
+      se verifica que el archivo exista de verdad en assets/.
+      La regla existe porque WhatsApp y Facebook cachean la imagen scrapeada por
+      mucho tiempo: al cambiar el diseño hay que renombrar el archivo, y ahí es
+      donde se olvida alguna de las cuatro menciones. El síntoma no se ve en el
+      sitio — se ve al pegar el link en un chat, días después, y ya es tarde.
    ══════════════════════════════════════════════════════════════════════════ */
 'use strict';
 
@@ -255,6 +264,31 @@ console.log('\nORDEN EN EL CSS — .step--pay::before después de .step::before'
     check(pago > base, '.step--pay::before va después',
           `.step::before en la línea ${linea(base)}, .step--pay::before en la ${linea(pago)}` +
           (pago > base ? '' : ' — invertido: el pizarra se lleva puesto el ámbar del paso 5'));
+  }
+}
+
+/* ── 9. IMAGEN DE OG ───────────────────────────────────────────────────── */
+console.log('\nIMAGEN DE OG — el nombre del PNG, en cuatro lugares');
+{
+  const nombres = [
+    { donde: 'index.html · meta og:image',
+      valor: extraer('index.html', /<meta property="og:image" content="https:\/\/[^/]+\/assets\/([^"]+)"/, 'nombre del OG') },
+    { donde: 'tools/build-og.ps1 · $out',
+      valor: extraer('tools/build-og.ps1', /\$out\s*=\s*Join-Path \$root 'assets\\([^']+)'/, 'nombre del OG') },
+    { donde: 'tools/build-og.ps1 · encabezado',
+      valor: extraer('tools/build-og.ps1', /# Genera assets\/(\S+) a partir de/, 'nombre del OG') },
+    { donde: 'tools/og-image.html · title',
+      valor: extraer('tools/og-image.html', /<title>Fuente de assets\/([^<]+)<\/title>/, 'nombre del OG') },
+  ];
+  todosIguales(nombres, 'el nombre del PNG');
+
+  /* Que las cuatro menciones coincidan no sirve de nada si apuntan a un archivo
+     que no existe: sería el mismo link roto, escrito cuatro veces igual. */
+  const alguno = nombres.find((n) => n.valor !== null);
+  if (alguno) {
+    const existe = fs.existsSync(path.join(RAIZ, 'assets', alguno.valor));
+    check(existe, 'el archivo existe en assets/',
+          alguno.valor + (existe ? '' : ' — no está en el disco'));
   }
 }
 
