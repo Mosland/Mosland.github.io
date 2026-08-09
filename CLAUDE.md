@@ -275,12 +275,16 @@ aprobación distinta.
   skill `claude-md-improver` y el comando `/revise-claude-md`. Estaba habilitado en
   `.claude/settings.json` desde el 7/8/2026 sin figurar en ningún inventario.
 
-**Fuera del inventario del proyecto, pero corre igual: `godot-ai`**
+**Fuera del inventario del proyecto: `godot-ai`, hoy deshabilitado acá**
 
-No es parte de esta configuración y por eso no está en la lista de arriba: es un
-servidor MCP de **scope usuario**, declarado en `~/.claude.json`, que corre en
-cualquier proyecto que se abra en esta computadora. Va acá igual porque **puede romper
-las pruebas locales de este repo**: escucha en el **puerto 8000**, el mismo que usan el
+**Estado actual: deshabilitado para este proyecto desde `/mcp`, el 9/8/2026.** No es
+parte de esta configuración y por eso no está en la lista de arriba: es un servidor MCP
+de **scope usuario**, declarado en `~/.claude.json`. Sigue declarado ahí, así que el
+riesgo no desapareció, solo está apagado en este proyecto: **vuelve si se lo reactiva, y
+en otra computadora nace activo**, porque deshabilitar desde `/mcp` es una decisión por
+máquina y no viaja con el repo.
+
+El riesgo, para cuando vuelva: escucha en el **puerto 8000**, el mismo que usan el
 servidor de preview y `tools/verificar.js`. Windows permite que los dos procesos hagan
 bind al mismo puerto, así que el servidor de preview arranca sin quejarse y las
 conexiones caen en cualquiera de los dos.

@@ -19,8 +19,10 @@ python -m http.server 8000
 
 Y entrar a http://localhost:8000
 
-⚠ En esta computadora el 8000 lo puede tener tomado el MCP de godot-ai. Si lo que
-cargás no es la landing, probá con otro puerto (`python -m http.server 8899`).
+⚠ El 8000 lo puede tener tomado el MCP de godot-ai. Hoy está **deshabilitado para este
+proyecto desde `/mcp`** (9/8/2026), pero sigue declarado en scope usuario: vuelve si se
+lo reactiva, y en otra computadora nace activo. Si lo que cargás no es la landing, probá
+con otro puerto (`python -m http.server 8899`).
 
 ---
 
@@ -131,10 +133,12 @@ python -m http.server 8000          en una terminal
 node tools/verificar.js             en otra
 ```
 
-⚠ **Si el 8000 está ocupado, el síntoma engaña.** Acá lo toma el MCP de godot-ai, y
-Windows deja que los dos procesos escuchen el mismo puerto: el script no dice "puerto
-ocupado", dice que **falta cada elemento del sitio**. Para eso `verificar.js` acepta el
-puerto como argumento — `python -m http.server 8899` y `node tools/verificar.js 8899`.
+⚠ **Si el 8000 está ocupado, el síntoma engaña.** Quien lo toma es el MCP de godot-ai
+—hoy **deshabilitado para este proyecto desde `/mcp`**, pero sigue declarado en scope
+usuario, así que vuelve si se lo reactiva y en otra computadora nace activo—. Windows
+deja que los dos procesos escuchen el mismo puerto: el script no dice "puerto ocupado",
+dice que **falta cada elemento del sitio**. Para eso `verificar.js` acepta el puerto como
+argumento — `python -m http.server 8899` y `node tools/verificar.js 8899`.
 
 Sale con código 1 si algo falla, y deja las capturas en una carpeta temporal cuya
 ruta imprime al final (no ensucia el repo). Chequea:
