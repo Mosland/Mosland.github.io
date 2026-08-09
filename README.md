@@ -159,6 +159,12 @@ ruta imprime al final (no ensucia el repo). Chequea:
 - que con **`prefers-reduced-motion`** la entrada no corra y el contenido se vea;
 - que **sin JavaScript** la página se vea entera.
 
+Con `--resumen` (`node tools/verificar.js 8899 --resumen`) agrega al final una tabla
+markdown con los bloques y cuántas aserciones corrió cada uno, lista para pegar en
+`ESTADO.md`. Es la forma de regenerar esa sección sin transcribirla a mano: la
+cantidad de aserciones no se puede contar leyendo el archivo, porque dos están
+adentro de bucles. El flag no cambia nada de la corrida normal.
+
 Necesita Playwright, que **no** es una dependencia del sitio —el sitio sigue sin
 ninguna— sino una herramienta de desarrollo:
 

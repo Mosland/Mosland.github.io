@@ -45,17 +45,53 @@ try {
   process.exit(1);
 }
 
-const PUERTO = process.argv[2] || process.env.PUERTO || '8000';
+/* Los flags se filtran antes de leer el puerto: sin esto,
+   `node tools/verificar.js --resumen` tomaría "--resumen" como número de puerto.
+   Así el orden no importa: 8899 --resumen y --resumen 8899 son lo mismo. */
+const ARGS = process.argv.slice(2);
+const RESUMEN = ARGS.includes('--resumen');
+const SUELTOS = ARGS.filter((a) => !a.startsWith('--'));
+
+const PUERTO = SUELTOS[0] || process.env.PUERTO || '8000';
 const URL = `http://127.0.0.1:${PUERTO}/index.html`;
 const OUT = fs.mkdtempSync(path.join(os.tmpdir(), 'verificar-landing-'));
 
 const AMBAR = 'rgb(255, 180, 84)';
 let fallas = 0;
 
+/* Registro de bloques, para --resumen. La cantidad de aserciones no se puede
+   contar leyendo el archivo: dos de ellas están adentro de bucles (los ratios
+   de contraste y los anchos del desborde), así que el número real solo se sabe
+   corriendo. Por eso el resumen se genera durante la corrida y no aparte. */
+const bloques = [];
+let actual = null;
+
+function bloque(nombre) {
+  actual = { nombre, total: 0, fallas: 0 };
+  bloques.push(actual);
+  console.log('\n' + nombre);
+}
+
 function check(bien, texto, detalle) {
   if (!bien) fallas++;
+  if (actual) {
+    actual.total++;
+    if (!bien) actual.fallas++;
+  }
   const marca = bien ? 'OK  ' : '*** FALLA ***  ';
   console.log('  ' + marca + texto + (detalle !== undefined ? ': ' + detalle : ''));
+}
+
+/* Tabla markdown, para pegar en ESTADO.md sin transcribir nada a mano. */
+function imprimirResumen() {
+  const total = bloques.reduce((n, b) => n + b.total, 0);
+  console.log('\n\n─── RESUMEN (markdown, para ESTADO.md) ───\n');
+  console.log('| Bloque | Aserciones | Estado |');
+  console.log('|---|---:|---|');
+  for (const b of bloques) {
+    console.log(`| ${b.nombre.split(' — ')[0]} | ${b.total} | ${b.fallas ? '❌ ' + b.fallas : '✅'} |`);
+  }
+  console.log(`| **Total** | **${total}** | **${fallas ? '❌ ' + fallas : '✅'}** |`);
 }
 
 (async () => {
@@ -86,7 +122,7 @@ function check(bien, texto, detalle) {
      Es lo más fácil de romper del sistema de dos colores: alcanza con escribir
      una regla de estructura después de estas para que el pizarra se las lleve
      puestas. Ya pasó una vez con el número del paso 5. */
-  console.log('\nÁMBAR — el momento del pago (los tres tienen que ser ámbar)');
+  bloque('ÁMBAR — el momento del pago (los tres tienen que ser ámbar)');
   const color = await page.evaluate(() => {
     const c = (sel, pseudo) => {
       const el = document.querySelector(sel);
@@ -105,7 +141,7 @@ function check(bien, texto, detalle) {
   check(color.paso5 === AMBAR,    'número del paso 5', color.paso5);
   check(color.garantia === AMBAR, 'cierre de la garantía', color.garantia);
 
-  console.log('\nPIZARRA — la estructura (ninguno debe ser ámbar)');
+  bloque('PIZARRA — la estructura (ninguno debe ser ámbar)');
   check(color.paso1 !== AMBAR,    'número del paso 1', color.paso1);
   check(color.badge !== AMBAR,    'etiqueta de precios', color.badge);
   check(color.marcador !== AMBAR, 'marcador del acordeón', color.marcador);
@@ -118,7 +154,7 @@ function check(bien, texto, detalle) {
      página realmente está usando —leídos del DOM, no copiados acá— así que si
      alguien toca un color o un fondo, esto falla en vez de dejar el comentario
      mintiendo. El margen de 0,05 es por los dos decimales de la anotación. */
-  console.log('\nCONTRASTE — los ratios anotados en styles.css');
+  bloque('CONTRASTE — los ratios anotados en styles.css');
 
   const paleta = await page.evaluate(() => {
     const raiz = getComputedStyle(document.documentElement);
@@ -193,7 +229,7 @@ function check(bien, texto, detalle) {
   /* ── Continuidad del espinazo ─────────────────────────────────────────────
      Es el elemento firma y su única gracia es no cortarse nunca. Se corta si
      una sección se queda sin .spine o si recupera su propio padding vertical. */
-  console.log('\nESPINAZO — tiene que ser una línea sola');
+  bloque('ESPINAZO — tiene que ser una línea sola');
   const tramos = await page.evaluate(() => [...document.querySelectorAll('.spine')].map(el => {
     const r = el.getBoundingClientRect();
     const top = r.top + window.scrollY;
@@ -213,7 +249,7 @@ function check(bien, texto, detalle) {
   /* ── CTA flotante ─────────────────────────────────────────────────────────
      Vigila cuatro anclas. Si se agrega un CTA al cuerpo y no se suma a la
      lista de js/main.js, la barra aparece pegada arriba del botón nuevo. */
-  console.log('\nCTA FLOTANTE — los cuatro estados');
+  bloque('CTA FLOTANTE — los cuatro estados');
   const visible = () => page.evaluate(() => document.getElementById('floatingCta').classList.contains('is-visible'));
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(500);
@@ -236,7 +272,7 @@ function check(bien, texto, detalle) {
   /* ── Desborde horizontal ──────────────────────────────────────────────────
      El body tiene overflow-x: hidden, así que un desborde no se ve pero
      igual rompe el ancho. Hay que medirlo, no mirarlo. */
-  console.log('\nDESBORDE HORIZONTAL');
+  bloque('DESBORDE HORIZONTAL');
   for (const ancho of [360, 390, 768, 1024, 1440]) {
     const c = await browser.newContext({ viewport: { width: ancho, height: 900 } });
     const p = await c.newPage();
@@ -251,7 +287,7 @@ function check(bien, texto, detalle) {
   }
 
   /* ── Foco visible en todo lo tabulable ───────────────────────────────────── */
-  console.log('\nFOCO');
+  bloque('FOCO');
   {
     const c = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const p = await c.newPage();
@@ -282,7 +318,7 @@ function check(bien, texto, detalle) {
   }
 
   /* ── prefers-reduced-motion ───────────────────────────────────────────────── */
-  console.log('\nREDUCED MOTION');
+  bloque('REDUCED MOTION');
   {
     const c = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 900 } });
     const p = await c.newPage();
@@ -300,7 +336,7 @@ function check(bien, texto, detalle) {
   /* ── Sin JavaScript ───────────────────────────────────────────────────────
      La página tiene que verse entera. La entrada del hero es CSS, así que
      además tiene que seguir corriendo. */
-  console.log('\nSIN JAVASCRIPT');
+  bloque('SIN JAVASCRIPT');
   {
     const c = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
     const p = await c.newPage();
@@ -335,4 +371,6 @@ function check(bien, texto, detalle) {
   } else {
     console.log('\nTodo en orden.\n');
   }
+
+  if (RESUMEN) imprimirResumen();
 })();
