@@ -95,6 +95,20 @@
       mucho tiempo: al cambiar el diseño hay que renombrar el archivo, y ahí es
       donde se olvida alguna de las cuatro menciones. El síntoma no se ve en el
       sitio — se ve al pegar el link en un chat, días después, y ya es tarde.
+
+  10. CATÁLOGO — qué puede escribir este proyecto en el repo de herramientas
+      (C:\ClaudeMCPsPlugingsSkillsETC), según los deny de .claude/settings.json.
+      ⚠ ESTA REGLA TIENE OTRA FORMA QUE LAS NUEVE DE ARRIBA. No compara un dato
+        entre dos archivos: es un invariante sobre uno solo. Está acá igual
+        porque falla del mismo modo que las otras — en silencio.
+      Verifica que proyectos/surgamezombie/ siga denegado (es de otro proyecto de
+      Joaco) y que proyectos/webpersonal/ siga escribible (si alguien mete un
+      deny amplio tipo proyectos/**, este proyecto deja de poder anotar sus
+      decisiones de herramientas y nada avisa).
+      ⚠ LO QUE ESTA REGLA NO PUEDE CUBRIR: los deny atan las herramientas de
+        edición, no el shell. Un `git add -A` corrido dentro del catálogo se
+        lleva cambios de cualquier carpeta igual. Contra eso solo hay una regla
+        escrita, y está en CLAUDE.md, en "Herramientas externas".
    ══════════════════════════════════════════════════════════════════════════ */
 'use strict';
 
@@ -290,6 +304,45 @@ console.log('\nIMAGEN DE OG — el nombre del PNG, en cuatro lugares');
     const existe = fs.existsSync(path.join(RAIZ, 'assets', alguno.valor));
     check(existe, 'el archivo existe en assets/',
           alguno.valor + (existe ? '' : ' — no está en el disco'));
+  }
+}
+
+/* ── 10. CATÁLOGO ──────────────────────────────────────────────────────── */
+console.log('\nCATÁLOGO — qué puede escribir este proyecto en el repo de herramientas');
+{
+  const CAT = 'ClaudeMCPsPlugingsSkillsETC';
+  let deny = null;
+
+  try {
+    const cfg = JSON.parse(leer('.claude/settings.json'));
+    deny = cfg.permissions && cfg.permissions.deny;
+  } catch (e) {
+    deny = null;
+  }
+
+  /* Mismo criterio que extraer(): si no está lo que se venía a mirar, eso es una
+     falla. Un deny vacío o ausente no es "nada que chequear" — es el guard
+     entero caído. */
+  if (!Array.isArray(deny) || deny.length === 0) {
+    fallas++;
+    console.log('  *** FALLA ***  no encontré permissions.deny en .claude/settings.json ' +
+                '(sin esa lista, el catálogo entero queda escribible desde este proyecto)');
+  } else {
+    const reglas = deny.filter((r) => r.includes(CAT));
+    check(reglas.length > 0, 'hay deny sobre el catálogo', reglas.length + ' reglas');
+
+    /* La carpeta del otro proyecto de Joaco. Si esto se afloja, este proyecto
+       puede escribirle encima y no hay ningún error que lo delate. */
+    const otro = reglas.some((r) => r.includes('proyectos/surgamezombie'));
+    check(otro, 'proyectos/surgamezombie/ denegado',
+          otro ? 'cerrado' : 'ABIERTO — este proyecto puede escribir en la carpeta de otro proyecto');
+
+    /* Y el lado inverso: que no se haya cerrado de más. Un deny sobre la propia
+       carpeta, o uno amplio sobre proyectos/, corta la anotación de decisiones
+       de herramientas sin avisar. */
+    const propia = reglas.filter((r) => /proyectos\/webpersonal|proyectos\/\*/.test(r));
+    check(propia.length === 0, 'proyectos/webpersonal/ sigue escribible',
+          propia.length === 0 ? 'sin deny encima' : 'lo tapa: ' + propia.join(', '));
   }
 }
 

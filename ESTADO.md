@@ -98,7 +98,7 @@ scrollear. → El porqué de todo esto está en `CLAUDE.md`.
 
 ## 6. Qué está protegido por máquina y qué no
 
-*Generado el 9/8/2026 con los dos comandos de la sección 2.*
+*Generado el 12/8/2026 con los dos comandos de la sección 2.*
 
 **`tools/verificar.js` — 39 aserciones sobre la página renderizada**
 
@@ -115,14 +115,19 @@ scrollear. → El porqué de todo esto está en `CLAUDE.md`.
 | SIN JAVASCRIPT | 3 | ✅ |
 | **Total** | **39** | **✅** |
 
-**`tools/consistencia.js` — 13 aserciones sobre 9 reglas entre archivos**
+**`tools/consistencia.js` — 16 aserciones sobre 10 reglas**
 
 Precio · WhatsApp · Introducción · Fondo · Dominio · Calendly · CTA→ancla · Orden en
-el CSS · Imagen de OG.
+el CSS · Imagen de OG · Catálogo.
 
 **Las once reglas de consistencia: diez cubiertas, una no.** Nueve las cubre
 `consistencia.js` y una `verificar.js` (los ratios de contraste). La del orden en el
 CSS está en los dos: directa en `consistencia.js`, por efecto en `verificar.js`.
+
+⚠ **La décima de `consistencia.js` —Catálogo— no es una de esas once**, y por eso las
+cuentas no cierran a simple vista. Las once son datos del sitio duplicados entre
+archivos; ésta es un guard sobre los `deny` de `.claude/settings.json`: que la carpeta
+de SurGameZombie siga cerrada y la propia siga abierta.
 
 ❌ **La que falta: las métricas `fallback` de las fuentes.** Salen de leer el binario
 del `.woff2` y compararlo con Arial, así que al cambiar una fuente sigue dependiendo
@@ -161,9 +166,10 @@ viajan a la otra computadora. Lo que **no** viaja es la aprobación por máquina
 usuario, así que vuelve si se lo reactiva y en otra computadora nace activo. Escucha
 en el puerto 8000 y choca con el servidor de preview — ver el README.
 
-**Sin instalar:** cinco herramientas diferidas, cada una con su disparador, y once
-rechazadas. → Los motivos completos están en Notion, página **Skills Plugins MCP**,
-sección *Proyecto Web Personal*. **No proponer nada nuevo sin preguntarle a Joaco.**
+**Sin instalar:** las diferidas van cada una con su gatillo, y las rechazadas con su
+motivo. → Todo eso vive en el **catálogo de herramientas**
+(`C:\ClaudeMCPsPlugingsSkillsETC`), en `proyectos/webpersonal/`. **No proponer nada
+nuevo sin preguntarle a Joaco.**
 
 ## 9. Lo que existe pero no está activo
 
@@ -187,7 +193,7 @@ sección *Proyecto Web Personal*. **No proponer nada nuevo sin preguntarle a Joa
 | El **cómo** se hace una tarea (editar, verificar, publicar, clonar) | `README.md` |
 | **Qué hay hoy** y cómo está armado | `ESTADO.md` — este archivo |
 | **Qué falta** y en qué orden | `PLAN.md` |
-| Motivos de las herramientas **rechazadas**, y las diferidas | Notion → *Skills Plugins MCP* |
+| Motivos de las herramientas **rechazadas**, y las diferidas | Catálogo → `proyectos/webpersonal/` |
 
 Un dato que aparece en dos de estos archivos es una regla de consistencia nueva. Antes
 de duplicar algo, conviene apuntar.

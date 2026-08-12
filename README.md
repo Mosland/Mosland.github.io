@@ -209,6 +209,15 @@ cada regla nueva obligaba a corregirlo, y un conteo viejo es peor que ninguno):
    `og-image.html`—, más que ese archivo exista de verdad en `assets/`. Es la regla
    del renombrado de más arriba: se rompe al cambiar el diseño de la imagen, y el
    síntoma no se ve en el sitio sino al pegar el link en un chat, días después.
+10. **Qué puede escribir este proyecto en el catálogo de herramientas**, según los
+    `deny` de `.claude/settings.json`: que `proyectos/surgamezombie/` siga cerrado
+    —es de otro proyecto— y que `proyectos/webpersonal/` siga abierto. Es la única
+    de la lista que no compara un dato entre dos archivos: mira un solo archivo. Está
+    acá porque falla igual que las otras, en silencio — si alguien afloja ese `deny`,
+    no hay ningún error que lo delate hasta que ya se escribió donde no iba.
+    ⚠ No cubre el shell: los `deny` atan las herramientas de edición, así que un
+    `git add -A` corrido adentro del catálogo se lleva cambios de cualquier carpeta
+    lo mismo. Contra eso hay una regla escrita en `CLAUDE.md`, y nada más.
 
 ⚠ **Lo que no cubre:** las métricas de las familias `fallback`, que hay que
 recalcular si se cambia una fuente. Salen de leer el binario del `.woff2`, así que

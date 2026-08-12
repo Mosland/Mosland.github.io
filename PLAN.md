@@ -12,7 +12,7 @@ decisiones —eso es `CLAUDE.md`—. Un ítem que se cierra baja a la sección 7
 | 3 | Clientes / outreach | no arrancado |
 
 ⚠ **El pilar 1 NO está cerrado.** El sitio está publicado y funcionando —39 aserciones de
-render, 13 reglas de consistencia— pero falta el **repaso completo con mejoras** que Joaco
+render, 16 de consistencia— pero falta el **repaso completo con mejoras** que Joaco
 quiere hacer antes de darlo por terminado. Ese repaso todavía no arrancó y no tiene detalle.
 
 ## 2. Ahora

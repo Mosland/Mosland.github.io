@@ -27,7 +27,10 @@ Este archivo guarda el **porqué** de las decisiones. El **cómo** se hace cada 
 - **Usá `/plan` antes de:** tocar más de dos archivos, cambiar el precio o copy ya
   publicado, o instalar cualquier herramienta. No para un typo ni un cambio de una línea.
 - **Un dato que aparece en dos archivos es una regla de consistencia nueva.** Antes de
-  duplicar algo, conviene apuntarlo en `tools/consistencia.js`.
+  duplicar algo, conviene apuntarlo en `tools/consistencia.js`. ⚠ **El criterio es si la
+  desincronización pasaría desapercibida.** Un dato que al desincronizarse falla ruidoso
+  solo —una ruta rota, que revienta en el próximo intento de leerla— no necesita chequeo
+  mecánico. El chequeo es para lo que se pudre en silencio.
 - **Después de un `/compact`, reabrí el archivo que dispara la regla que estés tocando.**
   Este `CLAUDE.md` se reinyecta solo al compactar; los de `.claude/rules/` no: recién
   vuelven a cargar cuando se lee de nuevo un archivo que matchee su `paths`. ⚠ Si seguís
@@ -129,10 +132,26 @@ un subdominio gratis antes de cobrar nada. Lo que **no** se reusa es la platafor
 ## Herramientas externas
 
 **No instalar ni proponer ninguna herramienta nueva —MCP, plugin, skill o servicio— sin
-preguntarle a Joaco primero.** Y antes de evaluar algo nuevo, **buscar si ya se evaluó**:
-los motivos completos de cada rechazo, y los diferidos, viven en **Notion, página *Skills
-Plugins MCP*, sección *Proyecto Web Personal***. No proponer nada de esa lista sin revisar
-ahí primero si cambió el motivo.
+preguntarle a Joaco primero.** Y antes de evaluar nada, **buscar si ya se evaluó**: el
+veredicto de cada una vive en el catálogo, `C:\ClaudeMCPsPlugingsSkillsETC`. Se navega
+`INDICE.md` → `VEREDICTOS.md` → la ficha puntual en `skills/`, `plugins/`, `mcp/`,
+`connectors/`, `hooks/`, `comandos/` u `otros/`; si hay más de una opción para el mismo
+rol, `comparativas/` **antes** de recomendar nada. Cuatro reglas al usarlo:
+
+- **Nada con veredicto `peligroso` se instala sin avisarle a Joaco primero**, con el
+  riesgo concreto sobre la mesa.
+- **Sin ficha no hay decisión.** Si está `sin-evaluar` o directamente no está, ahí sí se
+  evalúa desde cero y se le pide a Joaco que la sume al catálogo con el veredicto que
+  corresponda. No se decide ni se instala nada antes de eso.
+- **Lo que este proyecto decida se anota en `proyectos/webpersonal/`**, y solo ahí: el
+  resto del catálogo es de solo lectura, lo mantiene su propio agente. Todo lo que no sea
+  un `vale` ya instalado lleva **gatillo concreto y verificable** —una condición, un
+  evento o una fecha—, nunca "más adelante" ni "cuando haga falta".
+- **Al commitear en el catálogo, nombrar los archivos uno por uno en el `git add`**, nunca
+  `-A` ni comodines. ⚠ Los `deny` de `.claude/settings.json` atan las herramientas de
+  edición, **no el shell**: un `git add -A` ahí se lleva puestos cambios de cualquier otra
+  carpeta del catálogo, incluida `proyectos/surgamezombie/`, que es de otro proyecto y
+  puede tener una sesión escribiendo al mismo tiempo. Y nunca `push --force`.
 
 Qué hay instalado hoy y con qué alcance: `ESTADO.md` §8. Todo va en **project scope**, en
 archivos commiteados, para que viaje a la otra computadora.
