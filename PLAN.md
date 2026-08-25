@@ -21,18 +21,14 @@ quiere hacer antes de darlo por terminado. Ese repaso todavía no arrancó y no 
 
 1. **Definir el alcance del repaso de mejoras del sitio.** Es lo que desbloquea todo el
    pilar 1. Se define en otra sesión, con Joaco.
-2. **Verificar que las cuatro reglas de `.claude/rules/` cargan de verdad.** En sesión
-   nueva, `/context` y confirmar que aparecen bajo *Memory files*. Se escribieron con la
-   forma `paths:` documentada, pero **nunca se verificó**: la prueba del 9/8/2026 salió
-   inconcluyente porque el directorio no existía al arrancar esa sesión. Si no cargan, es
-   un cambio de una línea por archivo.
-   ⚠ **Al verificar textos en `index.html`, buscar sin el espacio: el sitio escribe
-   `10&nbsp;días`, así que un grep de `"10 días"` da falso negativo.** Es la misma trampa
-   que la de `"USD 90"` en `.claude/rules/precio.md`, y ya causó un falso negativo el
-   9/8/2026.
-3. **Repasar que las cuatro reglas dicen lo que tienen que decir.** Se movieron en bloque y
+2. **Repasar que las cuatro reglas dicen lo que tienen que decir.** Se movieron en bloque y
    se verificó que no se perdió nada (las cinco palabras prohibidas y las tres promesas
    siguen en pie), pero nadie las leyó todavía con ojo de "¿esto está bien redactado?".
+
+⚠ **Al verificar textos en `index.html`, buscar sin el espacio: el sitio escribe
+`10&nbsp;días`, así que un grep de `"10 días"` da falso negativo.** Es la misma trampa que
+la de `"USD 90"` en `.claude/rules/precio.md`, y ya causó un falso negativo el 9/8/2026.
+Aplica a cualquier ítem de acá que toque el HTML.
 
 ## 3. Después
 
@@ -67,6 +63,10 @@ Salir a buscar clientes activamente, en salud.
 
 *Se va a hacer; no se sabe cuándo. Sin orden a propósito.*
 
+- **Retomar los dashboards de Power BI.** El negocio arrancó con dos líneas de servicio:
+  las webs y **dashboards de Power BI para pequeñas empresas**. La segunda se pausó a
+  propósito para concentrarse en el sitio. **No está descartada — no tiene fecha.** Hoy no
+  figura en ningún otro archivo del repo.
 - **Borrar la memoria automática `commits-directo-a-main.md`.** La regla de push inmediato
   y de no usar ramas ya está en `CLAUDE.md`, así que la memoria quedó duplicada.
 - **Sacar el conector de Gmail.** Cero llamadas en 23 sesiones (medido el 9/8/2026). No
@@ -107,3 +107,4 @@ escribirle un `alt` real.
 | Cerrado dónde viven los sitios de clientes (Cloudflare, cuenta del cliente) | `8a7943c` |
 | Plantilla de entrega de la reserva de turnos | `a50351f` |
 | Reescritura de `CLAUDE.md` (373 → 171 l) + `.claude/rules/` + este archivo | `6411913` |
+| Verificado que las cuatro reglas de `.claude/rules/` cargan por su `paths:` | `aa96f1b` |
