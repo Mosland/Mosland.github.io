@@ -8,7 +8,7 @@ decisiones —eso es `CLAUDE.md`—. Un ítem que se cierra baja a la sección 7
 | # | Pilar | Estado |
 |---|---|---|
 | **1** | **Sitio** — esta web | **ACTIVO — estamos acá, en la etapa de repaso** |
-| 2 | Portfolio — piezas reales en salud | trabado |
+| 2 | Portfolio — piezas de ejemplo en salud | no arrancado |
 | 3 | Clientes / outreach | no arrancado |
 
 ⚠ **El pilar 1 NO está cerrado.** El sitio está publicado y funcionando —39 aserciones de
@@ -49,11 +49,14 @@ La vidriera del negocio. Publicada en `mosland.github.io`, verificada por
 No hay otro criterio: pasar las aserciones no alcanza, ya las pasa.
 
 **Pilar 2 — Portfolio**
-Piezas reales en el rubro salud, con capturas. Es el **único lugar de la web donde se
-nombra un rubro concreto**. El HTML y el CSS ya están resueltos y comentados en
-`index.html` (buscar `PORTFOLIO`).
-→ **Trigger de arranque:** que exista al menos una pieza real.
-→ Hoy: trabado, ver sección 6.
+Piezas de ejemplo en el rubro salud, con capturas: un antes/después de un consultorio real
+usado como referencia (no cliente), y un sitio de cero para otro caso, tampoco cliente. Es
+el **único lugar de la web donde se nombra un rubro concreto**. El HTML y el CSS ya están
+resueltos y comentados en `index.html` (buscar `PORTFOLIO`).
+→ **Trigger de arranque:** que exista al menos una pieza.
+⚠ Al descomentar el bloque `PORTFOLIO`, la captura de ejemplo lleva `alt=""`. Está bien
+mientras no se muestre, pero **una pieza de portfolio no es decorativa**: hay que
+escribirle un `alt` real.
 
 **Pilar 3 — Clientes / outreach**
 Salir a buscar clientes activamente, en salud.
@@ -87,13 +90,7 @@ Salir a buscar clientes activamente, en salud.
 
 | Qué | Espera | De quién |
 |---|---|---|
-| Piezas de portfolio | que existan trabajos reales para mostrar | primeros clientes |
-| `assets/trabajos/` — la carpeta no existe | lo mismo | primeros clientes |
 | Estrenar `entrega/reserva-de-turnos.md` | un cliente que necesite reserva de turnos | primer cliente con agenda |
-
-⚠ Cuando se descomente el bloque `PORTFOLIO`, la captura de ejemplo lleva `alt=""`. Está
-bien mientras no se muestre, pero **una pieza de portfolio no es decorativa**: hay que
-escribirle un `alt` real.
 
 ## 7. Cerrado
 

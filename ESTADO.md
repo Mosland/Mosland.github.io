@@ -175,7 +175,8 @@ nuevo sin preguntarle a Joaco.**
 
 - **La sección de portfolio.** El HTML y el CSS ya están resueltos, comentados en
   `index.html` (buscar `PORTFOLIO`). Es el único lugar de la web donde se nombra un
-  rubro concreto. Falta que existan piezas reales.
+  rubro concreto. Falta armar las piezas de ejemplo (depende de Joaco, no de un
+  cliente).
 - **`assets/trabajos/`** — la carpeta **no existe todavía**. La nombran el bloque
   comentado y el README.
 - **`entrega/reserva-de-turnos.md`** — terminado y sin estrenar: no hay clientes.

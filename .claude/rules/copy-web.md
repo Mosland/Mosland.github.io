@@ -46,8 +46,8 @@ propuesta las contradice, **lo que está mal es lo otro**.
   comunica como **precio de introducción** que va a subir, nunca como precio fijo
   permanente ni como oportunidad.
 - **No nombrar ningún rubro en el mensaje principal.** Ni salud ni ninguno. El rubro
-  específico solo aparece en la sección de portfolio, cuando existan piezas reales — es el
-  único lugar del sitio donde se nombra.
+  específico solo aparece en la sección de portfolio, cuando existan las piezas de
+  portfolio — es el único lugar del sitio donde se nombra.
 - **Sin formulario de contacto.** Puede fallar en silencio. Si algún día hay uno, tiene que
   mostrar el WhatsApp como alternativa visible.
 - **Sin fotos de Joaco.** Ni en el hero, ni en "Sobre mí", ni en la imagen de OG. Las

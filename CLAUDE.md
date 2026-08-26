@@ -46,7 +46,7 @@ El mensaje central de la web es **general**: "desarrollo web para pequeños nego
 profesionales independientes". El rubro donde va a buscar clientes activamente es **salud**
 (nutricionistas, psicólogos, fisioterapeutas), y gastronomía queda como secundario — pero
 **nada de eso se nombra en el sitio**. El rubro específico solo aparece más adelante, en la
-sección de portfolio, cuando existan piezas reales.
+sección de portfolio, cuando existan las piezas de portfolio.
 
 ## El negocio
 
@@ -167,7 +167,7 @@ otro puerto — está en el README, con los comandos.
   justificarla, no hay que proponer variantes con foto ni volver a levantarlo como mejora,
   **aunque la evidencia de conversión diga que una foto real del prestador ayuda** — ese
   dato ya se conoce y la decisión es igual. Las capturas de trabajos en portfolio son otra
-  cosa y sí van, cuando existan piezas reales.
+  cosa y sí van, cuando existan las piezas.
 - **No mencionar el rubro salud (ni ningún rubro) en el mensaje principal.**
 - **No presentar el precio de introducción como precio fijo** sin aclarar que va a subir,
   ni con lenguaje de oferta/promoción/promo/rebaja/descuento. Esas cinco palabras las
