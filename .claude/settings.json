@@ -47,6 +47,17 @@
       "Edit(//c/ClaudeMCPsPlugingsSkillsETC/proyectos/surgamezombie/**)",
       "Write(//c/ClaudeMCPsPlugingsSkillsETC/proyectos/surgamezombie/**)"
     ],
+    "ask": [
+      "Bash(git commit)",
+      "Bash(git commit *)",
+      "Bash(git push)",
+      "Bash(git push *)",
+
+      "PowerShell(git commit)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push)",
+      "PowerShell(git push *)"
+    ],
     "allow": [
       "Bash(git status)",
       "Bash(git status *)",
@@ -55,9 +66,6 @@
       "Bash(git log *)",
       "Bash(git show *)",
       "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(git push)",
-      "Bash(git push *)",
       "Bash(git pull)",
       "Bash(git pull *)",
       "Bash(git ls-files *)",
@@ -70,9 +78,6 @@
       "PowerShell(git log *)",
       "PowerShell(git show *)",
       "PowerShell(git add *)",
-      "PowerShell(git commit *)",
-      "PowerShell(git push)",
-      "PowerShell(git push *)",
       "PowerShell(git pull)",
       "PowerShell(git pull *)",
       "PowerShell(git ls-files *)",
