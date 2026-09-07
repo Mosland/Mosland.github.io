@@ -171,6 +171,24 @@ motivo. → Todo eso vive en el **catálogo de herramientas**
 (`C:\ClaudeMCPsPlugingsSkillsETC`), en `proyectos/webpersonal/`. **No proponer nada
 nuevo sin preguntarle a Joaco.**
 
+**Permisos — medido el 7/9/2026 con Claude Code `2.1.263`** *(salida de
+`claude --version`)*. Dos disparos con el árbol limpio y Joaco mirando la pantalla,
+porque el observable de esto es el cuadro y desde el lado del agente un cuadro
+aprobado y un comando que nunca preguntó devuelven la misma salida:
+
+- ✅ **`git commit` abre el cuadro, y el cuadro nombra la regla:** `Ask rule
+  Bash(git commit) overrides auto mode for this command`. Matcheó la regla **exacta**,
+  no la de comodín, estando las dos en `.claude/settings.json`. Las opciones eran solo
+  Yes/No: **no ofrece "no volver a preguntar"**, así que aprobar una vez no ensucia
+  `settings.local.json`.
+- ✅ **`git -c user.name=Test commit` NO abre cuadro.** El `ask` matchea por prefijo
+  literal, y cualquier flag global antes del subcomando lo esquiva. **Es un hueco
+  conocido y aceptado, no un bug a tapar** — el porqué de no taparlo está en el
+  catálogo, en `proyectos/webpersonal/`.
+
+⚠ Esto es superficie del producto y se vence rápido: **si `claude --version` no dice
+`2.1.263`, se vuelve a medir antes de citarlo.**
+
 ## 9. Lo que existe pero no está activo
 
 - **La sección de portfolio.** El HTML y el CSS ya están resueltos, comentados en
