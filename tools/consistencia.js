@@ -328,8 +328,21 @@ console.log('\nCATÁLOGO — qué puede escribir este proyecto en el repo de her
     console.log('  *** FALLA ***  no encontré permissions.deny en .claude/settings.json ' +
                 '(sin esa lista, el catálogo entero queda escribible desde este proyecto)');
   } else {
-    const reglas = deny.filter((r) => r.includes(CAT));
-    check(reglas.length > 0, 'hay deny sobre el catálogo', reglas.length + ' reglas');
+    /* ⚠ Solo cuentan las reglas Edit(...). Medido el 2026-09-09 en 2.1.266: en
+       Claude Code las reglas de archivo se matchean SOLO por Edit(ruta) —forma
+       que ya cubre Write y a cualquier otra herramienta de edición—, y el
+       validador nombra una por una a las 15 Write(...) de este mismo deny
+       diciendo que no matchean nada.
+       Contarlas acá hacía que el guard se leyera más fuerte de lo que es: con
+       la Edit borrada y la Write en pie, esto decía "cerrado" con la carpeta
+       del otro proyecto realmente abierta, y en silencio.
+       ⚠ Hoy la protección es real —las 15 Edit están—: lo que se arregla es el
+       detector, no un agujero. */
+    const reglas  = deny.filter((r) => r.includes(CAT) && r.startsWith('Edit('));
+    const inertes = deny.filter((r) => r.includes(CAT) && !r.startsWith('Edit('));
+    check(reglas.length > 0, 'hay deny sobre el catálogo',
+          reglas.length + ' reglas Edit' +
+          (inertes.length ? ' (+' + inertes.length + ' inertes, que no cuentan)' : ''));
 
     /* La carpeta del otro proyecto de Joaco. Si esto se afloja, este proyecto
        puede escribirle encima y no hay ningún error que lo delate. */
