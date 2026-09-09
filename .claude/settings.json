@@ -87,7 +87,9 @@
       "PowerShell(gh *)",
 
       "Bash(python -m http.server *)",
-      "PowerShell(python -m http.server *)",
+      "PowerShell(python -m http.server 8899)",
+      "Bash(node tools/verificar.js *)",
+      "Bash(node tools/consistencia.js)",
       "Bash(curl -s -o /dev/null -w *)",
       "PowerShell(Get-NetTCPConnection *)",
 

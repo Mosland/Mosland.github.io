@@ -160,7 +160,11 @@ el porqué de cada una está en `CLAUDE.md`.
 **frontend-design** (sin versión fija, puede cambiar sin aviso) y
 **claude-md-management** v1.0.0. Los tres en project scope, commiteados, así que
 viajan a la otra computadora. Lo que **no** viaja es la aprobación por máquina:
-`.claude/settings.local.json` está gitignoreado a propósito.
+`.claude/settings.local.json` está gitignoreado a propósito — y desde el
+9/9/2026 está **vacío de reglas**: se le sacaron las 25 `allow` que había
+sedimentado a fuerza de clicks de *"no volver a preguntar"*. Consecuencia:
+**el set efectivo de permisos pasó a ser el archivo versionado, así que por
+fin es el mismo acá y en la laptop.**
 
 **Deshabilitado:** `godot-ai`, desde `/mcp`, el 9/8/2026. Sigue declarado en scope
 usuario, así que vuelve si se lo reactiva y en otra computadora nace activo. Escucha
@@ -171,23 +175,71 @@ motivo. → Todo eso vive en el **catálogo de herramientas**
 (`C:\ClaudeMCPsPlugingsSkillsETC`), en `proyectos/webpersonal/`. **No proponer nada
 nuevo sin preguntarle a Joaco.**
 
-**Permisos — medido el 7/9/2026 con Claude Code `2.1.263`** *(salida de
-`claude --version`)*. Dos disparos con el árbol limpio y Joaco mirando la pantalla,
-porque el observable de esto es el cuadro y desde el lado del agente un cuadro
-aprobado y un comando que nunca preguntó devuelven la misma salida:
+**Permisos — medido el 9/9/2026 con Claude Code `2.1.266`** *(salida de
+`claude --version`)*. Todo lo de abajo se midió **desde el lado del agente**: son
+salidas de `claude --debug` y del log de `--debug-file`, así que se reproducen solas,
+sin depender de que alguien estuviera mirando la pantalla.
 
-- ✅ **`git commit` abre el cuadro, y el cuadro nombra la regla:** `Ask rule
-  Bash(git commit) overrides auto mode for this command`. Matcheó la regla **exacta**,
-  no la de comodín, estando las dos en `.claude/settings.json`. Las opciones eran solo
-  Yes/No: **no ofrece "no volver a preguntar"**, así que aprobar una vez no ensucia
-  `settings.local.json`.
-- ✅ **`git -c user.name=Test commit` NO abre cuadro.** El `ask` matchea por prefijo
-  literal, y cualquier flag global antes del subcomando lo esquiva. **Es un hueco
-  conocido y aceptado, no un bug a tapar** — el porqué de no taparlo está en el
-  catálogo, en `proyectos/webpersonal/`.
+**El set efectivo son 42 reglas, y por primera vez son exactamente las escritas.**
+`.claude/settings.json` tiene 42 `allow`, 8 `ask` y 30 `deny`; `.claude/settings.local.json`
+quedó vacío (abajo). Ninguna se descarta.
+
+**Lo que está escrito y no hace nada — y por qué se queda igual**
+
+- ⚠ **Las 15 `Write(//c/ClaudeMCPsPlugingsSkillsETC/...)` del `deny` no matchean nada.**
+  El validador las nombra una por una al arrancar: *"is not matched by file permission
+  checks — only `Edit(path)` rules are"*. **Las reglas de archivo se matchean solo por
+  `Edit(ruta)`, y esa forma ya cubre Write** y a cualquier otra herramienta de edición.
+  O sea que **la protección del catálogo la sostienen solas las 15 `Edit(...)`, y estaba
+  completa antes del commit `0fe6eda`** — que fue justamente el que agregó las `Write()`.
+  **Se quedan** (Joaco, 8/9/2026) por si una versión futura las hace matchear. 🔔 **Pero
+  no cuentan como protección: de las 30 del `deny`, 15 son reales y 15 inertes.**
+- ⚠ **`PowerShell(python -m http.server *)` estaba muerta.** Se reemplazó por
+  `PowerShell(python -m http.server 8899)`, la única forma que sobrevive al filtro de
+  abajo. `8899` y no `8000` porque es el puerto de las sesiones de agente — el que manda
+  `CLAUDE.md` para regenerar la sección 6. No ensancha nada: `Bash(python -m http.server *)`
+  ya estaba viva y es más ancha.
+
+**🆕 La capa nueva: escribir un `allow` no es tenerlo.**
+
+El producto **descarta reglas `allow` en silencio**: no lo avisa en pantalla y **el
+validador tampoco lo marca**. El único observable es el log de debug —
+
+```
+Ignoring dangerous permission PowerShell(python -m http.server *) from .claude\settings.json (bypasses classifier)
+Applying permission update: Removing 1 allow rule(s) from source 'projectSettings'
+```
+
+— y eso es lo que explicaba el **`65 → 63`** que mostraba `/permissions`: eran **dos
+reglas descartadas**, no subsunción de reglas `Read`, que era la hipótesis anotada.
+
+**🆕 Qué mide ese filtro: no mide peligro, mide si la regla pre-aprueba un intérprete.**
+Medido con 36 reglas en dos tandas el 9/9/2026.
+
+| Caen | Sobreviven |
+|---|---|
+| `python */-c */-m *`, `node */-e */--eval *`, `sh -c *`, `bash -c *`, `eval *`, `perl -e *`, `npx *`, `ssh *`, `Invoke-Expression *`, `iex *`, `Start-Process *` | `git *`, `echo *`, `docker run *` — y también `rm -rf /`, `chmod 777 *` y `curl * \| bash` |
+
+⚠ **Que `rm -rf /` sobreviva y `npx *` no, es la prueba de que el filtro no mide daño.**
+Y hay una asimetría entre shells: en Bash **fijar el módulo salva la regla**
+—`Bash(python -m http.server *)` sigue viva—; **en PowerShell no**, cualquier comodín
+después del intérprete la mata por específica que sea. Tenerlo en cuenta al escribir
+cualquier `allow` nuevo.
+
+**🆕 `settings.json` es JSON estricto, y un archivo que no parsea se descarta en
+silencio.** Un `//` adentro y el archivo entero deja de existir para el producto, sin
+error y sin aviso. Medido con dos brazos: `--settings` con comentario dio los **mismos 15**
+avisos que no pasar nada; sin comentario dio **16**, con su regla nombrada. **Por eso
+estas notas viven acá y no al lado de cada regla**, que era donde correspondían.
+
+**Lo que sigue medido en `2.1.263` y no se cita como fresco:** los dos tests de cuadro
+—que `git commit` abre el `ask` nombrando la regla exacta, y que `git -c foo commit` lo
+esquiva por prefijo literal—. Ésos **necesitan a Joaco frente a la pantalla**, porque
+desde el lado del agente un cuadro aprobado y un comando que nunca preguntó devuelven la
+misma salida. El detalle está en el catálogo, en `proyectos/webpersonal/`.
 
 ⚠ Esto es superficie del producto y se vence rápido: **si `claude --version` no dice
-`2.1.263`, se vuelve a medir antes de citarlo.**
+`2.1.266`, se vuelve a medir antes de citarlo.**
 
 ## 9. Lo que existe pero no está activo
 
